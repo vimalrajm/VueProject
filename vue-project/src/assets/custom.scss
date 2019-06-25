@@ -1,0 +1,28 @@
+@import "../../node_modules/bulma/sass/utilities/initial-variables";
+@import "../../node_modules/bulma/sass/utilities/functions";
+//$primary: #ffb3b3; /* changes primary color to pink */
+
+$dark: #a7164d;
+@import "../../node_modules/bulma/bulma";
+
+.notices .toast.is-danger {
+  color: #fff;
+  background: #ff3860;
+  padding: 8px;
+  font-size: smaller;
+}
+
+.notices .toast.is-success {
+  color: #fff;
+  background: #23d160;
+  padding: 8px;
+  font-size: smaller;
+}
+
+.ft-dp-width {
+  margin-right: 30px;
+}
+
+.btn-width-90 {
+  width: 90px;
+}

@@ -1,0 +1,281 @@
+{
+  "users": [
+    {
+      "id": 7652347523,
+      "name": "Vimal Raj",
+      "email": "vimal@gmail.com",
+      "role": "admin",
+      "password": "12345678"
+    },
+    {
+      "id": 9892734827,
+      "name": "Dinesh",
+      "email": "dinesh@gmail.com",
+      "role": "admin",
+      "password": "12345678"
+    },
+    {
+      "id": 9862756753,
+      "name": "Lakshman",
+      "email": "lakshman@gmail.com",
+      "role": "admin",
+      "password": "12345678"
+    }
+  ],
+  "customers": [
+    {
+      "id": 76323623665,
+      "name": "Arun Raj",
+      "email": "arun@gmail.com",
+      "country": "INDIA",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678"
+    },
+    {
+      "id": 908347634667,
+      "name": "adi",
+      "email": "adi@gmail.com",
+      "country": "US",
+      "orders": 10,
+      "role": "customer",
+      "password": "12345678"
+    },
+    {
+      "id": 634673466767,
+      "name": "murali",
+      "email": "murali@gmail.com",
+      "country": "INDIA",
+      "orders": 0,
+      "role": "customer",
+      "password": "12345678"
+    },
+    {
+      "id": 987387347562,
+      "name": "sai",
+      "email": "sai@gmail.com",
+      "country": "INDIA",
+      "orders": 2,
+      "role": "customer",
+      "password": "12345678"
+    },
+    {
+      "id": 534656565366,
+      "name": "sanjith",
+      "email": "sanjith@gmail.com",
+      "country": "INDIA",
+      "orders": 6,
+      "role": "customer",
+      "password": "12345678"
+    },
+    {
+      "id": 3307232146,
+      "name": "aditya",
+      "email": "aditya@gmail.com",
+      "country": "India",
+      "orders": 3,
+      "role": "customer",
+      "password": 12345678,
+      "address": [
+        "address1",
+        "address2"
+      ]
+    },
+    {
+      "id": 2239707937,
+      "name": "lakshmi",
+      "email": "lakshmi@gmail.com",
+      "country": "India",
+      "orders": 3,
+      "role": "customer",
+      "password": 12345678,
+      "address": [
+        "address1",
+        "address2"
+      ]
+    },
+    {
+      "id": 9455429809,
+      "name": "vignesh",
+      "email": "vignesh@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": 12345678,
+      "address": [
+        "hjsjhdsgsadg",
+        "kjdjhjdskjksdf"
+      ]
+    },
+    {
+      "id": 794300879,
+      "name": "danush",
+      "email": "danush@gmail.com",
+      "country": "Canada",
+      "orders": 3,
+      "role": "customer",
+      "password": 12345678,
+      "address": [
+        "sdkjhsdfhhk",
+        "khjhjdsfjhksfd"
+      ]
+    },
+    {
+      "id": 4629538733,
+      "name": "sagar",
+      "email": "sagar@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": 12345678,
+      "address": [
+        "address1",
+        "address2"
+      ]
+    },
+    {
+      "id": 3841126412,
+      "name": "harish",
+      "email": "harish@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": 12345678,
+      "address": [
+        "hgashghsa1",
+        "mnsknsvn2"
+      ]
+    },
+    {
+      "id": 958478428,
+      "name": "shreya",
+      "email": "shreya@gmmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": 12345678,
+      "address": [
+        "address1",
+        "ADDRESS2"
+      ]
+    },
+    {
+      "id": 3793448351,
+      "name": "rajesh",
+      "email": "rajesh@gmail.com",
+      "country": "India",
+      "orders": 3,
+      "role": "customer",
+      "password": 12345678,
+      "address": [
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "#311, BTM layout",
+        "Bangalore"
+      ]
+    },
+    {
+      "id": 6273252307,
+      "name": "depu",
+      "email": "depu@gmail.com",
+      "country": "India",
+      "orders": 3,
+      "role": "customer",
+      "password": 12345678,
+      "address": [
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "#111",
+        "Kerala"
+      ]
+    }
+  ],
+  "books": [
+    {
+      "bookName": "Tensorflow For Machine Intelligence",
+      "bookPrice": "22.99",
+      "bookPages": "270",
+      "bookISBN": "9721632817632",
+      "image": "transflow.jpg",
+      "addedBy": 7652347523
+    },
+    {
+      "bookName": "Docker In Production",
+      "bookPrice": "22.99",
+      "bookPages": "170",
+      "bookISBN": "7721237865409",
+      "image": "docker.jpg",
+      "addedBy": 9892734827
+    },
+    {
+      "bookName": "Developing A Gulp.Js Edge",
+      "bookPrice": "22.99",
+      "bookPages": "134",
+      "bookISBN": "7539493759359",
+      "image": "gulp.jpg",
+      "addedBy": 7652347523
+    },
+    {
+      "bookName": "Learning Swift",
+      "bookPrice": "22.99",
+      "bookPages": "345",
+      "bookISBN": "8475634576234",
+      "image": "swift.jpg",
+      "addedBy": 9892734827
+    },
+    {
+      "bookName": "Choosing A Javascript Framework",
+      "bookPrice": "19.99",
+      "bookPages": "96",
+      "bookISBN": "9839769874568",
+      "image": "js.jpg",
+      "addedBy": 9862756753
+    },
+    {
+      "bookName": "Deconstructing Google Cardboard Apps",
+      "bookPrice": "22.99",
+      "bookPages": "176",
+      "bookISBN": "9086438737656",
+      "image": "google.jpg",
+      "addedBy": 9862756753
+    },
+    {
+      "id": 3038280522,
+      "bookName": "learn js the hard way",
+      "bookPrice": "123.45",
+      "bookPages": "320",
+      "bookISBN": "2365126531212",
+      "image": "google.jpg",
+      "addedBy": 9862756753
+    },
+    {
+      "id": 8169846467,
+      "bookName": "Programming in C",
+      "bookPrice": "139.24",
+      "bookPages": "250",
+      "bookISBN": "89726773267234",
+      "image": "dummy.jpg",
+      "addedBy": 7652347523
+    }
+  ]
+}
