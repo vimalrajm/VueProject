@@ -24,190 +24,126 @@
   ],
   "customers": [
     {
-      "id": 76323623665,
-      "name": "Arun Raj",
-      "email": "arun@gmail.com",
-      "country": "INDIA",
-      "orders": 3,
-      "role": "customer",
-      "password": "12345678"
-    },
-    {
-      "id": 908347634667,
+      "id": 4489031448,
       "name": "adi",
       "email": "adi@gmail.com",
-      "country": "US",
-      "orders": 10,
-      "role": "customer",
-      "password": "12345678"
-    },
-    {
-      "id": 634673466767,
-      "name": "murali",
-      "email": "murali@gmail.com",
-      "country": "INDIA",
-      "orders": 0,
-      "role": "customer",
-      "password": "12345678"
-    },
-    {
-      "id": 987387347562,
-      "name": "sai",
-      "email": "sai@gmail.com",
-      "country": "INDIA",
-      "orders": 2,
-      "role": "customer",
-      "password": "12345678"
-    },
-    {
-      "id": 534656565366,
-      "name": "sanjith",
-      "email": "sanjith@gmail.com",
-      "country": "INDIA",
-      "orders": 6,
-      "role": "customer",
-      "password": "12345678"
-    },
-    {
-      "id": 3307232146,
-      "name": "aditya",
-      "email": "aditya@gmail.com",
-      "country": "India",
-      "orders": 3,
-      "role": "customer",
-      "password": 12345678,
-      "address": [
-        "address1",
-        "address2"
-      ]
-    },
-    {
-      "id": 2239707937,
-      "name": "lakshmi",
-      "email": "lakshmi@gmail.com",
-      "country": "India",
-      "orders": 3,
-      "role": "customer",
-      "password": 12345678,
-      "address": [
-        "address1",
-        "address2"
-      ]
-    },
-    {
-      "id": 9455429809,
-      "name": "vignesh",
-      "email": "vignesh@gmail.com",
       "country": "United Kingdom",
       "orders": 3,
       "role": "customer",
-      "password": 12345678,
+      "password": "12345678",
       "address": [
-        "hjsjhdsgsadg",
-        "kjdjhjdskjksdf"
-      ]
+        "311",
+        "jksdj"
+      ],
+      "zipcode": "1232",
+      "city": "city01"
     },
     {
-      "id": 794300879,
-      "name": "danush",
-      "email": "danush@gmail.com",
+      "name": "lakshman",
+      "email": "lakshman123@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "1",
+        "1"
+      ],
+      "zipcode": "1",
+      "city": "1",
+      "id": 2091885168
+    },
+    {
+      "id": 2967019139,
+      "name": "user1",
+      "email": "user1@gmail.com",
+      "country": "United States",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "zipcode": "1",
+      "city": "1"
+    },
+    {
+      "id": 5616807871,
+      "name": "user 2",
+      "email": "user2@gmail.com",
       "country": "Canada",
       "orders": 3,
       "role": "customer",
-      "password": 12345678,
+      "password": "12345678",
       "address": [
-        "sdkjhsdfhhk",
-        "khjhjdsfjhksfd"
-      ]
+        "2",
+        "2"
+      ],
+      "zipcode": "2",
+      "city": "2"
     },
     {
-      "id": 4629538733,
-      "name": "sagar",
-      "email": "sagar@gmail.com",
-      "country": "United Kingdom",
-      "orders": 3,
-      "role": "customer",
-      "password": 12345678,
-      "address": [
-        "address1",
-        "address2"
-      ]
-    },
-    {
-      "id": 3841126412,
-      "name": "harish",
-      "email": "harish@gmail.com",
-      "country": "United Kingdom",
-      "orders": 3,
-      "role": "customer",
-      "password": 12345678,
-      "address": [
-        "hgashghsa1",
-        "mnsknsvn2"
-      ]
-    },
-    {
-      "id": 958478428,
-      "name": "shreya",
-      "email": "shreya@gmmail.com",
-      "country": "United Kingdom",
-      "orders": 3,
-      "role": "customer",
-      "password": 12345678,
-      "address": [
-        "address1",
-        "ADDRESS2"
-      ]
-    },
-    {
-      "id": 3793448351,
-      "name": "rajesh",
-      "email": "rajesh@gmail.com",
+      "id": 2408714264,
+      "name": "user 3",
+      "email": "user3@gmail.com",
       "country": "India",
       "orders": 3,
       "role": "customer",
-      "password": 12345678,
+      "password": "12345678",
       "address": [
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "#311, BTM layout",
-        "Bangalore"
-      ]
+        "3",
+        "3"
+      ],
+      "zipcode": "3",
+      "city": "3"
     },
     {
-      "id": 6273252307,
-      "name": "depu",
-      "email": "depu@gmail.com",
+      "id": 130743613,
+      "name": "smith",
+      "email": "smith@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "4",
+        "4"
+      ],
+      "zipcode": "4",
+      "city": "4"
+    },
+    {
+      "id": 6495830531,
+      "name": "sanjith",
+      "email": "sanjith@gmail.com",
+      "country": "United States",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "4",
+        "4"
+      ],
+      "zipcode": "4",
+      "city": "4"
+    },
+    {
+      "name": "sai krishna",
+      "email": "sai123@gmail.com",
       "country": "India",
       "orders": 3,
       "role": "customer",
-      "password": 12345678,
+      "password": "12345678",
       "address": [
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "#111",
-        "Kerala"
-      ]
+        "7123",
+        "7123"
+      ],
+      "zipcode": "7123",
+      "city": "7123",
+      "id": 8075000549
     }
   ],
   "books": [
