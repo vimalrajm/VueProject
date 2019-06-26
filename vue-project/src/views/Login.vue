@@ -110,7 +110,7 @@ export default {
             });
           });
           if (this.loginFail) {
-            await customer.getCustomers().then(userDetail => {
+            await customer.getAllCustomers().then(userDetail => {
               userDetail.data.forEach(user => {
                 if (
                   user.email === this.emailVal &&
@@ -141,13 +141,13 @@ export default {
           this.loginFail = true;
         } catch (e) {
           console.log(e);
+          this.toast("is-warning", "Something went wrong", "is-top");
         }
       } else {
         this.toast("is-danger", "Invlid email id or password", "is-top");
       }
     },
-    signupModal() {
-    }
+    signupModal() {}
   }
 };
 </script>
