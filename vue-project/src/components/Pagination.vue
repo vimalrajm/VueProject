@@ -35,7 +35,7 @@
         >Previous</router-link
       >
       <router-link
-        v-show="currPageNumber != noOfPage"
+        v-show="currPageNumber != noOfPage && count != 0"
         class="pagination-next btn-width-90"
         :to="{
           name: 'customers',
