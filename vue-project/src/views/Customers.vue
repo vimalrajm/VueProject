@@ -22,8 +22,8 @@
             <div slot="name" slot-scope="props">
               <router-link
                 :to="{
-                  name: 'editOrCreateCustomer',
-                  params: { id: props.rowData.id }
+                  name: 'addCustomer',
+                  params: { customerDetail: props.rowData.id }
                 }"
               >
                 <strong class="has-text-link">
@@ -37,8 +37,8 @@
             <div slot="orders" slot-scope="props">
               <router-link
                 :to="{
-                  name: 'customer-orders',
-                  params: { id: props.rowData.id }
+                  name: 'addCustomer',
+                  params: { customerDetail: props.rowData.id }
                 }"
                 >{{ props.rowData.orders }}
               </router-link>
@@ -49,7 +49,15 @@
               slot-scope="props"
             >
               <div class="buttons">
-                <p class="button is-small is-primary">Edit</p>
+                <router-link
+                  :to="{
+                    name: 'addCustomer',
+                    params: { customerDetail: props.rowData.id }
+                  }"
+                  class="button is-small is-primary"
+                >
+                  Edit
+                </router-link>
                 <p class="button is-small is-danger">Delete</p>
               </div>
             </div>
@@ -152,6 +160,11 @@ export default {
       ],
       customerData: []
     };
+  },
+  methods: {
+    updateCall(data) {
+      console.log("call" + JSON.stringify(data.rowData.id));
+    }
   }
 };
 </script>
