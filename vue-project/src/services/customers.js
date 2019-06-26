@@ -22,10 +22,28 @@ export default {
       orders: customer.orders,
       role: customer.role,
       password: customer.password,
-      address: customer.address
+      address: customer.address,
+      zipcode: customer.zipcode,
+      city: customer.city
     });
   },
   getAllCustomers() {
     return apiClient.get("/customers");
+  },
+  getCustomer(id) {
+    return apiClient.get("/customers/" + id);
+  },
+  updateCustomer(customer) {
+    return apiClient.put('/customers/'+ customer.id, {
+      name: customer.name,
+      email: customer.email,
+      country: customer.country,
+      orders: customer.orders,
+      role: customer.role,
+      password: customer.password,
+      address: customer.address,
+      zipcode: customer.zipcode,
+      city: customer.city
+    })
   }
 };
