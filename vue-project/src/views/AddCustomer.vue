@@ -171,10 +171,28 @@ export default {
       btnLoading: ""
     };
   },
+  async created() {
+    if (this.customerDetail !== undefined && this.customerDetail !== "new") {
+      try {
+        await customerService.getCustomer(this.customerDetail).then(res => {
+          this.customerName = res.data.name;
+          this.customerEmail = res.data.email;
+          this.address1 = res.data.address[0];
+          this.address2 = res.data.address[1];
+          this.zipcode = res.data.zipcode;
+          this.city = res.data.city;
+          this.country = res.data.country;
+          this.btnType = "Update";
+        });
+      } catch(e) {
+        console.log(e);
+      }
+    }
+  },
   mixins: [toastMixin],
   props: {
     customerDetail: {
-      type: String,
+      type: [String, Number],
       required: true
     }
   },
@@ -212,27 +230,30 @@ export default {
         if (this.country === "-- Choose a country --") {
           this.toast("is-danger", "Select the country", "is-top");
           this.btnLoading = "";
+          this.address = [];
         } else {
           let id = Math.floor(Math.random() * 10000000000);
           this.address.push(this.address1);
           if (this.address2 !== "") {
             this.address.push(this.address2);
           }
-          const customerDetail = new CustomerData(
+          const customerDetailObj = new CustomerData(
             id,
             this.customerName,
             this.customerEmail,
             this.country,
             3,
             "customer",
-            12345678,
-            this.address
+            "12345678",
+            this.address,
+            this.zipcode,
+            this.city
           );
           try {
             let found = 0;
             await customerService.getAllCustomers().then(res => {
               _.find(res.data, function(o) {
-                if (o.email === customerDetail.email) {
+                if (o.email === customerDetailObj.email) {
                   found = 1;
                 }
               });
@@ -240,14 +261,14 @@ export default {
             if (!found) {
               await userService.getUsers().then(res => {
                 _.find(res.data, function(o) {
-                  if (o.email === customerDetail.email) {
+                  if (o.email === customerDetailObj.email) {
                     found = 1;
                   }
                 });
               });
             }
             if (!found) {
-              await customerService.addCustomer(customerDetail).then(res => {
+              await customerService.addCustomer(customerDetailObj).then(res => {
                 if (res.status === 201) {
                   this.toast(
                     "is-success",
@@ -270,6 +291,95 @@ export default {
               console.log("found");
               this.toast("is-danger", "Email id already exists", "is-top");
               this.btnLoading = "";
+              this.address = [];
+            }
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      }
+    },
+    async updateCustomerDetail() {
+      this.btnLoading = "is-loading";
+      if (
+        this.customerName === "" ||
+        this.customerEmail === "" ||
+        this.address1 === "" ||
+        this.zipcode === "" ||
+        this.city === ""
+      ) {
+        this.toast("is-danger", "Fields can't be empty", "is-top");
+        this.btnLoading = "";
+      } else {
+        if (this.country === "-- Choose a country --") {
+          this.toast("is-danger", "Select the country", "is-top");
+          this.btnLoading = "";
+          this.address = [];
+        } else {
+          this.address.push(this.address1);
+          if (this.address2 !== "") {
+            this.address.push(this.address2);
+          }
+          const customerDetailObj = new CustomerData(
+            this.customerDetail,
+            this.customerName,
+            this.customerEmail,
+            this.country,
+            3,
+            "customer",
+            "12345678",
+            this.address,
+            this.zipcode,
+            this.city
+          );
+          try {
+            let found = 0;
+            let id = this.customerDetail;
+            await customerService.getAllCustomers().then(res => {
+              _.find(res.data, function(o) {
+                if (o.email === customerDetailObj.email && o.id !== Number(id)) {
+                  found = 1;
+                }
+              });
+            });
+            if (!found) {
+              await userService.getUsers().then(res => {
+                _.find(res.data, function(o) {
+                  if (o.email === customerDetailObj.email && o.id !== Number(id)) {
+                    found = 1;
+                  }
+                });
+              });
+            }
+            if (!found) {
+              await customerService.updateCustomer(customerDetailObj).then(res => {
+                if (res.status === 200) {
+                  this.toast(
+                    "is-success",
+                    "Customer details updated sucessfully",
+                    "is-top"
+                  );
+                  this.btnLoading = "";
+                  this.$router.push({
+                    name: 'customers',
+                    params: {
+                      currPageNumber: 1
+                    }
+                  })
+                } else {
+                  this.toast(
+                    "is-danger",
+                    "Something went wrong while adding",
+                    "is-top"
+                  );
+                  this.btnLoading = "";
+                }
+              });
+            } else {
+              console.log("found");
+              this.toast("is-danger", "Email id already exists", "is-top");
+              this.btnLoading = "";
+              this.address = [];
             }
           } catch (e) {
             console.log(e);
