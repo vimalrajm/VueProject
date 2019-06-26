@@ -14,12 +14,12 @@
             :currentPage="currentPage"
           ></BooksNavBar>
           <BooksList
-            v-show="noOfBooks"
+            v-show="Number(noOfBooks)"
             :pageLimit="pageLimit"
             :currPageNumber="currPageNumber"
             :currUser="currUser"
           ></BooksList>
-          <div v-show="!noOfBooks" class="columns is-multiline">
+          <div v-show="!Number(noOfBooks)" class="columns is-multiline">
             <div class="column is-12">
               <div class="field has-text-centered">
                 No data found
@@ -27,7 +27,7 @@
             </div>
           </div>
           <pagination
-            v-show="noOfBooks"
+            v-show="Number(noOfBooks)"
             :pageLimit="pageLimit"
             :count="noOfBooks"
             :currPageNumber="currPageNumber"
