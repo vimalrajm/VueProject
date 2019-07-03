@@ -36,6 +36,9 @@ export default new Vuex.Store({
     },
     SET_CURRENT_PAGE_NUMBER(state, currentPageNumber) {
       state.currPageNumber = currentPageNumber;
+    },
+    SET_CUST_LIMIT(state, custLimit) {
+      state.custLimit = custLimit;
     }
   },
   actions: {
@@ -54,6 +57,9 @@ export default new Vuex.Store({
     },
     setCurrentPageNumber({ commit }, currPageNumber) {
       commit("SET_CURRENT_PAGE_NUMBER", currPageNumber);
+    },
+    setCustLimit({ commit }, custLimit) {
+      commit("SET_CUST_LIMIT", custLimit);
     }
   }
 });
