@@ -1,2 +1,2 @@
 # VueProject
-This is book selling project using vue and bulma
+online book publisher project developed using vue and bulma
