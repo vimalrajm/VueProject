@@ -1,5 +1,16 @@
 export default class CustomerData {
-  constructor(id, name, email, country, orders, role, password, address, zipcode, city) {
+  constructor(
+    id,
+    name,
+    email,
+    country,
+    orders,
+    role,
+    password,
+    address,
+    zipcode,
+    city
+  ) {
     this.id = id;
     this.name = name;
     this.email = email;
