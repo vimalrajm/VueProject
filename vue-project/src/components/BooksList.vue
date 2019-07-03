@@ -80,7 +80,7 @@ export default {
           message: `Are you sure you want to remove <b>${
             book.bookName
           }</b> book.`,
-          confirmText: "Delete Account",
+          confirmText: "Delete",
           type: "is-danger",
           iconPack: "fa",
           icon: "exclamation-triangle",
@@ -97,7 +97,7 @@ export default {
         await books.deleteBook(book).then(res => {
           if (res.status === 200) {
             this.toast("is-success", "Book removed succesfully", "is-top");
-            if (this.books.length === 1) {
+            if (this.books.length === 1 && this.currPageNumber !== 1) {
               this.$router.push({
                 name: "books",
                 params: {
@@ -115,6 +115,13 @@ export default {
             }
           }
         });
+        await books
+          .getBooks(this.currPageNumber, this.pageLimit)
+          .then(response => {
+            this.books = response.data;
+            this.bookCount = response.headers["x-total-count"];
+            this.$store.dispatch("setNoOfBooks", this.bookCount);
+          });
       } catch (e) {
         console.log(e);
         this.toast("is-danger", "Some thing went wrong", "is-top");
