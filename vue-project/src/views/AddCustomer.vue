@@ -184,7 +184,7 @@ export default {
           this.country = res.data.country;
           this.btnType = "Update";
         });
-      } catch(e) {
+      } catch (e) {
         console.log(e);
       }
     }
@@ -337,7 +337,10 @@ export default {
             let id = this.customerDetail;
             await customerService.getAllCustomers().then(res => {
               _.find(res.data, function(o) {
-                if (o.email === customerDetailObj.email && o.id !== Number(id)) {
+                if (
+                  o.email === customerDetailObj.email &&
+                  o.id !== Number(id)
+                ) {
                   found = 1;
                 }
               });
@@ -345,36 +348,41 @@ export default {
             if (!found) {
               await userService.getUsers().then(res => {
                 _.find(res.data, function(o) {
-                  if (o.email === customerDetailObj.email && o.id !== Number(id)) {
+                  if (
+                    o.email === customerDetailObj.email &&
+                    o.id !== Number(id)
+                  ) {
                     found = 1;
                   }
                 });
               });
             }
             if (!found) {
-              await customerService.updateCustomer(customerDetailObj).then(res => {
-                if (res.status === 200) {
-                  this.toast(
-                    "is-success",
-                    "Customer details updated sucessfully",
-                    "is-top"
-                  );
-                  this.btnLoading = "";
-                  this.$router.push({
-                    name: 'customers',
-                    params: {
-                      currPageNumber: 1
-                    }
-                  })
-                } else {
-                  this.toast(
-                    "is-danger",
-                    "Something went wrong while adding",
-                    "is-top"
-                  );
-                  this.btnLoading = "";
-                }
-              });
+              await customerService
+                .updateCustomer(customerDetailObj)
+                .then(res => {
+                  if (res.status === 200) {
+                    this.toast(
+                      "is-success",
+                      "Customer details updated sucessfully",
+                      "is-top"
+                    );
+                    this.btnLoading = "";
+                    this.$router.push({
+                      name: "customers",
+                      params: {
+                        currPageNumber: 1
+                      }
+                    });
+                  } else {
+                    this.toast(
+                      "is-danger",
+                      "Something went wrong while adding",
+                      "is-top"
+                    );
+                    this.btnLoading = "";
+                  }
+                });
             } else {
               console.log("found");
               this.toast("is-danger", "Email id already exists", "is-top");
