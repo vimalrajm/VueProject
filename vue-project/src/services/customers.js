@@ -34,7 +34,7 @@ export default {
     return apiClient.get("/customers/" + id);
   },
   updateCustomer(customer) {
-    return apiClient.put('/customers/'+ customer.id, {
+    return apiClient.put("/customers/" + customer.id, {
       name: customer.name,
       email: customer.email,
       country: customer.country,
@@ -44,6 +44,9 @@ export default {
       address: customer.address,
       zipcode: customer.zipcode,
       city: customer.city
-    })
+    });
+  },
+  deleteCustomer(id) {
+    return apiClient.delete("/customers/" + id);
   }
 };
