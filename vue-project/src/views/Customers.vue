@@ -14,10 +14,11 @@
             :currentPage="currentPage"
           ></CustomersNavBar>
           <VueTable
+            ref="vuetable"
             :api-mode="false"
             :fields="headers"
             :data="customerData"
-            :line-numbers="true"
+            @vuetable:checkbox-toggled="checked"
           >
             <div slot="name" slot-scope="props">
               <router-link
@@ -54,16 +55,34 @@
                     name: 'addCustomer',
                     params: { customerDetail: props.rowData.id }
                   }"
-                  class="button is-small is-primary"
+                  class="button is-small is-warning"
                 >
                   Edit
                 </router-link>
-                <p class="button is-small is-danger">Delete</p>
+                <p
+                  class="button is-small is-danger"
+                  @click="deleteCustomer(props.rowData)"
+                >
+                  Delete
+                </p>
               </div>
             </div>
             <div v-else slot="actions" slot-scope="props">
               <div class="buttons">
-                <p class="button is-small is-primary" disabled>Edit</p>
+                <router-link
+                  :to="
+                    props.rowData.id === currUser.id
+                      ? {
+                          name: 'addCustomer',
+                          params: { customerDetail: props.rowData.id }
+                        }
+                      : ''
+                  "
+                  class="button is-small is-warning"
+                  :disabled="props.rowData.id === currUser.id ? false : true"
+                >
+                  Edit
+                </router-link>
                 <p class="button is-small is-danger" disabled>Delete</p>
               </div>
             </div>
@@ -90,8 +109,10 @@ import VueTable from "vuetable-2";
 import VuetableFieldCheckbox from "vuetable-2/src/components/VuetableFieldCheckbox.vue";
 import { mapState } from "vuex";
 import customers from "@/services/customers";
+import { toastMixin } from "@/toastMixin";
 
 export default {
+  mixins: [toastMixin],
   props: {
     currPageNumber: {
       require: true,
@@ -110,6 +131,7 @@ export default {
   },
   async created() {
     this.$store.dispatch("setCurrPage", "Customers");
+    this.$store.dispatch("setCustLimit", 3);
     try {
       await customers
         .getCustomers(this.currPageNumber, this.custLimit)
@@ -126,6 +148,7 @@ export default {
   },
   data() {
     return {
+      deleteItems: [],
       placeholder: "Name, Email...",
       headers: [
         {
@@ -162,8 +185,85 @@ export default {
     };
   },
   methods: {
-    updateCall(data) {
-      console.log("call" + JSON.stringify(data.rowData.id));
+    async multiRemove() {
+      let data = Array.from(this.deleteItems);
+      for (let i in data) {
+        await this.delete(data[i], 0);
+      }
+      this.toast("is-success", "Customer removed successfully", "is-top");
+    },
+    checked() {
+      this.deleteItems = this.$refs.vuetable.selectedTo;
+      console.log(Array.from(this.deleteItems).length);
+    },
+    deleteCustomer(customer) {
+      if (Array.from(this.deleteItems).length !== 0) {
+        this.$dialog.confirm({
+          title: "Remove customer",
+          message: `Are you sure you want to remove selected books?.`,
+          confirmText: "Delete",
+          type: "is-danger",
+          iconPack: "fa",
+          icon: "exclamation-triangle",
+          size: "is-small",
+          hasIcon: true,
+          onConfirm: () => {
+            this.multiRemove();
+          }
+        });
+      } else {
+        this.$dialog.confirm({
+          title: "Remove customer",
+          message: `Are you sure you want to remove <b>${customer.name}</b>.`,
+          confirmText: "Delete",
+          type: "is-danger",
+          iconPack: "fa",
+          icon: "exclamation-triangle",
+          size: "is-small",
+          hasIcon: true,
+          onConfirm: () => {
+            this.delete(customer.id, 1);
+          }
+        });
+      }
+    },
+    async delete(id, count) {
+      try {
+        await customers.deleteCustomer(id).then(res => {
+          if (res.status === 200) {
+            if (count) {
+              this.toast("is-success", "Customer removed successfully", "is-top");
+            }
+            if (
+              this.customerData.data.length === 1 &&
+              this.currPageNumber !== 1
+            ) {
+              this.$router.push({
+                name: "customers",
+                params: {
+                  currPageNumber: this.currPageNumber - 1
+                }
+              });
+            } else {
+              this.customerData = this.customerData.data.filter(data => {
+                return data.id !== id;
+              });
+              this.$store.dispatch('setNoOfCustomers', this.noOfCustomers - 1);
+            }
+          }
+        });
+        await customers
+          .getCustomers(this.currPageNumber, this.custLimit)
+          .then(res => {
+            this.customerData = res;
+            this.$store.dispatch(
+              "setNoOfCustomers",
+              res.headers["x-total-count"]
+            );
+          });
+      } catch (e) {
+         this.toast("is-danger", "Some thing went wrong", "is-top");
+      }
     }
   }
 };
