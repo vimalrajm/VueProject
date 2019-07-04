@@ -28,7 +28,7 @@
                   params: { customerDetail: props.rowData.id }
                 }"
               >
-                <strong class="has-text-link">
+                <strong class="has-text-link is-capitalized">
                   {{ props.rowData.name }}
                 </strong>
               </router-link>
@@ -132,7 +132,7 @@ export default {
   },
   async created() {
     this.$store.dispatch("setCurrPage", "Customers");
-    this.$store.dispatch("setCustLimit", 3);
+    this.$store.dispatch("setCustLimit", 7);
     try {
       await customers
         .getCustomers(this.currPageNumber, this.custLimit)
