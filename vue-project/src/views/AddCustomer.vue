@@ -203,7 +203,7 @@ export default {
   computed: {
     ...mapState(["currUser", "currentPage", "noOfCustomers", "custLimit"]),
     curPageNum() {
-      return Math.ceil((Number(this.noOfCustomers) + 1) / this.custLimit);
+      return Math.ceil(Number(this.noOfCustomers) / this.custLimit);
     },
     btnLoad() {
       return this.btnLoading;
@@ -278,6 +278,11 @@ export default {
                   this.isCreated = 1;
                   this.clearFields();
                   this.btnLoading = "";
+                  this.$store.dispatch(
+                    "setNoOfCustomers",
+                    Number(this.noOfCustomers) + 1
+                  );
+                  console.log(this.noOfCustomers);
                 } else {
                   this.toast(
                     "is-danger",

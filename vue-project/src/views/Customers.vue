@@ -19,6 +19,7 @@
             :fields="headers"
             :data="customerData"
             @vuetable:checkbox-toggled="checked"
+            @vuetable:checkbox-toggled-all="checked"
           >
             <div slot="name" slot-scope="props">
               <router-link
@@ -190,11 +191,11 @@ export default {
       for (let i in data) {
         await this.delete(data[i], 0);
       }
-      this.toast("is-success", "Customer removed successfully", "is-top");
+      this.toast("is-success", "Customer's removed successfully", "is-top");
     },
     checked() {
       this.deleteItems = this.$refs.vuetable.selectedTo;
-      console.log(Array.from(this.deleteItems).length);
+      console.log(Array.from(this.deleteItems));
     },
     deleteCustomer(customer) {
       if (Array.from(this.deleteItems).length !== 0) {
@@ -232,7 +233,11 @@ export default {
         await customers.deleteCustomer(id).then(res => {
           if (res.status === 200) {
             if (count) {
-              this.toast("is-success", "Customer removed successfully", "is-top");
+              this.toast(
+                "is-success",
+                "Customer removed successfully",
+                "is-top"
+              );
             }
             if (
               this.customerData.data.length === 1 &&
@@ -248,7 +253,7 @@ export default {
               this.customerData = this.customerData.data.filter(data => {
                 return data.id !== id;
               });
-              this.$store.dispatch('setNoOfCustomers', this.noOfCustomers - 1);
+              this.$store.dispatch("setNoOfCustomers", this.noOfCustomers - 1);
             }
           }
         });
@@ -262,7 +267,7 @@ export default {
             );
           });
       } catch (e) {
-         this.toast("is-danger", "Some thing went wrong", "is-top");
+        this.toast("is-danger", "Some thing went wrong", "is-top");
       }
     }
   }

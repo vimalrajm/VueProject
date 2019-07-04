@@ -22,7 +22,159 @@
       "password": "12345678"
     }
   ],
-  "customers": [],
+  "customers": [
+    {
+      "id": 4445805593,
+      "name": "melcome",
+      "email": "melcome@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "MYSURU"
+      ],
+      "zipcode": "570019",
+      "city": "MYSURU"
+    },
+    {
+      "id": 6036564318,
+      "name": "aditya varma",
+      "email": "aditya@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "MYSURU",
+        "#24"
+      ],
+      "zipcode": "123566",
+      "city": "bangalore"
+    },
+    {
+      "id": 2036703673,
+      "name": "jose",
+      "email": "jose@gmail.com",
+      "country": "United States",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "MYSURU",
+        "#24",
+        "#456"
+      ],
+      "zipcode": "765435",
+      "city": "MYSURU"
+    },
+    {
+      "id": 7909775249,
+      "name": "lakshmaiah",
+      "email": "lakshmaiah@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "MYSURU",
+        "#24",
+        "#456",
+        "#842"
+      ],
+      "zipcode": "198273",
+      "city": "andra pradesh"
+    },
+    {
+      "id": 6231843688,
+      "name": "vimalraj",
+      "email": "vimalraj@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "1",
+        "1"
+      ],
+      "zipcode": "1",
+      "city": "1"
+    },
+    {
+      "id": 5457371316,
+      "name": "murali krishna",
+      "email": "murali@gmail.com",
+      "country": "Canada",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "#127-128, ALANAHALLI, MYSURU - BANNUR ROAD, ALANAHALLI POST, MYSURU - 570028, KARNATAKA"
+      ],
+      "zipcode": "123",
+      "city": "232"
+    },
+    {
+      "id": 1247898811,
+      "name": "pushkar",
+      "email": "pushkar@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "kerala"
+      ],
+      "zipcode": "3432",
+      "city": "kerala"
+    },
+    {
+      "id": 9577400113,
+      "name": "danush",
+      "email": "danush@gmail.com",
+      "country": "India",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "324"
+      ],
+      "zipcode": "43",
+      "city": "bangalore"
+    },
+    {
+      "id": 1047319950,
+      "name": "arjun",
+      "email": "arjun@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "1",
+        "1"
+      ],
+      "zipcode": "1",
+      "city": "1"
+    },
+    {
+      "id": 5123739648,
+      "name": "harish",
+      "email": "harish@gmail.com",
+      "country": "United Kingdom",
+      "orders": 3,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "1",
+        "1",
+        "2",
+        "2"
+      ],
+      "zipcode": "2",
+      "city": "2"
+    }
+  ],
   "books": [
     {
       "bookName": "Tensorflow For Machine Intelligence",
