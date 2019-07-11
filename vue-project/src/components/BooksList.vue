@@ -29,6 +29,11 @@
               <a v-show="currUser.role === 'admin'" @click="deleteBook(book)"
                 >Delete</a
               >
+              <a v-show="currUser.role === 'customer'" @click="cart(book)">
+                <span class="is-pulled-right has-text-info">
+                  Order<i class="fa fa-cart-plus"></i>
+                </span>
+              </a>
             </h3>
           </div>
         </div>
