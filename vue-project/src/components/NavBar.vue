@@ -44,7 +44,10 @@
         </div>
       </div>
     </div>
-    <div v-show="getcurrentPage === 'Customers'" class="level-right">
+    <div
+      v-show="getcurrentPage === 'Customers' || getcurrentPage === 'Orders'"
+      class="level-right"
+    >
       <div class="level-item">
         <p><strong>All</strong></p>
       </div>

@@ -88,9 +88,10 @@
               </div>
             </div>
           </VueTable>
+          <hr />
           <pagination
             v-show="noOfCustomers"
-            :pageLimit="custLimit"
+            :pageLimit="custOrderLimit"
             :count="noOfCustomers"
             :currPageNumber="currPageNumber"
             :currentPage="currentPage"
@@ -128,14 +129,14 @@ export default {
     VueTable
   },
   computed: {
-    ...mapState(["currUser", "currentPage", "noOfCustomers", "custLimit"])
+    ...mapState(["currUser", "currentPage", "noOfCustomers", "custOrderLimit"])
   },
   async created() {
     this.$store.dispatch("setCurrPage", "Customers");
-    this.$store.dispatch("setCustLimit", 7);
+    this.$store.dispatch("setCustAndOrderLimit", 7);
     try {
       await customers
-        .getCustomers(this.currPageNumber, this.custLimit)
+        .getCustomers(this.currPageNumber, this.custOrderLimit)
         .then(res => {
           this.customerData = res;
           this.$store.dispatch(
@@ -258,7 +259,7 @@ export default {
           }
         });
         await customers
-          .getCustomers(this.currPageNumber, this.custLimit)
+          .getCustomers(this.currPageNumber, this.custOrderLimit)
           .then(res => {
             this.customerData = res;
             this.$store.dispatch(

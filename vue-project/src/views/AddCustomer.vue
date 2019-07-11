@@ -201,9 +201,9 @@ export default {
     Menu
   },
   computed: {
-    ...mapState(["currUser", "currentPage", "noOfCustomers", "custLimit"]),
+    ...mapState(["currUser", "currentPage", "noOfCustomers", "custOrderLimit"]),
     curPageNum() {
-      return Math.ceil(Number(this.noOfCustomers) / this.custLimit);
+      return Math.ceil(Number(this.noOfCustomers) / this.custOrderLimit);
     },
     btnLoad() {
       return this.btnLoading;

@@ -29,15 +29,15 @@
         </span>
         Customers
       </router-link>
-      <a
-        href="orders.html"
-        :class="currentPage === 'orders' ? 'is-active' : ''"
+      <router-link
+        :to="{ name: 'orders', params: { currPageNumber: 1 } }"
+        :class="currentPage === 'Orders' ? 'is-active' : ''"
       >
         <span class="icon">
           <i class="fa fa-file-text-o"></i>
         </span>
         Orders
-      </a>
+      </router-link>
     </div>
   </nav>
 </template>

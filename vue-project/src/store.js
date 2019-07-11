@@ -17,9 +17,10 @@ export default new Vuex.Store({
     currentPage: "",
     noOfBooks: 0,
     pageLimit: 4,
-    custLimit: 7,
+    custOrderLimit: 7,
     noOfCustomers: 0,
-    currPageNumber: 1
+    currPageNumber: 1,
+    noOfOrders: 0
   },
   mutations: {
     CURR_USER(state, user) {
@@ -37,8 +38,11 @@ export default new Vuex.Store({
     SET_CURRENT_PAGE_NUMBER(state, currentPageNumber) {
       state.currPageNumber = currentPageNumber;
     },
-    SET_CUST_LIMIT(state, custLimit) {
-      state.custLimit = custLimit;
+    SET_CUST_ORDER_LIMIT(state, custOrderLimit) {
+      state.custOrderLimit = custOrderLimit;
+    },
+    SET_NUM_OF_ORDERS(state, noOfOrders) {
+      state.noOfOrders = noOfOrders;
     }
   },
   actions: {
@@ -58,8 +62,11 @@ export default new Vuex.Store({
     setCurrentPageNumber({ commit }, currPageNumber) {
       commit("SET_CURRENT_PAGE_NUMBER", currPageNumber);
     },
-    setCustLimit({ commit }, custLimit) {
-      commit("SET_CUST_LIMIT", custLimit);
+    setCustAndOrderLimit({ commit }, custOrderLimit) {
+      commit("SET_CUST_ORDER_LIMIT", custOrderLimit);
+    },
+    setNumOfOrders({ commit }, noOfOrders) {
+      commit("SET_NUM_OF_ORDERS", noOfOrders);
     }
   }
 });

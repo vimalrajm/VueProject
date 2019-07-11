@@ -5,7 +5,7 @@ import Books from "@/views/Books.vue";
 import CreateBook from "@/views/CreateBook.vue";
 import Customers from "@/views/Customers.vue";
 import AddCustomer from "@/views/AddCustomer";
-
+import Orders from "@/views/Orders";
 Vue.use(Router);
 
 export default new Router({
@@ -43,6 +43,12 @@ export default new Router({
       path: "/customers/:currPageNumber",
       name: "customers",
       component: Customers,
+      props: true
+    },
+    {
+      path: "/orders/:currPageNumber",
+      name: "orders",
+      component: Orders,
       props: true
     }
   ]
