@@ -29,11 +29,29 @@
               <a v-show="currUser.role === 'admin'" @click="deleteBook(book)"
                 >Delete</a
               >
-              <a v-show="currUser.role === 'customer'" @click="cart(book)">
-                <span class="is-pulled-right has-text-info">
-                  Order<i class="fa fa-cart-plus"></i>
+
+              <div v-show="currUser.role === 'customer'">
+                <a @click="cart(book, currUser)">
+                  <span class="is-pulled-right has-text-info">
+                    Order<i class="fa fa-cart-plus"></i>
+                  </span>
+                </a>
+                <span
+                  class="is-pulled-left has-text-info is-pulled-right"
+                  style="padding-right: 10px"
+                >
+                  Quantity
+                  <input
+                    class="input"
+                    type="number"
+                    @input="quantityCall"
+                    v-model="book.qty"
+                    min="1"
+                    max="5"
+                    style="width:70px"
+                  />
                 </span>
-              </a>
+              </div>
             </h3>
           </div>
         </div>
@@ -44,8 +62,10 @@
 
 <script>
 import books from "@/services/books.js";
+import orders from "@/services/orders.js";
 import { mapActions } from "vuex";
 import { toastMixin } from "@/toastMixin";
+import _ from "lodash";
 
 export default {
   props: {
@@ -72,6 +92,18 @@ export default {
   },
   methods: {
     ...mapActions(["setNoOfBooks"]),
+    quantityCall(event) {
+      this.$emit("input", event.target.value);
+    },
+    qtyChange(book, event) {
+      console.log(event.target.value);
+      _.find(this.books, o => {
+        if (o.id === book.id) {
+          o.qty = event.target.value;
+        }
+      });
+      console.log(JSON.stringify(this.books));
+    },
     async deleteBook(book) {
       if (this.currUser.userId !== book.addedBy) {
         this.toast(
@@ -95,6 +127,40 @@ export default {
             this.delete(book);
           }
         });
+      }
+    },
+    cart(book, currUser) {
+      console.log(JSON.stringify(book), currUser);
+      this.$dialog.confirm({
+        title: "Add to cart",
+        message: `Are you sure you want to add <b>${
+          book.bookName
+        }</b> book to the cart.`,
+        confirmText: "Add",
+        type: "is-success",
+        iconPack: "fa",
+        size: "is-small",
+        hasIcon: true,
+        onConfirm: () => {
+          this.addToCart(book, currUser);
+        }
+      });
+    },
+    async addToCart(book, currUser) {
+      try {
+        await orders.addToCart(book.id, currUser.id, book.qty).then(res => {
+          if (res.status === 201) {
+            this.toast("is-success", "Book added to cart", "is-top");
+            this.$emit("input", 1);
+          }
+        });
+      } catch (e) {
+        console.log(e);
+        this.toast(
+          "is-danger",
+          "Some thing went wrong while adding to cart",
+          "is-top"
+        );
       }
     },
     async delete(book) {
@@ -149,4 +215,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.field {
+  width: 80px;
+}
+
+input .input {
+  padding-left: 0.25em;
+}
+</style>

@@ -21,7 +21,8 @@ export default {
       bookPages: book.pages,
       bookISBN: book.isbn,
       image: "dummy.jpg",
-      addedBy: book.addedBy
+      addedBy: book.addedBy,
+      qty: 1
     });
   },
   deleteBook(book) {

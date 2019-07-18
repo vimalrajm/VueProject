@@ -24,7 +24,6 @@
   ],
   "customers": [
     {
-      "id": 4445805593,
       "name": "melcome",
       "email": "melcome@gmail.com",
       "country": "United Kingdom",
@@ -32,10 +31,12 @@
       "role": "customer",
       "password": "12345678",
       "address": [
-        "MYSURU"
+        "MYSURU",
+        "12345"
       ],
       "zipcode": "570019",
-      "city": "MYSURU"
+      "city": "MYSURU",
+      "id": 4445805593
     },
     {
       "id": 6036564318,
@@ -177,52 +178,64 @@
   ],
   "books": [
     {
+      "id": 13579,
       "bookName": "Tensorflow For Machine Intelligence",
       "bookPrice": "22.99",
       "bookPages": "270",
       "bookISBN": "9721632817632",
       "image": "transflow.jpg",
-      "addedBy": 7652347523
+      "addedBy": 7652347523,
+      "qty": 1
     },
     {
+      "id": 246810,
       "bookName": "Docker In Production",
       "bookPrice": "22.99",
       "bookPages": "170",
       "bookISBN": "7721237865409",
       "image": "docker.jpg",
-      "addedBy": 9892734827
+      "addedBy": 9892734827,
+      "qty": 1
     },
     {
+      "id": 97531,
       "bookName": "Developing A Gulp.Js Edge",
       "bookPrice": "22.99",
       "bookPages": "134",
       "bookISBN": "7539493759359",
       "image": "gulp.jpg",
-      "addedBy": 7652347523
+      "addedBy": 7652347523,
+      "qty": 1
     },
     {
+      "id": 8642,
       "bookName": "Learning Swift",
       "bookPrice": "22.99",
       "bookPages": "345",
       "bookISBN": "8475634576234",
       "image": "swift.jpg",
-      "addedBy": 9892734827
+      "addedBy": 9892734827,
+      "qty": 1
     },
     {
+      "id": 12345678,
       "bookName": "Choosing A Javascript Framework",
       "bookPrice": "19.99",
       "bookPages": "96",
       "bookISBN": "9839769874568",
       "image": "js.jpg",
-      "addedBy": 9862756753
+      "addedBy": 9862756753,
+      "qty": 1
     },
     {
+      "id": 87654321,
       "bookName": "Deconstructing Google Cardboard Apps",
       "bookPrice": "22.99",
       "bookPages": "176",
       "bookISBN": "9086438737656",
       "image": "google.jpg",
-      "addedBy": 9862756753
+      "addedBy": 9862756753,
+      "qty": 1
     },
     {
       "id": 3038280522,
@@ -231,7 +244,8 @@
       "bookPages": "320",
       "bookISBN": "2365126531212",
       "image": "google.jpg",
-      "addedBy": 9862756753
+      "addedBy": 9862756753,
+      "qty": 1
     },
     {
       "id": 8169846467,
@@ -240,7 +254,22 @@
       "bookPages": "250",
       "bookISBN": "89726773267234",
       "image": "dummy.jpg",
-      "addedBy": 7652347523
+      "addedBy": 7652347523,
+      "qty": 1
+    }
+  ],
+  "cart": [
+    {
+      "bookId": 13579,
+      "custId": 4445805593,
+      "qty": "4",
+      "id": 1
+    },
+    {
+      "bookId": 246810,
+      "custId": 4445805593,
+      "qty": "5",
+      "id": 2
     }
   ]
 }
