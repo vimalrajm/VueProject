@@ -77,13 +77,34 @@
             <div slot="qty" class="has-text-dark" slot-scope="props">
               {{ props.rowData.qty }}
             </div>
+            <div
+              slot="actions"
+              slot-scope="props"
+              class="delete"
+              @click="removeBook(props.rowData.cartId)"
+            >
+              <span class="icon has-text-danger button">
+                <i class="fa fa-remove"></i>
+              </span>
+            </div>
           </vueTable>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success" @click="createOrder">
+          <button
+            class="button is-success"
+            @click="createOrder"
+            :disabled="cartLength === 0 ? true : false"
+          >
             Place Order
           </button>
           <button class="button" @click="closeCartModal">Cancel</button>
+          <button
+            class="button is-danger"
+            @click="clearCart(currUser)"
+            :disabled="cartLength === 0 ? true : false"
+          >
+            Clear Cart
+          </button>
         </footer>
       </div>
     </div>
@@ -92,12 +113,19 @@
 <script>
 import orders from "@/services/orders.js";
 import books from "@/services/books.js";
+import { toastMixin } from "@/toastMixin";
 import _ from "lodash";
 import vueTable from "vuetable-2";
 
 export default {
+  mixins: [toastMixin],
   components: {
     vueTable
+  },
+  computed: {
+    cartLength() {
+      return this.cartData.length;
+    }
   },
   props: {
     currUser: {
@@ -113,7 +141,7 @@ export default {
         {
           name: "SI NO",
           title: "SI NO",
-          width: "5%"
+          width: "3%"
         },
         {
           name: "bookName",
@@ -124,6 +152,11 @@ export default {
           name: "qty",
           title: "QUANTITY",
           width: "1%"
+        },
+        {
+          name: "actions",
+          title: "ACTIONS",
+          width: "2%"
         }
       ]
     };
@@ -134,18 +167,12 @@ export default {
       this.activeModal = "is-active";
       try {
         await orders.getCart().then(res => {
-          console.log("vimal", JSON.stringify(res.data));
-          console.log("currUser", JSON.stringify(currUser));
           _.find(res.data, o => {
-            console.log("o", o);
             if (o.custId === currUser.id) {
-              console.log("in");
               books.getABook(o.bookId).then(res => {
-                console.log("inin", JSON.stringify(res.data));
                 res.data.qty = o.qty;
+                res.data.cartId = o.id;
                 this.cartData.push(res.data);
-                let result = _(this.cartData).groupBy("bookId");
-                console.log("result " + JSON.stringify(result));
               });
             }
           });
@@ -157,6 +184,38 @@ export default {
     closeCartModal() {
       this.activeModal = "";
       this.cartData = [];
+    },
+    async removeBook(cartId) {
+      let data = [];
+      let res = await orders.removeBookFromCart(cartId);
+      if (res.status === 200) {
+        _.find(this.cartData, o => {
+          if (o.cartId !== cartId) {
+            data.push(o);
+          }
+        });
+        this.cartData = data;
+      }
+    },
+    async clearCart(currUser) {
+      try {
+        await orders.getCart().then(res => {
+          _.find(res.data, o => {
+            if (o.custId === currUser.id) {
+              console.log("clearCart");
+              orders.removeBookFromCart(o.id).then(res => {
+                if (!res.status === 200) {
+                  this.toast("is-danger", "Something went wrong", "is-top");
+                }
+              });
+            }
+            this.cartData = [];
+          });
+        });
+      } catch (e) {
+        console.log(e);
+        this.toast("is-danger", "Something went wrong", "is-top");
+      }
     }
   }
 };
@@ -164,5 +223,12 @@ export default {
 <style lang="scss" scoped>
 .navWidth {
   min-width: 120px;
+}
+.modal-card {
+  max-height: 450px;
+}
+
+.delete {
+  margin-left: 20px;
 }
 </style>

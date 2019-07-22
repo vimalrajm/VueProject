@@ -20,5 +20,9 @@ export default {
       custId,
       qty
     });
+  },
+
+  removeBookFromCart(id) {
+    return orderClient.delete("/cart/" + id);
   }
 };
