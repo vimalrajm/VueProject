@@ -24,5 +24,17 @@ export default {
 
   removeBookFromCart(id) {
     return orderClient.delete("/cart/" + id);
+  },
+
+  createOrder(orderData) {
+    return orderClient.post("/orders", {
+      id: orderData.orderId,
+      custId: orderData.custId,
+      date: orderData.date,
+      numberOfBooks: orderData.bookCount,
+      status: orderData.status,
+      totalCost: orderData.status,
+      bookIdQty: orderData.bookIdQty
+    });
   }
 };

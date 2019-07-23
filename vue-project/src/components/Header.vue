@@ -100,7 +100,7 @@
           <button class="button" @click="closeCartModal">Cancel</button>
           <button
             class="button is-danger"
-            @click="clearCart(currUser)"
+            @click="clearCart"
             :disabled="cartLength === 0 ? true : false"
           >
             Clear Cart
@@ -116,6 +116,7 @@ import books from "@/services/books.js";
 import { toastMixin } from "@/toastMixin";
 import _ from "lodash";
 import vueTable from "vuetable-2";
+import OrderData from "@/services/dataServices/orderData";
 
 export default {
   mixins: [toastMixin],
@@ -162,7 +163,62 @@ export default {
     };
   },
   methods: {
-    async createOrder() {},
+    async createOrder() {
+      try {
+        /*var months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];*/
+        // console.log(
+        //   "inside placeOrder",
+        //   JSON.stringify(new Date("2019-07-23T16:24:50.172Z").getMonth())
+        // );
+        let orderId = Math.floor(Math.random() * 10000000);
+        let bookCount = 0;
+        let totalCost = 0;
+        let bookIdQty = [];
+        const date = new Date();
+        const orderData = new OrderData(
+          orderId,
+          this.currUser.id,
+          date,
+          null,
+          "In Progress",
+          null,
+          null
+        );
+        this.cartData.forEach(data => {
+          console.log("data1", JSON.stringify(data));
+          bookCount = bookCount + Number(data.qty);
+          totalCost = totalCost + Number(data.qty) * Number(data.bookPrice);
+          bookIdQty.push({
+            bookId: data.id,
+            qty: data.qty
+          });
+        });
+        orderData.bookCount = bookCount;
+        orderData.totalCost = totalCost;
+        orderData.bookIdQty = bookIdQty;
+        let res = await orders.createOrder(orderData);
+        if (res.status === 201) {
+          this.activeModal = "";
+          this.toast("is-success", "Order placed successful", "is-top");
+          this.clearCart();
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
     async openCartModal(currUser) {
       this.activeModal = "is-active";
       try {
@@ -197,11 +253,11 @@ export default {
         this.cartData = data;
       }
     },
-    async clearCart(currUser) {
+    async clearCart() {
       try {
         await orders.getCart().then(res => {
           _.find(res.data, o => {
-            if (o.custId === currUser.id) {
+            if (o.custId === this.currUser.id) {
               console.log("clearCart");
               orders.removeBookFromCart(o.id).then(res => {
                 if (!res.status === 200) {

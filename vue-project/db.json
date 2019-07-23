@@ -271,5 +271,55 @@
       "qty": 1,
       "id": 4
     }
+  ],
+  "orders": [
+    {
+      "id": 6425930,
+      "custId": 4445805593,
+      "date": "2019-07-23T17:37:22.400Z",
+      "numberOfBooks": 2,
+      "status": "In Progress",
+      "totalCost": "In Progress",
+      "bookIdQty": [
+        {
+          "bookId": 12345678,
+          "qty": 1
+        },
+        {
+          "bookId": 87654321,
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": 4205735,
+      "custId": 4445805593,
+      "date": "2019-07-23T17:38:30.342Z",
+      "numberOfBooks": 16,
+      "status": "In Progress",
+      "totalCost": "In Progress",
+      "bookIdQty": [
+        {
+          "bookId": 13579,
+          "qty": "5"
+        },
+        {
+          "bookId": 97531,
+          "qty": "3"
+        },
+        {
+          "bookId": 246810,
+          "qty": "3"
+        },
+        {
+          "bookId": 12345678,
+          "qty": "3"
+        },
+        {
+          "bookId": 8169846467,
+          "qty": "2"
+        }
+      ]
+    }
   ]
 }
