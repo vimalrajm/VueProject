@@ -33,8 +33,12 @@ export default {
       date: orderData.date,
       numberOfBooks: orderData.bookCount,
       status: orderData.status,
-      totalCost: orderData.status,
+      totalCost: orderData.totalCost,
       bookIdQty: orderData.bookIdQty
     });
+  },
+
+  getOrders(page, limit) {
+    return orderClient.get("/orders?_page=" + page + "&_limit=" + limit);
   }
 };

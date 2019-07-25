@@ -12,7 +12,7 @@
       <div class="level-item">
         <p>
           <router-link
-            v-show="getcurrentPage === 'Books'"
+            v-show="getcurrentPage === 'Books' && currUser.role !== 'customer'"
             :to="{ name: 'createBook', params: { bookDetail: 'new' } }"
             class="button is-success"
             >New</router-link
@@ -44,10 +44,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-show="getcurrentPage === 'Customers' || getcurrentPage === 'Orders'"
-      class="level-right"
-    >
+    <div v-show="getcurrentPage === 'Customers'" class="level-right">
       <div class="level-item">
         <p><strong>All</strong></p>
       </div>
@@ -73,6 +70,9 @@ export default {
     currentPage: {
       type: [String],
       required: true
+    },
+    currUser: {
+      type: Object
     }
   },
   computed: {

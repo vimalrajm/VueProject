@@ -187,6 +187,7 @@ export default {
       } catch (e) {
         console.log(e);
       }
+      this.$store.dispatch("setCurrPage", "Customers");
     }
   },
   mixins: [toastMixin],
@@ -242,7 +243,7 @@ export default {
             this.customerName,
             this.customerEmail,
             this.country,
-            3,
+            0,
             "customer",
             "12345678",
             this.address,

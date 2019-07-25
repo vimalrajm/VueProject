@@ -17,84 +17,67 @@
             ref="vuetable"
             :api-mode="false"
             :fields="headers"
-            :data="customerData"
+            :data="orderData"
             @vuetable:checkbox-toggled="checked"
             @vuetable:checkbox-toggled-all="checked"
           >
-            <div slot="name" slot-scope="props">
+            <div slot="id" slot-scope="data">
               <router-link
+                v-if="
+                  currUser.id === data.rowData.custId ||
+                    currUser.role === 'admin'
+                "
                 :to="{
-                  name: 'addCustomer',
-                  params: { customerDetail: props.rowData.id }
+                  name: 'orderEdit',
+                  params: { orderId: data.rowData.id }
                 }"
+                class="has-text-weight-bold"
+                >{{ data.rowData.id }}</router-link
               >
-                <strong class="has-text-link is-capitalized">
-                  {{ props.rowData.name }}
-                </strong>
-              </router-link>
+              <div v-else class="has-text-black has-text-weight-bold">
+                {{ data.rowData.id }}
+              </div>
             </div>
-            <div slot="email" slot-scope="props">
-              <code> {{ props.rowData.email }} </code>
-            </div>
-            <div slot="orders" slot-scope="props">
+            <div slot="custName" slot-scope="data">
               <router-link
+                v-if="
+                  currUser.id === data.rowData.custId ||
+                    currUser.role === 'admin'
+                "
                 :to="{
                   name: 'addCustomer',
-                  params: { customerDetail: props.rowData.id }
+                  params: { customerDetail: data.rowData.custId }
                 }"
-                >{{ props.rowData.orders }}
-              </router-link>
+                class="is-capitalized"
+                >{{ data.rowData.custName }}</router-link
+              >
+              <div v-else class="has-text-black is-capitalized">
+                {{ data.rowData.custName }}
+              </div>
+            </div>
+            <div slot="date" slot-scope="data">
+              {{ getDate(data.rowData.date) }}
             </div>
             <div
-              v-if="currUser.role === 'admin'"
-              slot="actions"
-              slot-scope="props"
+              slot="status"
+              slot-scope="data"
+              class="tag"
+              :class="getColor(data.rowData.status)"
             >
-              <div class="buttons">
-                <router-link
-                  :to="{
-                    name: 'addCustomer',
-                    params: { customerDetail: props.rowData.id }
-                  }"
-                  class="button is-small is-warning"
-                >
-                  Edit
-                </router-link>
-                <p
-                  class="button is-small is-danger"
-                  @click="deleteCustomer(props.rowData)"
-                >
-                  Delete
-                </p>
-              </div>
+              {{ data.rowData.status }}
             </div>
-            <div v-else slot="actions" slot-scope="props">
-              <div class="buttons">
-                <router-link
-                  :to="
-                    props.rowData.id === currUser.id
-                      ? {
-                          name: 'addCustomer',
-                          params: { customerDetail: props.rowData.id }
-                        }
-                      : ''
-                  "
-                  class="button is-small is-warning"
-                  :disabled="props.rowData.id === currUser.id ? false : true"
-                >
-                  Edit
-                </router-link>
-                <p class="button is-small is-danger" disabled>Delete</p>
-              </div>
+            <div slot="totalCost" slot-scope="data" class="has-text-right">
+              ${{ Number(data.rowData.totalCost).toFixed(2) }}
             </div>
           </VueTable>
-          <pagination
+          <hr />
+          <Pagination
             v-show="noOfOrders"
             :pageLimit="custOrderLimit"
             :count="noOfOrders"
             :currPageNumber="currPageNumber"
             :currentPage="currentPage"
-          ></pagination>
+          ></Pagination>
         </div>
       </div>
     </div>
@@ -108,6 +91,7 @@ import { mapState } from "vuex";
 import VueTable from "vuetable-2";
 import VuetableFieldCheckbox from "vuetable-2/src/components/VuetableFieldCheckbox.vue";
 import customers from "@/services/customers";
+import orders from "@/services/orders";
 import OrdersNavBar from "@/components/NavBar.vue";
 import Pagination from "@/components/Pagination.vue";
 
@@ -134,13 +118,13 @@ export default {
           width: "3%"
         },
         {
-          name: "orderId",
+          name: "id",
           title: "Order #",
           width: "14%"
         },
         {
           title: "Customer",
-          name: "customer",
+          name: "custName",
           width: "16.6%"
         },
         {
@@ -149,7 +133,7 @@ export default {
           width: "21.5%"
         },
         {
-          name: "books",
+          name: "numberOfBooks",
           title: "Books",
           width: "12%"
         },
@@ -159,19 +143,58 @@ export default {
           width: "22%"
         },
         {
-          name: "total",
+          name: "totalCost",
           title: "Total",
           titleClass: "has-text-right",
           width: "0%"
         }
       ],
-      customerData: []
+      orderData: []
     };
   },
   methods: {
+    getColor(status) {
+      if (status === "In Progress") {
+        return "is-warning";
+      } else if (status === "Success") {
+        return "is-success";
+      } else {
+        return "is-danger";
+      }
+    },
     checked() {
       this.deleteItems = this.$refs.vuetable.selectedTo;
-      console.log(Array.from(this.deleteItems));
+    },
+    getDate(date) {
+      var months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+      let dateFormat = "";
+      dateFormat = months[new Date(date).getMonth()];
+      dateFormat =
+        dateFormat.toUpperCase() +
+        " " +
+        new Date(date).getDate() +
+        " " +
+        new Date(date).getFullYear();
+      dateFormat =
+        dateFormat +
+        ", " +
+        new Date(date).getHours() +
+        ":" +
+        new Date(date).getMinutes();
+      return dateFormat;
     }
   },
   computed: {
@@ -181,15 +204,19 @@ export default {
     this.$store.dispatch("setCurrPage", "Orders");
     this.$store.dispatch("setCustAndOrderLimit", 7);
     try {
-      await customers
-        .getCustomers(this.currPageNumber, this.custOrderLimit)
+      let temp = [];
+      await orders
+        .getOrders(this.currPageNumber, this.custOrderLimit)
         .then(res => {
-          this.customerData = res;
-          this.$store.dispatch(
-            "setNoOfCustomers",
-            res.headers["x-total-count"]
-          );
+          this.orderData = res.data;
+          this.$store.dispatch("setNumOfOrders", res.headers["x-total-count"]);
         });
+      for (let data of this.orderData) {
+        let res = await customers.getCustomer(data.custId);
+        data.custName = await res.data.name;
+        temp.push(data);
+      }
+      this.orderData = temp;
     } catch (e) {
       console.log(e);
     }

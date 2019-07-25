@@ -27,7 +27,7 @@
       "name": "melcome",
       "email": "melcome@gmail.com",
       "country": "United Kingdom",
-      "orders": 3,
+      "orders": 2,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -43,7 +43,7 @@
       "name": "aditya varma",
       "email": "aditya@gmail.com",
       "country": "United Kingdom",
-      "orders": 3,
+      "orders": 0,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -54,11 +54,10 @@
       "city": "bangalore"
     },
     {
-      "id": 2036703673,
       "name": "jose",
       "email": "jose@gmail.com",
       "country": "United States",
-      "orders": 3,
+      "orders": 1,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -67,14 +66,15 @@
         "#456"
       ],
       "zipcode": "765435",
-      "city": "MYSURU"
+      "city": "MYSURU",
+      "id": 2036703673
     },
     {
       "id": 7909775249,
       "name": "lakshmaiah",
       "email": "lakshmaiah@gmail.com",
       "country": "United Kingdom",
-      "orders": 3,
+      "orders": 0,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -91,7 +91,7 @@
       "name": "vimalraj",
       "email": "vimalraj@gmail.com",
       "country": "United Kingdom",
-      "orders": 3,
+      "orders": 0,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -106,7 +106,7 @@
       "name": "murali krishna",
       "email": "murali@gmail.com",
       "country": "Canada",
-      "orders": 3,
+      "orders": 0,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -120,7 +120,7 @@
       "name": "pushkar",
       "email": "pushkar@gmail.com",
       "country": "United Kingdom",
-      "orders": 3,
+      "orders": 0,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -134,7 +134,7 @@
       "name": "danush",
       "email": "danush@gmail.com",
       "country": "India",
-      "orders": 3,
+      "orders": 0,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -148,7 +148,7 @@
       "name": "arjun",
       "email": "arjun@gmail.com",
       "country": "United Kingdom",
-      "orders": 3,
+      "orders": 0,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -163,7 +163,7 @@
       "name": "harish",
       "email": "harish@gmail.com",
       "country": "United Kingdom",
-      "orders": 3,
+      "orders": 0,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -174,6 +174,20 @@
       ],
       "zipcode": "2",
       "city": "2"
+    },
+    {
+      "id": 497703455,
+      "name": "ajith",
+      "email": "ajith@gmail.com",
+      "country": "India",
+      "orders": 0,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "India"
+      ],
+      "zipcode": "876233",
+      "city": "MYSURU"
     }
   ],
   "books": [
@@ -258,66 +272,59 @@
       "qty": 1
     }
   ],
-  "cart": [
-    {
-      "bookId": 97531,
-      "custId": 2036703673,
-      "qty": 1,
-      "id": 3
-    },
-    {
-      "bookId": 8642,
-      "custId": 2036703673,
-      "qty": 1,
-      "id": 4
-    }
-  ],
+  "cart": [],
   "orders": [
     {
-      "id": 6425930,
+      "id": 9250623,
       "custId": 4445805593,
-      "date": "2019-07-23T17:37:22.400Z",
-      "numberOfBooks": 2,
+      "date": "2019-07-25T18:11:53.641Z",
+      "numberOfBooks": 1,
       "status": "In Progress",
-      "totalCost": "In Progress",
+      "totalCost": 22.99,
       "bookIdQty": [
         {
-          "bookId": 12345678,
-          "qty": 1
-        },
-        {
-          "bookId": 87654321,
+          "bookId": 13579,
           "qty": 1
         }
       ]
     },
     {
-      "id": 4205735,
+      "id": 6872748,
       "custId": 4445805593,
-      "date": "2019-07-23T17:38:30.342Z",
-      "numberOfBooks": 16,
+      "date": "2019-07-25T18:12:04.452Z",
+      "numberOfBooks": 1,
       "status": "In Progress",
-      "totalCost": "In Progress",
+      "totalCost": 22.99,
       "bookIdQty": [
         {
-          "bookId": 13579,
+          "bookId": 246810,
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": 2814215,
+      "custId": 2036703673,
+      "date": "2019-07-25T18:14:43.178Z",
+      "numberOfBooks": 13,
+      "status": "In Progress",
+      "totalCost": 597.25,
+      "bookIdQty": [
+        {
+          "bookId": 97531,
+          "qty": "4"
+        },
+        {
+          "bookId": 8642,
           "qty": "5"
         },
         {
-          "bookId": 97531,
-          "qty": "3"
-        },
-        {
-          "bookId": 246810,
+          "bookId": 3038280522,
           "qty": "3"
         },
         {
           "bookId": 12345678,
-          "qty": "3"
-        },
-        {
-          "bookId": 8169846467,
-          "qty": "2"
+          "qty": "1"
         }
       ]
     }

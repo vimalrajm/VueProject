@@ -12,6 +12,7 @@
             :count="noOfBooks"
             :placeHolder="placeholder"
             :currentPage="currentPage"
+            :currUser="currUser"
           ></BooksNavBar>
           <BooksList
             v-show="Number(noOfBooks)"

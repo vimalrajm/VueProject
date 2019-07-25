@@ -117,6 +117,7 @@ import { toastMixin } from "@/toastMixin";
 import _ from "lodash";
 import vueTable from "vuetable-2";
 import OrderData from "@/services/dataServices/orderData";
+import customers from "@/services/customers";
 
 export default {
   mixins: [toastMixin],
@@ -162,27 +163,12 @@ export default {
       ]
     };
   },
+  created() {
+    console.log("curr", JSON.stringify(this.currUser));
+  },
   methods: {
     async createOrder() {
       try {
-        /*var months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ];*/
-        // console.log(
-        //   "inside placeOrder",
-        //   JSON.stringify(new Date("2019-07-23T16:24:50.172Z").getMonth())
-        // );
         let orderId = Math.floor(Math.random() * 10000000);
         let bookCount = 0;
         let totalCost = 0;
@@ -214,6 +200,11 @@ export default {
           this.activeModal = "";
           this.toast("is-success", "Order placed successful", "is-top");
           this.clearCart();
+          let responseData = await customers.updateOrder(
+            this.currUser.orders + 1,
+            this.currUser
+          );
+          this.$store.dispatch("setCurrUser", responseData.data);
         }
       } catch (e) {
         console.log(e);

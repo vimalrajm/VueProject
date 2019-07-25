@@ -54,6 +54,36 @@
         </li>
       </ul>
     </nav>
+    <nav v-show="currentPage === 'Orders'" class="pagination">
+      <router-link
+        v-show="currPageNumber != 1"
+        class="pagination-previous btn-width-90"
+        :to="{
+          name: 'orders',
+          params: { currPageNumber: currPageNumber - 1 }
+        }"
+        >Previous</router-link
+      >
+      <router-link
+        v-show="currPageNumber != noOfPage && count != 0"
+        class="pagination-next btn-width-90"
+        :to="{
+          name: 'orders',
+          params: { currPageNumber: currPageNumber + 1 }
+        }"
+        >Next</router-link
+      >
+      <ul class="pagination-list">
+        <li v-for="N in noOfPage" :key="N">
+          <router-link
+            :to="{ name: 'orders', params: { currPageNumber: N } }"
+            class="pagination-link"
+            :class="currPageNumber == N ? 'is-current' : ''"
+            >{{ N }}</router-link
+          >
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 

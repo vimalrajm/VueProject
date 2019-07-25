@@ -48,5 +48,19 @@ export default {
   },
   deleteCustomer(id) {
     return apiClient.delete("/customers/" + id);
+  },
+  updateOrder(orderCount, customer) {
+    console.log("orderCount", orderCount);
+    return apiClient.put("/customers/" + customer.id, {
+      name: customer.name,
+      email: customer.email,
+      country: customer.country,
+      orders: orderCount,
+      role: customer.role,
+      password: customer.password,
+      address: customer.address,
+      zipcode: customer.zipcode,
+      city: customer.city
+    });
   }
 };

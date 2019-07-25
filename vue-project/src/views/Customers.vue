@@ -39,8 +39,8 @@
             <div slot="orders" slot-scope="props">
               <router-link
                 :to="{
-                  name: 'addCustomer',
-                  params: { customerDetail: props.rowData.id }
+                  name: 'orders',
+                  params: { currPageNumber: 1 }
                 }"
                 >{{ props.rowData.orders }}
               </router-link>
@@ -89,13 +89,13 @@
             </div>
           </VueTable>
           <hr />
-          <pagination
+          <Pagination
             v-show="noOfCustomers"
             :pageLimit="custOrderLimit"
             :count="noOfCustomers"
             :currPageNumber="currPageNumber"
             :currentPage="currentPage"
-          ></pagination>
+          ></Pagination>
         </div>
       </div>
     </div>
