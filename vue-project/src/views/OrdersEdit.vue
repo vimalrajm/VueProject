@@ -261,8 +261,7 @@ export default {
   methods: {}
 };
 </script>
-
-<style lang="scss" scoped>
+<style scoped>
 div >>> .table thead th {
   border: 1px solid black !important;
 }
