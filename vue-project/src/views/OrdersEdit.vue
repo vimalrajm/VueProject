@@ -160,7 +160,7 @@ export default {
         {
           name: "image",
           title: "Cover",
-          width: "20%"
+          width: "10%"
         },
         {
           name: "bookName",
@@ -262,4 +262,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+div >>> .table thead th {
+  border: 1px solid black !important;
+}
+div >>> .table tr td {
+  border: 1px solid black !important;
+}
+</style>
