@@ -47,13 +47,26 @@
                   <strong>Status</strong>
                 </p>
                 <div class="buttons">
-                  <button class="is-warning is-small button">
+                  <button
+                    class="is-warning is-small button"
+                    :class="
+                      orderData.status === 'In Progress' ? '' : 'is-outlined'
+                    "
+                  >
                     In Progress
                   </button>
-                  <button class="is-success is-outlined is-small button">
+                  <button
+                    class="is-success is-small button"
+                    :class="
+                      orderData.status === 'Successful' ? '' : 'is-outlined'
+                    "
+                  >
                     Successful
                   </button>
-                  <button class="is-danger is-outlined is-small button">
+                  <button
+                    class="is-danger is-small button"
+                    :class="orderData.status === 'Failed' ? '' : 'is-outlined'"
+                  >
                     Failed
                   </button>
                 </div>
@@ -62,15 +75,25 @@
                 </p>
                 <p class="content">
                   <strong>
-                    <a href="edit-customer.html">Vimal Raj</a>
+                    <router-link
+                      :to="{
+                        name: 'addCustomer',
+                        params: { customerDetail: orderedBy.id }
+                      }"
+                      class="is-capitalized"
+                      >{{ orderedBy.name }}</router-link
+                    >
                   </strong>
                   <br />
-                  <code>vimalraj@gmail.com</code>
+                  <code>{{ orderedBy.email }}</code>
                   <br />
-                  55 Long Bridge road
+                  <span v-for="address in orderedBy.address" :key="address"
+                    >{{ address }},
+                  </span>
                   <br />
-                  78170 Los Angeles
-                  <br />Uinted States
+                  {{ orderedBy.city }}, {{ orderedBy.zipcode }},
+                  <br />
+                  {{ orderedBy.country }}.
                 </p>
                 <br />
               </div>
@@ -78,111 +101,33 @@
                 <p class="heading">
                   <strong>Books</strong>
                 </p>
-                <table class="table is-bordered is-fullwidth">
-                  <thead>
-                    <tr>
-                      <th class="is-narrow">Cover</th>
-                      <th>Title</th>
-                      <th class="has-text-right is-narrow">Price</th>
-                      <th class="has-text-right is-narrow">Amount</th>
-                      <th class="has-text-right is-narrow">Total</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th colspan="5" class="has-text-right">$42.98</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <!-- <img src="./images/transflow.jpg" width="40" /> -->
-                      </td>
-                      <td>
-                        <a href="new-book.html"
-                          ><strong
-                            >TensorFlow For Machine Intelligence</strong
-                          ></a
-                        >
-                      </td>
-                      <td class="has-text-right">$22.99</td>
-                      <td class="has-text-right">
-                        <input
-                          type="number"
-                          value="1"
-                          maxlength="2"
-                          class="input is-small"
-                          max="2"
-                        />
-                      </td>
-                      <td class="has-text-right">$22.99</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <!-- <img src="./images/js.jpg" width="40" /> -->
-                      </td>
-                      <td>
-                        <a href="new-book.html"
-                          ><strong>Choosing a Javascript Framework</strong></a
-                        >
-                      </td>
-                      <td class="has-text-right">$19.99</td>
-                      <td class="has-text-right">
-                        <input
-                          type="number"
-                          value="1"
-                          maxlength="2"
-                          class="input is-small"
-                          max="2"
-                        />
-                      </td>
-                      <td class="has-text-right">$19.99</td>
-                    </tr>
-                    <tr>
-                      <td colspan="5">
-                        <div class="field is-grouped is-grouped-right">
-                          <div class="control">
-                            <div class="select is-small">
-                              <select>
-                                <option class="is-capitalized"
-                                  >TensorFlow For Machine Intelligence</option
-                                >
-                                <option class="is-capitalized"
-                                  >Docker In Production</option
-                                >
-                                <option class="is-capitalized"
-                                  >Developing A Gulp.js Edge</option
-                                >
-                                <option class="is-capitalized"
-                                  >Learning Swift</option
-                                >
-                                <option class="is-capitalized"
-                                  >Choosing A Javascript Framework
-                                </option>
-                                <option class="is-capitalized"
-                                  >Deconstructing Google Cardboard Apps</option
-                                >
-                              </select>
-                            </div>
-                          </div>
-                          <div class="control">
-                            <input
-                              type="number"
-                              value="1"
-                              maxlength="2"
-                              class="input is-small"
-                              max="2"
-                              placeholder="Amount"
-                            />
-                          </div>
-                          <div class="control">
-                            <a class="button is-small is-link">Add book</a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <VueTable :api-mode="false" :fields="headers" :data="books">
+                  <div slot="image" slot-scope="props">
+                    <img
+                      :src="require(`@/assets/${props.rowData.image}`)"
+                      :alt="props.rowData.image"
+                      width="40"
+                    />
+                  </div>
+                  <div slot="bookName" slot-scope="props" disabled>
+                    <router-link
+                      :to="{
+                        name: 'addCustomer',
+                        params: { customerDetail: props.rowData.id }
+                      }"
+                      :event="currUser.role === 'customer' ? '' : 'click'"
+                      >{{ props.rowData.bookName }}</router-link
+                    >
+                  </div>
+                  <div slot="total" slot-scope="props">
+                    {{
+                      (
+                        Number(props.rowData.qty) *
+                        Number(props.rowData.bookPrice)
+                      ).toFixed(2)
+                    }}
+                  </div>
+                </VueTable>
               </div>
             </div>
           </form>
@@ -198,19 +143,54 @@ import Menu from "@/components/Menu";
 import { toastMixin } from "@/toastMixin";
 import { mapState } from "vuex";
 import orders from "@/services/orders";
+import customers from "@/services/customers";
+import books from "@/services/books";
+import VueTable from "vuetable-2";
+
 // import _ from "lodash";
 
 export default {
   data() {
     return {
       orderData: {},
-      orderDate: ""
+      orderDate: "",
+      orderedBy: {},
+      books: [],
+      headers: [
+        {
+          name: "image",
+          title: "Cover",
+          width: "20%"
+        },
+        {
+          name: "bookName",
+          title: "Title",
+          width: "40%"
+        },
+        {
+          name: "bookPrice",
+          title: "Price",
+          width: "10%"
+        },
+        {
+          name: "qty",
+          title: "Amount",
+          width: "10%"
+        },
+        {
+          name: "total",
+          title: "Total",
+          width: "5%"
+        }
+      ]
     };
   },
   async created() {
     try {
-      this.orderData = await orders.getOrder(Number(this.orderId));
-      const date = this.orderData.data.date;
+      ({ data: this.orderData } = await orders.getOrder(Number(this.orderId)));
+      console.log("after destructuring", JSON.stringify(this.orderData));
+      // console.log(JSON.stringify(this.orderData.data));
+      const date = this.orderData.date;
       var months = [
         "January",
         "February",
@@ -240,6 +220,19 @@ export default {
         ":" +
         new Date(date).getMinutes();
       this.orderDate = dateFormat;
+      ({ data: this.orderedBy } = await customers.getCustomer(
+        this.orderData.custId
+      ));
+      console.log(JSON.stringify(this.orderedBy.data));
+      let book = [];
+      console.log("this.orderData.bookIdQty", this.orderData.bookIdQty);
+      for (let data of this.orderData.bookIdQty) {
+        book = await books.getABook(data.bookId);
+        console.log("book-data", book.data);
+        book.data.qty = data.qty;
+        this.books.push(book.data);
+      }
+      console.log("books data", JSON.stringify(this.books));
     } catch (e) {
       console.log(e);
     }
@@ -253,7 +246,8 @@ export default {
   },
   components: {
     Header,
-    Menu
+    Menu,
+    VueTable
   },
   computed: {
     ...mapState(["currUser", "currentPage", "noOfCustomers", "custOrderLimit"]),

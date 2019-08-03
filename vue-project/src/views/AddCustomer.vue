@@ -234,6 +234,7 @@ export default {
           this.address = [];
         } else {
           let id = Math.floor(Math.random() * 10000000000);
+          
           this.address.push(this.address1);
           if (this.address2 !== "") {
             this.address.push(this.address2);
