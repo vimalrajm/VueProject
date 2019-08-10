@@ -13,6 +13,9 @@ export default {
   getBooks(page, limit) {
     return apiClient.get("/books?_page=" + page + "&_limit=" + limit);
   },
+  getAllBooks() {
+    return apiClient.get("/books");
+  },
   createBook(book) {
     return apiClient.post("/books", {
       id: book._id,
