@@ -128,6 +128,44 @@
                     }}
                   </div>
                 </VueTable>
+                <table class="tableBorder">
+                  <tr>
+                    <td class="has-text-centered ">
+                      <MultiSelect
+                        class="select is-small"
+                        style="min-width: 200px;max-width: 350px"
+                        v-model="bookSelected"
+                        :options="bookList"
+                        :clear-on-select="false"
+                        :close-on-select="true"
+                        :allow-empty="false"
+                        label="bookName"
+                        track-by="id"
+                        :hide-selected="true"
+                      >
+                      </MultiSelect>
+                      <span class="control ">
+                        <input
+                          type="number"
+                          value="1"
+                          maxlength="2"
+                          class="input is-small"
+                          max="5"
+                          placeholder="Amount"
+                          style="width: 60px; height: 38px; margin-right: -190px; margin-left: 30px"
+                        />
+                      </span>
+                      <span class="control is-pulled-right">
+                        <span
+                          class="button is-small is-link"
+                          style="width: 80px; height: 38px;"
+                        >
+                          Add Book
+                        </span>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
               </div>
             </div>
           </form>
@@ -136,6 +174,8 @@
     </div>
   </div>
 </template>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <script>
 import Header from "@/components/Header";
@@ -146,7 +186,7 @@ import orders from "@/services/orders";
 import customers from "@/services/customers";
 import books from "@/services/books";
 import VueTable from "vuetable-2";
-
+import MultiSelect from "vue-multiselect";
 // import _ from "lodash";
 
 export default {
@@ -156,6 +196,9 @@ export default {
       orderDate: "",
       orderedBy: {},
       books: [],
+      allBooks: [],
+      bookSelected: [],
+      bookList: [],
       headers: [
         {
           name: "image",
@@ -188,8 +231,10 @@ export default {
   async created() {
     try {
       ({ data: this.orderData } = await orders.getOrder(Number(this.orderId)));
+      ({ data: this.bookList } = await books.getAllBooks());
       console.log("after destructuring", JSON.stringify(this.orderData));
-      // console.log(JSON.stringify(this.orderData.data));
+      this.bookSelected.push(this.bookList[0]);
+      console.log("boook", this.bookSelected);
       const date = this.orderData.date;
       var months = [
         "January",
@@ -247,7 +292,8 @@ export default {
   components: {
     Header,
     Menu,
-    VueTable
+    VueTable,
+    MultiSelect
   },
   computed: {
     ...mapState(["currUser", "currentPage", "noOfCustomers", "custOrderLimit"]),
@@ -267,5 +313,17 @@ div >>> .table thead th {
 }
 div >>> .table tr td {
   border: 1px solid black !important;
+}
+.tableBorder {
+  border: 1px solid black;
+  border-top: 0px solid black;
+}
+td {
+  width: 1000px;
+  height: 70px;
+  padding: 15px;
+}
+div >>> .multiselect__select:before {
+  border-color: white;
 }
 </style>
