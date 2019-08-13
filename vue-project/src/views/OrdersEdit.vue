@@ -146,9 +146,11 @@
                       </MultiSelect>
                       <span class="control ">
                         <input
+                          v-model="bookQty"
                           type="number"
                           value="1"
                           maxlength="2"
+                          min="1"
                           class="input is-small"
                           max="5"
                           placeholder="Amount"
@@ -159,6 +161,7 @@
                         <span
                           class="button is-small is-link"
                           style="width: 80px; height: 38px;"
+                          @click="confirmBookAdd"
                         >
                           Add Book
                         </span>
@@ -195,6 +198,7 @@ export default {
       orderData: {},
       orderDate: "",
       orderedBy: {},
+      bookQty: 1,
       books: [],
       allBooks: [],
       bookSelected: [],
@@ -304,7 +308,53 @@ export default {
       return this.btnLoading;
     }
   },
-  methods: {}
+  methods: {
+    async addBook() {
+      try {
+        console.log(this.bookSelected.id)
+        this.orderData.bookIdQty.push({
+          bookId: this.bookSelected.id,
+          qty: this.bookQty
+        });
+        let res = await orders.updateOrder(this.orderData);
+        if (res.status === 200) {
+          this.toast(
+            "is-success",
+            "book added successfully to current order",
+            "is-top"
+          );
+          ({ data: this.orderData } = await orders.getOrder(
+            Number(this.orderId)
+          ));
+        } else {
+          this.toast(
+            "is-danger",
+            "Spmething went wrong while adding book to the order",
+            "is-top"
+          );
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    confirmBookAdd() {
+      this.$dialog.confirm({
+        title: "Order book",
+        message: `Are you sure you want to add <b> 
+        ${this.bookSelected.bookName} </b> book of <b>
+        ${this.bookQty} </b> quantity to current order`,
+        confirmText: "Add",
+        type: "is-warning",
+        iconPack: "fa",
+        icon: "exclamation-triangle",
+        size: "is-small",
+        hasIcon: true,
+        onConfirm: () => {
+          this.addBook();
+        }
+      });
+    }
+  }
 };
 </script>
 <style scoped>
@@ -325,5 +375,6 @@ td {
 }
 div >>> .multiselect__select:before {
   border-color: white;
+  display: none;
 }
 </style>

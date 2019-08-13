@@ -44,5 +44,17 @@ export default {
 
   getOrder(id) {
     return orderClient.get("/orders/" + id);
+  },
+
+  updateOrder(orderData) {
+    return orderClient.put("/orders/" + orderData.id, {
+      id: orderData.id,
+      custId: orderData.custId,
+      date: orderData.date,
+      numberOfBooks: orderData.numberOfBooks,
+      status: orderData.status,
+      totalCost: orderData.totalCost,
+      bookIdQty: orderData.bookIdQty
+    });
   }
 };
