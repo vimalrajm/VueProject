@@ -52,6 +52,8 @@
                     :class="
                       orderData.status === 'In Progress' ? '' : 'is-outlined'
                     "
+                    :disabled="currUser.role === 'customer' ? true : false"
+                    @click.prevent="setStatus('In Progress')"
                   >
                     In Progress
                   </button>
@@ -60,12 +62,16 @@
                     :class="
                       orderData.status === 'Successful' ? '' : 'is-outlined'
                     "
+                    :disabled="currUser.role === 'customer' ? true : false"
+                    @click.prevent="setStatus('Successful')"
                   >
                     Successful
                   </button>
                   <button
                     class="is-danger is-small button"
+                    :disabled="currUser.role === 'customer' ? true : false"
                     :class="orderData.status === 'Failed' ? '' : 'is-outlined'"
+                    @click.prevent="setStatus('Failed')"
                   >
                     Failed
                   </button>
@@ -142,6 +148,7 @@
                         label="bookName"
                         track-by="id"
                         :hide-selected="true"
+                        placeholder="Select a book"
                       >
                       </MultiSelect>
                       <span class="control ">
@@ -158,14 +165,25 @@
                         />
                       </span>
                       <span class="control is-pulled-right">
-                        <span
+                        <button
                           class="button is-small is-link"
                           style="width: 80px; height: 38px;"
-                          @click="confirmBookAdd"
+                          @click.prevent="confirmBookAdd"
+                          :class="isLoading"
+                          :disabled="
+                            orderData.status === 'Successful' ? true : false
+                          "
                         >
                           Add Book
-                        </span>
+                        </button>
                       </span>
+                    </td>
+                  </tr>
+                  <tr style="border: 1px solid #dbdbdb;">
+                    <td style="height:50px;">
+                      <label class="has-text-right has-text-weight-bold label"
+                        >${{ getTotal }}</label
+                      >
                     </td>
                   </tr>
                 </table>
@@ -190,7 +208,7 @@ import customers from "@/services/customers";
 import books from "@/services/books";
 import VueTable from "vuetable-2";
 import MultiSelect from "vue-multiselect";
-// import _ from "lodash";
+import _ from "lodash";
 
 export default {
   data() {
@@ -203,6 +221,7 @@ export default {
       allBooks: [],
       bookSelected: [],
       bookList: [],
+      isLoading: "",
       headers: [
         {
           name: "image",
@@ -236,9 +255,6 @@ export default {
     try {
       ({ data: this.orderData } = await orders.getOrder(Number(this.orderId)));
       ({ data: this.bookList } = await books.getAllBooks());
-      console.log("after destructuring", JSON.stringify(this.orderData));
-      this.bookSelected.push(this.bookList[0]);
-      console.log("boook", this.bookSelected);
       const date = this.orderData.date;
       var months = [
         "January",
@@ -272,16 +288,14 @@ export default {
       ({ data: this.orderedBy } = await customers.getCustomer(
         this.orderData.custId
       ));
-      console.log(JSON.stringify(this.orderedBy.data));
       let book = [];
-      console.log("this.orderData.bookIdQty", this.orderData.bookIdQty);
       for (let data of this.orderData.bookIdQty) {
         book = await books.getABook(data.bookId);
-        console.log("book-data", book.data);
+        this.total =
+          this.total + Number(book.data.bookPrice) * Number(data.qty);
         book.data.qty = data.qty;
         this.books.push(book.data);
       }
-      console.log("books data", JSON.stringify(this.books));
     } catch (e) {
       console.log(e);
     }
@@ -306,16 +320,67 @@ export default {
     },
     btnLoad() {
       return this.btnLoading;
+    },
+    getTotal() {
+      if (this.orderData.totalCost !== undefined) {
+        return this.orderData.totalCost.toFixed(2);
+      } else {
+        return 0;
+      }
     }
   },
   methods: {
+    async orderStatus(status) {
+      try {
+        this.orderData.status = status;
+        let res = await orders.updateOrder(this.orderData);
+        if (res.status === 200) {
+          this.toast("is-success", "Order status set successful", "is-top");
+          ({ data: this.orderData } = await orders.getOrder(
+            Number(this.orderId)
+          ));
+        } else {
+          this.toast(
+            "is-danger",
+            "Spmething went wrong while updating status to the order",
+            "is-top"
+          );
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    setStatus(status) {
+      this.$dialog.confirm({
+        title: "Order book",
+        message: `Are you sure you want to set <b> ${status} </b> status to current order`,
+        confirmText: "Set",
+        type: "is-warning",
+        iconPack: "fa",
+        icon: "exclamation-triangle",
+        size: "is-small",
+        hasIcon: true,
+        onConfirm: () => {
+          this.orderStatus(status);
+        }
+      });
+    },
     async addBook() {
       try {
-        console.log(this.bookSelected.id)
+        let bookPrice = 0;
+        this.isLoading = "is-loading";
         this.orderData.bookIdQty.push({
           bookId: this.bookSelected.id,
           qty: this.bookQty
         });
+        this.orderData.numberOfBooks =
+          Number(this.orderData.numberOfBooks) + Number(this.bookQty);
+        _.find(this.bookList, book => {
+          if (book.id === this.bookSelected.id) {
+            bookPrice = Number(book.bookPrice) * this.bookQty;
+          }
+        });
+        this.orderData.totalCost = Number(this.orderData.totalCost) + bookPrice;
         let res = await orders.updateOrder(this.orderData);
         if (res.status === 200) {
           this.toast(
@@ -326,6 +391,18 @@ export default {
           ({ data: this.orderData } = await orders.getOrder(
             Number(this.orderId)
           ));
+          ({ data: this.bookList } = await books.getAllBooks());
+          let book = [];
+          this.books = [];
+          for (let data of this.orderData.bookIdQty) {
+            book = await books.getABook(data.bookId);
+            this.total =
+              this.total + Number(book.data.bookPrice) * Number(data.qty);
+            book.data.qty = data.qty;
+            this.books.push(book.data);
+          }
+          this.bookSelected = [];
+          this.bookQty = 1;
         } else {
           this.toast(
             "is-danger",
@@ -333,6 +410,7 @@ export default {
             "is-top"
           );
         }
+        this.isLoading = "";
       } catch (e) {
         console.log(e);
       }
@@ -359,14 +437,14 @@ export default {
 </script>
 <style scoped>
 div >>> .table thead th {
-  border: 1px solid black !important;
+  border: 1px solid #dbdbdb !important;
 }
 div >>> .table tr td {
-  border: 1px solid black !important;
+  border: 1px solid #dbdbdb !important;
 }
 .tableBorder {
-  border: 1px solid black;
-  border-top: 0px solid black;
+  border: 1px solid #dbdbdb;
+  border-top: 0px solid #dbdbdb;
 }
 td {
   width: 1000px;

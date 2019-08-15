@@ -156,7 +156,7 @@ export default {
     getColor(status) {
       if (status === "In Progress") {
         return "is-warning";
-      } else if (status === "Success") {
+      } else if (status === "Successful") {
         return "is-success";
       } else {
         return "is-danger";

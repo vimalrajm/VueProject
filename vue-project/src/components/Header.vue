@@ -25,7 +25,9 @@
           Cart
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <div class="navbar-link navWidth">{{ currUser.name }}</div>
+          <div class="navbar-link navWidth is-capitalized">
+            {{ currUser.name }}
+          </div>
           <div class="navbar-dropdown">
             <a class="navbar-item">
               <div>
@@ -163,9 +165,6 @@ export default {
       ]
     };
   },
-  created() {
-    console.log("curr", JSON.stringify(this.currUser));
-  },
   methods: {
     async createOrder() {
       try {
@@ -184,7 +183,6 @@ export default {
           null
         );
         this.cartData.forEach(data => {
-          console.log("data1", JSON.stringify(data));
           bookCount = bookCount + Number(data.qty);
           totalCost = totalCost + Number(data.qty) * Number(data.bookPrice);
           bookIdQty.push({
@@ -249,7 +247,6 @@ export default {
         await orders.getCart().then(res => {
           _.find(res.data, o => {
             if (o.custId === this.currUser.id) {
-              console.log("clearCart");
               orders.removeBookFromCart(o.id).then(res => {
                 if (!res.status === 200) {
                   this.toast("is-danger", "Something went wrong", "is-top");
