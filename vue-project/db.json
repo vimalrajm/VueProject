@@ -27,7 +27,7 @@
       "name": "melcome",
       "email": "melcome@gmail.com",
       "country": "United Kingdom",
-      "orders": 2,
+      "orders": 4,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -39,11 +39,10 @@
       "id": 4445805593
     },
     {
-      "id": 6036564318,
       "name": "aditya varma",
       "email": "aditya@gmail.com",
       "country": "United Kingdom",
-      "orders": 0,
+      "orders": 1,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -51,13 +50,14 @@
         "#24"
       ],
       "zipcode": "123566",
-      "city": "bangalore"
+      "city": "bangalore",
+      "id": 6036564318
     },
     {
       "name": "jose",
       "email": "jose@gmail.com",
       "country": "United States",
-      "orders": 1,
+      "orders": 2,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -70,11 +70,10 @@
       "id": 2036703673
     },
     {
-      "id": 7909775249,
       "name": "lakshmaiah",
       "email": "lakshmaiah@gmail.com",
       "country": "United Kingdom",
-      "orders": 0,
+      "orders": 1,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -84,79 +83,80 @@
         "#842"
       ],
       "zipcode": "198273",
-      "city": "andra pradesh"
+      "city": "andra pradesh",
+      "id": 7909775249
     },
     {
-      "id": 6231843688,
       "name": "vimalraj",
       "email": "vimalraj@gmail.com",
       "country": "United Kingdom",
-      "orders": 0,
+      "orders": 1,
       "role": "customer",
       "password": "12345678",
       "address": [
         "1",
-        "1"
+        "2"
       ],
-      "zipcode": "1",
-      "city": "1"
+      "zipcode": "3",
+      "city": "4",
+      "id": 6231843688
     },
     {
-      "id": 5457371316,
       "name": "murali krishna",
       "email": "murali@gmail.com",
       "country": "Canada",
-      "orders": 0,
+      "orders": 1,
       "role": "customer",
       "password": "12345678",
       "address": [
         "#127-128, ALANAHALLI, MYSURU - BANNUR ROAD, ALANAHALLI POST, MYSURU - 570028, KARNATAKA"
       ],
       "zipcode": "123",
-      "city": "232"
+      "city": "232",
+      "id": 5457371316
     },
     {
-      "id": 1247898811,
       "name": "pushkar",
       "email": "pushkar@gmail.com",
       "country": "United Kingdom",
-      "orders": 0,
+      "orders": 1,
       "role": "customer",
       "password": "12345678",
       "address": [
         "kerala"
       ],
       "zipcode": "3432",
-      "city": "kerala"
+      "city": "kerala",
+      "id": 1247898811
     },
     {
-      "id": 9577400113,
       "name": "danush",
       "email": "danush@gmail.com",
       "country": "India",
-      "orders": 0,
+      "orders": 1,
       "role": "customer",
       "password": "12345678",
       "address": [
         "324"
       ],
       "zipcode": "43",
-      "city": "bangalore"
+      "city": "bangalore",
+      "id": 9577400113
     },
     {
-      "id": 1047319950,
       "name": "arjun",
       "email": "arjun@gmail.com",
       "country": "United Kingdom",
-      "orders": 0,
+      "orders": 1,
       "role": "customer",
       "password": "12345678",
       "address": [
-        "1",
-        "1"
+        "5",
+        "6"
       ],
-      "zipcode": "1",
-      "city": "1"
+      "zipcode": "7",
+      "city": "8",
+      "id": 1047319950
     },
     {
       "id": 5123739648,
@@ -167,10 +167,10 @@
       "role": "customer",
       "password": "12345678",
       "address": [
-        "1",
-        "1",
-        "2",
-        "2"
+        "9",
+        "10",
+        "11",
+        "12"
       ],
       "zipcode": "2",
       "city": "2"
@@ -275,25 +275,99 @@
   "cart": [],
   "orders": [
     {
-      "id": 9250623,
+      "id": 8340822,
       "custId": 4445805593,
-      "date": "2019-07-25T18:11:53.641Z",
-      "numberOfBooks": 1,
-      "status": "In Progress",
-      "totalCost": 22.99,
+      "date": "2019-08-15T09:25:24.272Z",
+      "numberOfBooks": 11,
+      "status": "Successful",
+      "totalCost": 987.69,
       "bookIdQty": [
         {
           "bookId": 13579,
+          "qty": "2"
+        },
+        {
+          "bookId": 8169846467,
+          "qty": "2"
+        },
+        {
+          "bookId": 3038280522,
+          "qty": "5"
+        },
+        {
+          "bookId": 87654321,
+          "qty": "2"
+        }
+      ]
+    },
+    {
+      "id": 6060610,
+      "custId": 2036703673,
+      "date": "2019-08-15T09:57:23.845Z",
+      "numberOfBooks": 8,
+      "status": "In Progress",
+      "totalCost": 165.92,
+      "bookIdQty": [
+        {
+          "bookId": 8642,
+          "qty": "2"
+        },
+        {
+          "bookId": 12345678,
+          "qty": "5"
+        },
+        {
+          "bookId": 12345678,
           "qty": 1
         }
       ]
     },
     {
-      "id": 6872748,
-      "custId": 4445805593,
-      "date": "2019-07-25T18:12:04.452Z",
-      "numberOfBooks": 1,
+      "id": 8975523,
+      "custId": 7909775249,
+      "date": "2019-08-15T10:00:11.705Z",
+      "numberOfBooks": 3,
+      "status": "Failed",
+      "totalCost": 185.22000000000003,
+      "bookIdQty": [
+        {
+          "bookId": 8169846467,
+          "qty": 1
+        },
+        {
+          "bookId": 13579,
+          "qty": 1
+        },
+        {
+          "bookId": 8642,
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": 628095,
+      "custId": 6036564318,
+      "date": "2019-08-15T10:05:30.863Z",
+      "numberOfBooks": 3,
       "status": "In Progress",
+      "totalCost": 62.97,
+      "bookIdQty": [
+        {
+          "bookId": 13579,
+          "qty": 1
+        },
+        {
+          "bookId": 12345678,
+          "qty": "2"
+        }
+      ]
+    },
+    {
+      "id": 9892590,
+      "custId": 6231843688,
+      "date": "2019-08-15T10:06:01.597Z",
+      "numberOfBooks": 1,
+      "status": "Successful",
       "totalCost": 22.99,
       "bookIdQty": [
         {
@@ -303,32 +377,62 @@
       ]
     },
     {
-      "id": 2814215,
-      "custId": 2036703673,
-      "date": "2019-07-25T18:14:43.178Z",
-      "numberOfBooks": 13,
+      "id": 1181449,
+      "custId": 5457371316,
+      "date": "2019-08-15T10:06:28.654Z",
+      "numberOfBooks": 1,
       "status": "In Progress",
-      "totalCost": 597.25,
+      "totalCost": 22.99,
       "bookIdQty": [
         {
           "bookId": 97531,
-          "qty": "4"
-        },
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": 9125909,
+      "custId": 1247898811,
+      "date": "2019-08-15T10:07:01.179Z",
+      "numberOfBooks": 1,
+      "status": "Successful",
+      "totalCost": 22.99,
+      "bookIdQty": [
         {
           "bookId": 8642,
-          "qty": "5"
-        },
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": 8056961,
+      "custId": 9577400113,
+      "date": "2019-08-15T10:08:49.969Z",
+      "numberOfBooks": 2,
+      "status": "In Progress",
+      "totalCost": 45.98,
+      "bookIdQty": [
         {
-          "bookId": 3038280522,
-          "qty": "3"
-        },
+          "bookId": 8642,
+          "qty": "2"
+        }
+      ]
+    },
+    {
+      "id": 3180775,
+      "custId": 1047319950,
+      "date": "2019-08-15T10:09:33.255Z",
+      "numberOfBooks": 5,
+      "status": "Failed",
+      "totalCost": 111.94999999999999,
+      "bookIdQty": [
         {
           "bookId": 12345678,
-          "qty": "1"
+          "qty": 1
         },
         {
-          "bookId": 87654321,
-          "qty": "3"
+          "bookId": 13579,
+          "qty": "4"
         }
       ]
     }
