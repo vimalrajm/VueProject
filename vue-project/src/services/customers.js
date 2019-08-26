@@ -62,5 +62,11 @@ export default {
       zipcode: customer.zipcode,
       city: customer.city
     });
+  },
+  getViews() {
+    return apiClient.get("/views");
+  },
+  setViews(count) {
+    return apiClient.put("/views/" + 1, { viewers: count, id: 1 });
   }
 };

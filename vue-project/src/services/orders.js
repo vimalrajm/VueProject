@@ -42,6 +42,10 @@ export default {
     return orderClient.get("/orders?_page=" + page + "&_limit=" + limit);
   },
 
+  getAllOrders() {
+    return orderClient.get("/orders");
+  },
+
   getOrder(id) {
     return orderClient.get("/orders/" + id);
   },

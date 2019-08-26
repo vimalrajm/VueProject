@@ -34,7 +34,10 @@
                 class="has-text-weight-bold"
                 >{{ data.rowData.id }}</router-link
               >
-              <div v-else class="has-text-black has-text-weight-bold">
+              <div
+                v-else
+                class="has-text-link has-text-weight-bold not-allowed"
+              >
                 {{ data.rowData.id }}
               </div>
             </div>
@@ -51,7 +54,7 @@
                 class="is-capitalized"
                 >{{ data.rowData.custName }}</router-link
               >
-              <div v-else class="has-text-black is-capitalized">
+              <div v-else class="has-text-link is-capitalized not-allowed">
                 {{ data.rowData.custName }}
               </div>
             </div>

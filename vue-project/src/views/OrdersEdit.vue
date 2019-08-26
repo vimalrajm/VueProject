@@ -252,6 +252,7 @@ export default {
     };
   },
   async created() {
+    this.$store.dispatch("setCurrPage", "Orders");
     try {
       ({ data: this.orderData } = await orders.getOrder(Number(this.orderId)));
       ({ data: this.bookList } = await books.getAllBooks());

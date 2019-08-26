@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="hero is-primary is-fullheight">
+    <div class="hero has-background-white-ter is-fullheight">
       <div class="hero-body">
         <div class="container">
           <div class="columns is-centered">
@@ -9,7 +9,7 @@
                 <div class="field has-text-centered">
                   <img src="@/assets/logo.jpg" width="80" />
                   <div class="heading is-size-5 has-text-weight-semibold">
-                    Bleeding Edge Press
+                    Vimal Book House
                   </div>
                 </div>
                 <hr class="has-background-dark" />
@@ -80,7 +80,8 @@ export default {
     return {
       emailVal: "",
       pwdValue: "",
-      loginFail: true
+      loginFail: true,
+      customer: false
     };
   },
   methods: {
@@ -101,10 +102,7 @@ export default {
                 this.$store.dispatch("setCurrPage", "Books");
                 this.$store.dispatch("setCurrentPageNumber", 1);
                 this.$router.push({
-                  name: "books",
-                  params: {
-                    currPageNumber: 1
-                  }
+                  name: "dashboard"
                 });
               }
             });
@@ -116,15 +114,13 @@ export default {
                   user.email === this.emailVal &&
                   user.password === this.pwdValue
                 ) {
+                  this.customer = true;
                   this.loginFail = false;
                   this.$store.dispatch("setCurrUser", user);
                   this.$store.dispatch("setCurrPage", "Books");
                   this.$store.dispatch("setCurrentPageNumber", 1);
                   this.$router.push({
-                    name: "books",
-                    params: {
-                      currPageNumber: 1
-                    }
+                    name: "dashboard"
                   });
                 }
               });
@@ -133,9 +129,14 @@ export default {
           if (this.loginFail) {
             this.toast("is-danger", "Invalid email id or password", "is-top");
           } else {
+            if (this.customer) {
+              let views;
+              ({ data: views } = await customer.getViews());
+              await customer.setViews(Number(views[0].viewers) + 1);
+            }
             this.toast("is-success", "Login Success", "is-top");
             this.$router.push({
-              name: "books"
+              name: "dashboard"
             });
           }
           this.loginFail = true;

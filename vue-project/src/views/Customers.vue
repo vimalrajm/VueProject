@@ -27,11 +27,17 @@
                   name: 'addCustomer',
                   params: { customerDetail: props.rowData.id }
                 }"
+                v-if="
+                  currUser.role === 'admin' || currUser.id === props.rowData.id
+                "
               >
                 <strong class="has-text-link is-capitalized">
                   {{ props.rowData.name }}
                 </strong>
               </router-link>
+              <strong v-else class="has-text-link is-capitalized not-allowed">{{
+                props.rowData.name
+              }}</strong>
             </div>
             <div slot="email" slot-scope="props">
               <code> {{ props.rowData.email }} </code>
