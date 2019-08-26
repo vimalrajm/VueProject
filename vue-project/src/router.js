@@ -7,6 +7,7 @@ import Customers from "@/views/Customers.vue";
 import AddCustomer from "@/views/AddCustomer";
 import Orders from "@/views/Orders";
 import orderEdit from "@/views/OrdersEdit";
+import dashboard from "@/views/Dashboard";
 Vue.use(Router);
 
 export default new Router({
@@ -57,6 +58,11 @@ export default new Router({
       name: "orderEdit",
       component: orderEdit,
       props: true
+    },
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      component: dashboard
     }
   ]
 });

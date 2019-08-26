@@ -2,15 +2,15 @@
   <nav class="menu">
     <div class="menu-label">Menu</div>
     <div class="menu-list">
-      <a
-        href="dashboard.html"
-        :class="currentPage === 'dashboard' ? 'is-active' : ''"
+      <router-link
+        :to="{ name: 'dashboard' }"
+        :class="currentPage === 'Dashboard' ? 'is-active' : ''"
       >
         <span class="icon">
           <i class="fa fa-tachometer"></i>
         </span>
         DashBoard
-      </a>
+      </router-link>
       <router-link
         :to="{ name: 'books', params: { currPageNumber: 1 } }"
         :class="currentPage === 'Books' ? 'is-active' : ''"

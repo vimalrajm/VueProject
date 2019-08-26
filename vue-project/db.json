@@ -27,7 +27,7 @@
       "name": "melcome",
       "email": "melcome@gmail.com",
       "country": "United Kingdom",
-      "orders": 4,
+      "orders": 6,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -435,6 +435,40 @@
           "qty": "4"
         }
       ]
+    },
+    {
+      "id": 3179292,
+      "custId": 4445805593,
+      "date": "2019-08-21T16:48:32.122Z",
+      "numberOfBooks": 2,
+      "status": "Successful",
+      "totalCost": 45.98,
+      "bookIdQty": [
+        {
+          "bookId": 246810,
+          "qty": "2"
+        }
+      ]
+    },
+    {
+      "id": 827101,
+      "custId": 4445805593,
+      "date": "2019-08-24T12:08:38.994Z",
+      "numberOfBooks": 1,
+      "status": "In Progress",
+      "totalCost": 19.99,
+      "bookIdQty": [
+        {
+          "bookId": 12345678,
+          "qty": 1
+        }
+      ]
+    }
+  ],
+  "views": [
+    {
+      "viewers": 16,
+      "id": 1
     }
   ]
 }
