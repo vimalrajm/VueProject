@@ -152,3 +152,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.box {
+  border: 1px solid #a7164d;
+}
+</style>
