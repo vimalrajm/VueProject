@@ -53,67 +53,7 @@
     </div>
     <div class="columns">
       <LatestOrders></LatestOrders>
-      <div class="column is-4-desktop">
-        <div class="card">
-          <div class="card-content">
-            <h2 class="title is-4">
-              Most popular books
-            </h2>
-            <div class="media">
-              <div class="media-left is-marginless">
-                <!-- <img src="./images/swift.jpg" width="40" /> -->
-                <p class="number">1</p>
-              </div>
-              <div class="media-left"></div>
-              <div class="media-content">
-                <p class="title is-6 is-spaced is-marginless">
-                  <a href="edit-book.html">Learning Swift</a>
-                </p>
-              </div>
-              <div class="media-right">
-                146 sold
-              </div>
-            </div>
-            <div class="media">
-              <div class="media-left is-marginless">
-                <p class="number">2</p>
-              </div>
-              <div class="media-left">
-                <!-- <img src="./images/transflow.jpg" width="40" /> -->
-              </div>
-              <div class="media-content">
-                <p class="title is-6 is-spaced is-marginless">
-                  <a href="edit-book.html"
-                    >TensorFlow For Machine Intelligence</a
-                  >
-                </p>
-              </div>
-              <div class="media-right">
-                56 sold
-              </div>
-            </div>
-            <div class="media">
-              <div class="media-left is-marginless">
-                <p class="number">3</p>
-              </div>
-              <div class="media-left">
-                <!-- <img src="./images/js.jpg" width="40" /> -->
-              </div>
-              <div class="media-content">
-                <p class="title is-6 is-spaced is-marginless">
-                  <a href="edit-book.html">Choosing a JavaScript Framework</a>
-                </p>
-              </div>
-              <div class="media-right">
-                47 sold
-              </div>
-            </div>
-            <a href="books.html" class="button is-link is-outlined"
-              >View all books</a
-            >
-          </div>
-        </div>
-      </div>
+      <PopularBooks></PopularBooks>
       <div class="column is-4-desktop">
         <div class="card">
           <div class="card-content">
@@ -182,6 +122,7 @@
 import orders from "@/services/orders";
 import customers from "@/services/customers";
 import LatestOrders from "@/components/LatestOrders";
+import PopularBooks from "@/components/PopularBooks";
 
 export default {
   props: {
@@ -191,7 +132,8 @@ export default {
     }
   },
   components: {
-    LatestOrders
+    LatestOrders,
+    PopularBooks
   },
   data() {
     return {

@@ -174,6 +174,7 @@ export default {
     Menu
   },
   async created() {
+    this.$store.dispatch("setCurrPage", "Books");
     if (this.bookDetail !== undefined && this.bookDetail !== "new") {
       await bookService.getABook(this.bookDetail).then(res => {
         this.titleVal = res.data.bookName;
