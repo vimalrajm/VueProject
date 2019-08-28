@@ -54,66 +54,7 @@
     <div class="columns">
       <LatestOrders></LatestOrders>
       <PopularBooks></PopularBooks>
-      <div class="column is-4-desktop">
-        <div class="card">
-          <div class="card-content">
-            <h2 class="title is-4">
-              Most loyal customers
-            </h2>
-            <div class="media">
-              <div class="media-left is-marginless">
-                <p class="number">1</p>
-              </div>
-              <div class="media-content">
-                <p class="title is-6 is-spaced is-marginless">
-                  <a href="edit-customer.html">John Miller</a>
-                </p>
-                <p class="subtitle is-6">
-                  United States
-                </p>
-              </div>
-              <div class="media-right">
-                7 orders
-              </div>
-            </div>
-            <div class="media">
-              <div class="media-left is-marginless">
-                <p class="number">2</p>
-              </div>
-              <div class="media-content">
-                <p class="title is-6 is-spaced is-marginless">
-                  <a href="edit-customer.html">Samantha Rogers</a>
-                </p>
-                <p class="subtitle is-6">
-                  United Kingdom
-                </p>
-              </div>
-              <div class="media-right">
-                5 orders
-              </div>
-            </div>
-            <div class="media">
-              <div class="media-left is-marginless">
-                <p class="number">3</p>
-              </div>
-              <div class="media-content">
-                <p class="title is-6 is-spaced is-marginless">
-                  <a href="edit-customer.html">Paul Jacques</a>
-                </p>
-                <p class="subtitle is-6">
-                  Canada
-                </p>
-              </div>
-              <div class="media-right">
-                2 orders
-              </div>
-            </div>
-            <a href="customers.html" class="button is-link is-outlined"
-              >View all Customers</a
-            >
-          </div>
-        </div>
-      </div>
+      <LoyalCustomers></LoyalCustomers>
     </div>
   </div>
 </template>
@@ -123,6 +64,7 @@ import orders from "@/services/orders";
 import customers from "@/services/customers";
 import LatestOrders from "@/components/LatestOrders";
 import PopularBooks from "@/components/PopularBooks";
+import LoyalCustomers from "@/components/LoyalCustomers";
 
 export default {
   props: {
@@ -133,7 +75,8 @@ export default {
   },
   components: {
     LatestOrders,
-    PopularBooks
+    PopularBooks,
+    LoyalCustomers
   },
   data() {
     return {
