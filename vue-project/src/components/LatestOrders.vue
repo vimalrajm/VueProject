@@ -22,7 +22,7 @@
                 </label>
               </p>
               <small>
-                Nov 16, 11:45 by
+                {{ getDate(order.date) }}
                 <router-link
                   v-if="
                     currUser.role === 'admin' || order.custId === currUser.id
@@ -101,7 +101,39 @@ export default {
       this.lastThreeOrders.push(this.orderData[i]);
     }
   },
-  methods: {},
+  methods: {
+    getDate(date) {
+      var months = [
+        "Jan",
+        "Feb",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sept",
+        "Oct",
+        "Nov",
+        "Dec"
+      ];
+      let dateFormat = "";
+      dateFormat = months[new Date(date).getMonth()];
+      dateFormat =
+        dateFormat.toUpperCase() +
+        " " +
+        new Date(date).getDate() +
+        " " +
+        new Date(date).getFullYear();
+      dateFormat =
+        dateFormat +
+        ", " +
+        new Date(date).getHours() +
+        ":" +
+        new Date(date).getMinutes();
+      return dateFormat;
+    }
+  },
   computed: {
     ...mapState(["currUser"])
   }

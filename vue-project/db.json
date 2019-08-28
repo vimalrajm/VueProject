@@ -147,7 +147,7 @@
       "name": "arjun",
       "email": "arjun@gmail.com",
       "country": "United Kingdom",
-      "orders": 1,
+      "orders": 3,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -467,7 +467,7 @@
   ],
   "views": [
     {
-      "viewers": 17,
+      "viewers": 18,
       "id": 1
     }
   ]

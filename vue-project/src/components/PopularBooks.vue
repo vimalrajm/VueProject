@@ -81,7 +81,6 @@ export default {
       this.topThreeBooks.push(this.bookData[i]);
     }
   },
-  methods: {},
   computed: {
     ...mapState(["currUser"])
   }
