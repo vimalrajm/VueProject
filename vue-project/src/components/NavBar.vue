@@ -46,13 +46,7 @@
     </div>
     <div v-show="getcurrentPage === 'Customers'" class="level-right">
       <div class="level-item">
-        <p><strong>All</strong></p>
-      </div>
-      <div class="level-item">
-        <p><a>With orders</a></p>
-      </div>
-      <div class="level-item">
-        <p><a>Without orders</a></p>
+        <p><strong>All Orders</strong></p>
       </div>
     </div>
   </nav>

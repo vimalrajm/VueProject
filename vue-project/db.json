@@ -27,7 +27,7 @@
       "name": "melcome",
       "email": "melcome@gmail.com",
       "country": "United Kingdom",
-      "orders": 6,
+      "orders": 3,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -57,7 +57,7 @@
       "name": "jose",
       "email": "jose@gmail.com",
       "country": "United States",
-      "orders": 2,
+      "orders": 1,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -102,20 +102,6 @@
       "id": 6231843688
     },
     {
-      "name": "murali krishna",
-      "email": "murali@gmail.com",
-      "country": "Canada",
-      "orders": 1,
-      "role": "customer",
-      "password": "12345678",
-      "address": [
-        "#127-128, ALANAHALLI, MYSURU - BANNUR ROAD, ALANAHALLI POST, MYSURU - 570028, KARNATAKA"
-      ],
-      "zipcode": "123",
-      "city": "232",
-      "id": 5457371316
-    },
-    {
       "name": "pushkar",
       "email": "pushkar@gmail.com",
       "country": "United Kingdom",
@@ -130,24 +116,10 @@
       "id": 1247898811
     },
     {
-      "name": "danush",
-      "email": "danush@gmail.com",
-      "country": "India",
-      "orders": 1,
-      "role": "customer",
-      "password": "12345678",
-      "address": [
-        "324"
-      ],
-      "zipcode": "43",
-      "city": "bangalore",
-      "id": 9577400113
-    },
-    {
       "name": "arjun",
       "email": "arjun@gmail.com",
       "country": "United Kingdom",
-      "orders": 3,
+      "orders": 1,
       "role": "customer",
       "password": "12345678",
       "address": [
@@ -377,20 +349,6 @@
       ]
     },
     {
-      "id": 1181449,
-      "custId": 5457371316,
-      "date": "2019-08-15T10:06:28.654Z",
-      "numberOfBooks": 1,
-      "status": "In Progress",
-      "totalCost": 22.99,
-      "bookIdQty": [
-        {
-          "bookId": 97531,
-          "qty": 1
-        }
-      ]
-    },
-    {
       "id": 9125909,
       "custId": 1247898811,
       "date": "2019-08-15T10:07:01.179Z",
@@ -401,20 +359,6 @@
         {
           "bookId": 8642,
           "qty": 1
-        }
-      ]
-    },
-    {
-      "id": 8056961,
-      "custId": 9577400113,
-      "date": "2019-08-15T10:08:49.969Z",
-      "numberOfBooks": 2,
-      "status": "In Progress",
-      "totalCost": 45.98,
-      "bookIdQty": [
-        {
-          "bookId": 8642,
-          "qty": "2"
         }
       ]
     },
@@ -467,7 +411,7 @@
   ],
   "views": [
     {
-      "viewers": 18,
+      "viewers": 19,
       "id": 1
     }
   ]
