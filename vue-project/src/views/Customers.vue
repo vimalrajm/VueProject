@@ -238,7 +238,6 @@ export default {
     },
     async delete(id, count) {
       try {
-        console.log(id, count);
         let ordersData;
         ({ data: ordersData } = await orders.getAllOrders());
         console.log(">>>", ordersData);
