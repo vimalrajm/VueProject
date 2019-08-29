@@ -60,5 +60,9 @@ export default {
       totalCost: orderData.totalCost,
       bookIdQty: orderData.bookIdQty
     });
+  },
+
+  removeOrder(id) {
+    return orderClient.delete("/orders/" + id);
   }
 };

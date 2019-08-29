@@ -170,18 +170,18 @@ export default {
     },
     getDate(date) {
       var months = [
-        "January",
-        "February",
+        "Jan",
+        "Feb",
         "March",
         "April",
         "May",
         "June",
         "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+        "Aug",
+        "Sept",
+        "Oct",
+        "Nov",
+        "Dec"
       ];
       let dateFormat = "";
       dateFormat = months[new Date(date).getMonth()];

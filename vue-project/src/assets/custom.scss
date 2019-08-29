@@ -35,3 +35,7 @@ hr {
 .not-allowed {
   cursor: not-allowed;
 }
+
+.table thead td,.table thead th {
+  background-color: rgba(165, 164, 164, 0.212);
+}

@@ -118,6 +118,7 @@ import VuetableFieldCheckbox from "vuetable-2/src/components/VuetableFieldCheckb
 import { mapState } from "vuex";
 import customers from "@/services/customers";
 import { toastMixin } from "@/toastMixin";
+import orders from "@/services/orders";
 
 export default {
   mixins: [toastMixin],
@@ -237,6 +238,15 @@ export default {
     },
     async delete(id, count) {
       try {
+        console.log(id, count);
+        let ordersData;
+        ({ data: ordersData } = await orders.getAllOrders());
+        console.log(">>>", ordersData);
+        for (let order of ordersData) {
+          if (order.custId === id) {
+            await orders.removeOrder(order.id);
+          }
+        }
         await customers.deleteCustomer(id).then(res => {
           if (res.status === 200) {
             if (count) {
@@ -274,6 +284,7 @@ export default {
             );
           });
       } catch (e) {
+        console.log(e);
         this.toast("is-danger", "Some thing went wrong", "is-top");
       }
     }
