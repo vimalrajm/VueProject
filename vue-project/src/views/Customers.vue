@@ -141,16 +141,14 @@ export default {
   async created() {
     this.$store.dispatch("setCurrPage", "Customers");
     this.$store.dispatch("setCustAndOrderLimit", 7);
+    let res;
     try {
-      await customers
-        .getCustomers(this.currPageNumber, this.custOrderLimit)
-        .then(res => {
-          this.customerData = res;
-          this.$store.dispatch(
-            "setNoOfCustomers",
-            res.headers["x-total-count"]
-          );
-        });
+      res = await customers.getCustomers(
+        this.currPageNumber,
+        this.custOrderLimit
+      );
+      this.customerData = res;
+      this.$store.dispatch("setNoOfCustomers", res.headers["x-total-count"]);
     } catch (e) {
       console.log(e);
     }
@@ -237,51 +235,43 @@ export default {
       }
     },
     async delete(id, count) {
+      let res;
       try {
         let ordersData;
         ({ data: ordersData } = await orders.getAllOrders());
-        console.log(">>>", ordersData);
         for (let order of ordersData) {
           if (order.custId === id) {
             await orders.removeOrder(order.id);
           }
         }
-        await customers.deleteCustomer(id).then(res => {
-          if (res.status === 200) {
-            if (count) {
-              this.toast(
-                "is-success",
-                "Customer removed successfully",
-                "is-top"
-              );
-            }
-            if (
-              this.customerData.data.length === 1 &&
-              this.currPageNumber !== 1
-            ) {
-              this.$router.push({
-                name: "customers",
-                params: {
-                  currPageNumber: this.currPageNumber - 1
-                }
-              });
-            } else {
-              this.customerData = this.customerData.data.filter(data => {
-                return data.id !== id;
-              });
-              this.$store.dispatch("setNoOfCustomers", this.noOfCustomers - 1);
-            }
+        res = await customers.deleteCustomer(id);
+        if (res.status === 200) {
+          if (count) {
+            this.toast("is-success", "Customer removed successfully", "is-top");
           }
-        });
-        await customers
-          .getCustomers(this.currPageNumber, this.custOrderLimit)
-          .then(res => {
-            this.customerData = res;
-            this.$store.dispatch(
-              "setNoOfCustomers",
-              res.headers["x-total-count"]
-            );
-          });
+          if (
+            this.customerData.data.length === 1 &&
+            this.currPageNumber !== 1
+          ) {
+            this.$router.push({
+              name: "customers",
+              params: {
+                currPageNumber: this.currPageNumber - 1
+              }
+            });
+          } else {
+            this.customerData = this.customerData.data.filter(data => {
+              return data.id !== id;
+            });
+            this.$store.dispatch("setNoOfCustomers", this.noOfCustomers - 1);
+          }
+        }
+        res = await customers.getCustomers(
+          this.currPageNumber,
+          this.custOrderLimit
+        );
+        this.customerData = res;
+        this.$store.dispatch("setNoOfCustomers", res.headers["x-total-count"]);
       } catch (e) {
         console.log(e);
         this.toast("is-danger", "Some thing went wrong", "is-top");

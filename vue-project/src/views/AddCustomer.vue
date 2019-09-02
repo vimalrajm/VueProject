@@ -174,16 +174,16 @@ export default {
   async created() {
     if (this.customerDetail !== undefined && this.customerDetail !== "new") {
       try {
-        await customerService.getCustomer(this.customerDetail).then(res => {
-          this.customerName = res.data.name;
-          this.customerEmail = res.data.email;
-          this.address1 = res.data.address[0];
-          this.address2 = res.data.address[1];
-          this.zipcode = res.data.zipcode;
-          this.city = res.data.city;
-          this.country = res.data.country;
-          this.btnType = "Update";
-        });
+        let res;
+        res = await customerService.getCustomer(this.customerDetail);
+        this.customerName = res.data.name;
+        this.customerEmail = res.data.email;
+        this.address1 = res.data.address[0];
+        this.address2 = res.data.address[1];
+        this.zipcode = res.data.zipcode;
+        this.city = res.data.city;
+        this.country = res.data.country;
+        this.btnType = "Update";
       } catch (e) {
         console.log(e);
       }
@@ -253,47 +253,45 @@ export default {
           );
           try {
             let found = 0;
-            await customerService.getAllCustomers().then(res => {
+            let res;
+            res = await customerService.getAllCustomers();
+            _.find(res.data, function(o) {
+              if (o.email === customerDetailObj.email) {
+                found = 1;
+              }
+            });
+            if (!found) {
+              res = await userService.getUsers();
               _.find(res.data, function(o) {
                 if (o.email === customerDetailObj.email) {
                   found = 1;
                 }
               });
-            });
-            if (!found) {
-              await userService.getUsers().then(res => {
-                _.find(res.data, function(o) {
-                  if (o.email === customerDetailObj.email) {
-                    found = 1;
-                  }
-                });
-              });
             }
             if (!found) {
-              await customerService.addCustomer(customerDetailObj).then(res => {
-                if (res.status === 201) {
-                  this.toast(
-                    "is-success",
-                    "Customer added sucessfully",
-                    "is-top"
-                  );
-                  this.isCreated = 1;
-                  this.clearFields();
-                  this.btnLoading = "";
-                  this.$store.dispatch(
-                    "setNoOfCustomers",
-                    Number(this.noOfCustomers) + 1
-                  );
-                  console.log(this.noOfCustomers);
-                } else {
-                  this.toast(
-                    "is-danger",
-                    "Something went wrong while adding",
-                    "is-top"
-                  );
-                  this.btnLoading = "";
-                }
-              });
+              res = await customerService.addCustomer(customerDetailObj);
+              if (res.status === 201) {
+                this.toast(
+                  "is-success",
+                  "Customer added sucessfully",
+                  "is-top"
+                );
+                this.isCreated = 1;
+                this.clearFields();
+                this.btnLoading = "";
+                this.$store.dispatch(
+                  "setNoOfCustomers",
+                  Number(this.noOfCustomers) + 1
+                );
+                console.log(this.noOfCustomers);
+              } else {
+                this.toast(
+                  "is-danger",
+                  "Something went wrong while adding",
+                  "is-top"
+                );
+                this.btnLoading = "";
+              }
             } else {
               console.log("found");
               this.toast("is-danger", "Email id already exists", "is-top");
@@ -342,7 +340,15 @@ export default {
           try {
             let found = 0;
             let id = this.customerDetail;
-            await customerService.getAllCustomers().then(res => {
+            let res;
+            res = await customerService.getAllCustomers();
+            _.find(res.data, function(o) {
+              if (o.email === customerDetailObj.email && o.id !== Number(id)) {
+                found = 1;
+              }
+            });
+            if (!found) {
+              res = await userService.getUsers();
               _.find(res.data, function(o) {
                 if (
                   o.email === customerDetailObj.email &&
@@ -351,45 +357,30 @@ export default {
                   found = 1;
                 }
               });
-            });
-            if (!found) {
-              await userService.getUsers().then(res => {
-                _.find(res.data, function(o) {
-                  if (
-                    o.email === customerDetailObj.email &&
-                    o.id !== Number(id)
-                  ) {
-                    found = 1;
-                  }
-                });
-              });
             }
             if (!found) {
-              await customerService
-                .updateCustomer(customerDetailObj)
-                .then(res => {
-                  if (res.status === 200) {
-                    this.toast(
-                      "is-success",
-                      "Customer details updated sucessfully",
-                      "is-top"
-                    );
-                    this.btnLoading = "";
-                    this.$router.push({
-                      name: "customers",
-                      params: {
-                        currPageNumber: 1
-                      }
-                    });
-                  } else {
-                    this.toast(
-                      "is-danger",
-                      "Something went wrong while adding",
-                      "is-top"
-                    );
-                    this.btnLoading = "";
+              res = await customerService.updateCustomer(customerDetailObj);
+              if (res.status === 200) {
+                this.toast(
+                  "is-success",
+                  "Customer details updated sucessfully",
+                  "is-top"
+                );
+                this.btnLoading = "";
+                this.$router.push({
+                  name: "customers",
+                  params: {
+                    currPageNumber: 1
                   }
                 });
+              } else {
+                this.toast(
+                  "is-danger",
+                  "Something went wrong while adding",
+                  "is-top"
+                );
+                this.btnLoading = "";
+              }
             } else {
               console.log("found");
               this.toast("is-danger", "Email id already exists", "is-top");

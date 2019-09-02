@@ -86,17 +86,35 @@ export default {
   },
   methods: {
     async loginValidation() {
+      let userDetail;
       const emailRegex = /([a-zA-Z0-9]+)@([a-zA-Z]+)\.([a-zA-Z]{2,4}$)/;
       if (this.emailVal === "" || this.pwdValue === "") {
         this.toast("is-danger", "Fields cannot be empty", "is-top");
       } else if (emailRegex.test(this.emailVal)) {
         try {
-          await user.getUsers().then(userDetail => {
+          userDetail = await user.getUsers();
+          userDetail.data.forEach(user => {
+            if (
+              user.email === this.emailVal &&
+              user.password === this.pwdValue
+            ) {
+              this.loginFail = false;
+              this.$store.dispatch("setCurrUser", user);
+              this.$store.dispatch("setCurrPage", "Books");
+              this.$store.dispatch("setCurrentPageNumber", 1);
+              this.$router.push({
+                name: "dashboard"
+              });
+            }
+          });
+          if (this.loginFail) {
+            userDetail = await customer.getAllCustomers();
             userDetail.data.forEach(user => {
               if (
                 user.email === this.emailVal &&
                 user.password === this.pwdValue
               ) {
+                this.customer = true;
                 this.loginFail = false;
                 this.$store.dispatch("setCurrUser", user);
                 this.$store.dispatch("setCurrPage", "Books");
@@ -105,25 +123,6 @@ export default {
                   name: "dashboard"
                 });
               }
-            });
-          });
-          if (this.loginFail) {
-            await customer.getAllCustomers().then(userDetail => {
-              userDetail.data.forEach(user => {
-                if (
-                  user.email === this.emailVal &&
-                  user.password === this.pwdValue
-                ) {
-                  this.customer = true;
-                  this.loginFail = false;
-                  this.$store.dispatch("setCurrUser", user);
-                  this.$store.dispatch("setCurrPage", "Books");
-                  this.$store.dispatch("setCurrentPageNumber", 1);
-                  this.$router.push({
-                    name: "dashboard"
-                  });
-                }
-              });
             });
           }
           if (this.loginFail) {

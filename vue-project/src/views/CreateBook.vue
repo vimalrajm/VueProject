@@ -175,16 +175,16 @@ export default {
   },
   async created() {
     this.$store.dispatch("setCurrPage", "Books");
+    let res;
     if (this.bookDetail !== undefined && this.bookDetail !== "new") {
-      await bookService.getABook(this.bookDetail).then(res => {
-        this.titleVal = res.data.bookName;
-        this.price = res.data.bookPrice;
-        this.pages = res.data.bookPages;
-        this.isbn = res.data.bookISBN;
-        this.chosenFileName = res.data.image;
-        this.btnType = "Update";
-        this.addedBy = res.data.addedBy;
-      });
+      res = await bookService.getABook(this.bookDetail);
+      this.titleVal = res.data.bookName;
+      this.price = res.data.bookPrice;
+      this.pages = res.data.bookPages;
+      this.isbn = res.data.bookISBN;
+      this.chosenFileName = res.data.image;
+      this.btnType = "Update";
+      this.addedBy = res.data.addedBy;
     }
   },
   computed: {
@@ -203,6 +203,7 @@ export default {
       this.chosenFileName = "No chosen file";
     },
     createNewBook() {
+      let res;
       if (
         this.titleVal === "" ||
         this.price === "" ||
@@ -223,25 +224,25 @@ export default {
           this.addedBy
         );
         try {
-          bookService.createBook(bookObj).then(res => {
-            if (res.status === 201) {
-              this.toast("is-success", "Book added sucessfully", "is-top");
-              this.isCreated = 1;
-              this.clearFields();
-            } else {
-              this.toast(
-                "is-danger",
-                "Something went wrong while adding",
-                "is-top"
-              );
-            }
-          });
+          res = bookService.createBook(bookObj);
+          if (res.status === 201) {
+            this.toast("is-success", "Book added sucessfully", "is-top");
+            this.isCreated = 1;
+            this.clearFields();
+          } else {
+            this.toast(
+              "is-danger",
+              "Something went wrong while adding",
+              "is-top"
+            );
+          }
         } catch (e) {
           console.log(e);
         }
       }
     },
     updateBook() {
+      let res;
       if (
         this.titleVal === "" ||
         this.price === "" ||
@@ -260,25 +261,22 @@ export default {
             this.chosenFileName,
             this.addedBy
           );
-          bookService
-            .updateBook(Number(this.bookDetail), bookObj2)
-            .then(res => {
-              if (res.status === 200) {
-                this.toast("is-success", "Book updated sucessfully", "is-top");
-                this.$router.push({
-                  name: "books",
-                  params: {
-                    currPageNumber: 1
-                  }
-                });
-              } else {
-                this.toast(
-                  "is-danger",
-                  "Something went wrong while adding",
-                  "is-top"
-                );
+          res = bookService.updateBook(Number(this.bookDetail), bookObj2);
+          if (res.status === 200) {
+            this.toast("is-success", "Book updated sucessfully", "is-top");
+            this.$router.push({
+              name: "books",
+              params: {
+                currPageNumber: 1
               }
             });
+          } else {
+            this.toast(
+              "is-danger",
+              "Something went wrong while adding",
+              "is-top"
+            );
+          }
         } catch (e) {
           this.toast(
             "is-danger",

@@ -148,12 +148,12 @@ export default {
     },
     async addToCart(book, currUser) {
       try {
-        await orders.addToCart(book.id, currUser.id, book.qty).then(res => {
-          if (res.status === 201) {
-            this.toast("is-success", "Book added to cart", "is-top");
-            this.$emit("input", 1);
-          }
-        });
+        let response;
+        response = await orders.addToCart(book.id, currUser.id, book.qty);
+        if (response.status === 201) {
+          this.toast("is-success", "Book added to cart", "is-top");
+          this.$emit("input", 1);
+        }
       } catch (e) {
         console.log(e);
         this.toast(
@@ -165,34 +165,31 @@ export default {
     },
     async delete(book) {
       try {
-        await books.deleteBook(book).then(res => {
-          if (res.status === 200) {
-            this.toast("is-success", "Book removed succesfully", "is-top");
-            if (this.books.length === 1 && this.currPageNumber !== 1) {
-              this.$router.push({
-                name: "books",
-                params: {
-                  currPageNumber: this.currPageNumber - 1
-                }
-              });
-            } else {
-              this.books.forEach(bookVal => {
-                if (bookVal.id !== book.id) {
-                  this.nonRemovedItem.push(bookVal);
-                }
-              });
-              this.books = this.nonRemovedItem;
-              this.nonRemovedItem = [];
-            }
+        let res;
+        res = await books.deleteBook(book);
+        if (res.status === 200) {
+          this.toast("is-success", "Book removed succesfully", "is-top");
+          if (this.books.length === 1 && this.currPageNumber !== 1) {
+            this.$router.push({
+              name: "books",
+              params: {
+                currPageNumber: this.currPageNumber - 1
+              }
+            });
+          } else {
+            this.books.forEach(bookVal => {
+              if (bookVal.id !== book.id) {
+                this.nonRemovedItem.push(bookVal);
+              }
+            });
+            this.books = this.nonRemovedItem;
+            this.nonRemovedItem = [];
           }
-        });
-        await books
-          .getBooks(this.currPageNumber, this.pageLimit)
-          .then(response => {
-            this.books = response.data;
-            this.bookCount = response.headers["x-total-count"];
-            this.$store.dispatch("setNoOfBooks", this.bookCount);
-          });
+        }
+        res = await books.getBooks(this.currPageNumber, this.pageLimit);
+        this.books = res.data;
+        this.bookCount = res.headers["x-total-count"];
+        this.$store.dispatch("setNoOfBooks", this.bookCount);
       } catch (e) {
         console.log(e);
         this.toast("is-danger", "Some thing went wrong", "is-top");
@@ -201,12 +198,10 @@ export default {
   },
   async created() {
     try {
-      await books
-        .getBooks(this.currPageNumber, this.pageLimit)
-        .then(response => {
-          this.books = response.data;
-          this.bookCount = response.headers["x-total-count"];
-        });
+      let response;
+      response = await books.getBooks(this.currPageNumber, this.pageLimit);
+      this.books = response.data;
+      this.bookCount = response.headers["x-total-count"];
     } catch (e) {
       console.log(e);
     }

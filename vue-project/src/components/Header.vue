@@ -211,16 +211,15 @@ export default {
     async openCartModal(currUser) {
       this.activeModal = "is-active";
       try {
-        await orders.getCart().then(res => {
-          _.find(res.data, o => {
-            if (o.custId === currUser.id) {
-              books.getABook(o.bookId).then(res => {
-                res.data.qty = o.qty;
-                res.data.cartId = o.id;
-                this.cartData.push(res.data);
-              });
-            }
-          });
+        let res;
+        res = await orders.getCart();
+        _.find(res.data, o => {
+          if (o.custId === currUser.id) {
+            let book = books.getABook(o.bookId);
+            book.data.qty = o.qty;
+            book.data.cartId = o.id;
+            this.cartData.push(book.data);
+          }
         });
       } catch (e) {
         console.log(e);
@@ -244,17 +243,16 @@ export default {
     },
     async clearCart() {
       try {
-        await orders.getCart().then(res => {
-          _.find(res.data, o => {
-            if (o.custId === this.currUser.id) {
-              orders.removeBookFromCart(o.id).then(res => {
-                if (!res.status === 200) {
-                  this.toast("is-danger", "Something went wrong", "is-top");
-                }
-              });
+        let res;
+        res = await orders.getCart();
+        _.find(res.data, o => {
+          if (o.custId === this.currUser.id) {
+            let order = orders.removeBookFromCart(o.id);
+            if (!order.status === 200) {
+              this.toast("is-danger", "Something went wrong", "is-top");
             }
-            this.cartData = [];
-          });
+          }
+          this.cartData = [];
         });
       } catch (e) {
         console.log(e);

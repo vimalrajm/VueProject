@@ -204,16 +204,14 @@ export default {
     ...mapState(["currUser", "currentPage", "noOfOrders", "custOrderLimit"])
   },
   async created() {
+    let res;
     this.$store.dispatch("setCurrPage", "Orders");
     this.$store.dispatch("setCustAndOrderLimit", 7);
     try {
       let temp = [];
-      await orders
-        .getOrders(this.currPageNumber, this.custOrderLimit)
-        .then(res => {
-          this.orderData = res.data;
-          this.$store.dispatch("setNumOfOrders", res.headers["x-total-count"]);
-        });
+      res = await orders.getOrders(this.currPageNumber, this.custOrderLimit);
+      this.orderData = res.data;
+      this.$store.dispatch("setNumOfOrders", res.headers["x-total-count"]);
       for (let data of this.orderData) {
         let res = await customers.getCustomer(data.custId);
         data.custName = await res.data.name;
