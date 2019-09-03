@@ -209,7 +209,7 @@ import books from "@/services/books";
 import VueTable from "vuetable-2";
 import MultiSelect from "vue-multiselect";
 import _ from "lodash";
-
+import nProgress from "nprogress";
 export default {
   data() {
     return {
@@ -252,6 +252,7 @@ export default {
     };
   },
   async created() {
+    nProgress.start();
     this.$store.dispatch("setCurrPage", "Orders");
     try {
       ({ data: this.orderData } = await orders.getOrder(Number(this.orderId)));
@@ -300,6 +301,7 @@ export default {
     } catch (e) {
       console.log(e);
     }
+    nProgress.done();
   },
   mixins: [toastMixin],
   props: {
@@ -332,6 +334,7 @@ export default {
   },
   methods: {
     async orderStatus(status) {
+      nProgress.start();
       try {
         this.orderData.status = status;
         let res = await orders.updateOrder(this.orderData);
@@ -350,6 +353,7 @@ export default {
       } catch (e) {
         console.log(e);
       }
+      nProgress.done();
     },
     setStatus(status) {
       this.$dialog.confirm({
@@ -367,6 +371,7 @@ export default {
       });
     },
     async addBook() {
+      nProgress.start();
       try {
         let bookPrice = 0;
         this.isLoading = "is-loading";
@@ -407,7 +412,7 @@ export default {
         } else {
           this.toast(
             "is-danger",
-            "Spmething went wrong while adding book to the order",
+            "Something went wrong while adding book to the order",
             "is-top"
           );
         }
@@ -415,6 +420,7 @@ export default {
       } catch (e) {
         console.log(e);
       }
+      nProgress.done();
     },
     confirmBookAdd() {
       this.$dialog.confirm({

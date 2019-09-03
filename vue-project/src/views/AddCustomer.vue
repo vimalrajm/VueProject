@@ -154,6 +154,7 @@ import CustomerData from "@/services/dataServices/customerData";
 import customerService from "@/services/customers";
 import userService from "@/services/users";
 import _ from "lodash";
+import nProgress from "nprogress";
 
 export default {
   data() {
@@ -172,6 +173,7 @@ export default {
     };
   },
   async created() {
+    nProgress.start();
     if (this.customerDetail !== undefined && this.customerDetail !== "new") {
       try {
         let res;
@@ -189,6 +191,7 @@ export default {
       }
       this.$store.dispatch("setCurrPage", "Customers");
     }
+    nProgress.done();
   },
   mixins: [toastMixin],
   props: {

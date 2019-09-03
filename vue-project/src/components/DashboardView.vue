@@ -65,7 +65,7 @@ import customers from "@/services/customers";
 import LatestOrders from "@/components/LatestOrders";
 import PopularBooks from "@/components/PopularBooks";
 import LoyalCustomers from "@/components/LoyalCustomers";
-
+import nProgress from "nprogress";
 export default {
   props: {
     currUser: {
@@ -89,11 +89,9 @@ export default {
     };
   },
   async created() {
+    nProgress.start();
     ({ data: this.ordersData } = await orders.getAllOrders());
     this.ordersCount = this.ordersData.length;
-    // this.ordersData.forEach(order => {
-    //   this.revenu += order.totalCost;
-    // });
     for (let order of this.ordersData) {
       this.revenu += order.totalCost;
     }
@@ -101,6 +99,7 @@ export default {
     this.customersCount = this.customersData.length;
     const res = await customers.getViews();
     this.viewers = res.data[0].viewers;
+    nProgress.done();
   }
 };
 </script>

@@ -66,6 +66,7 @@ import orders from "@/services/orders.js";
 import { mapActions } from "vuex";
 import { toastMixin } from "@/toastMixin";
 import _ from "lodash";
+import nProgress from "nprogress";
 
 export default {
   props: {
@@ -197,6 +198,7 @@ export default {
     }
   },
   async created() {
+    nProgress.start();
     try {
       let response;
       response = await books.getBooks(this.currPageNumber, this.pageLimit);
@@ -206,6 +208,7 @@ export default {
       console.log(e);
     }
     this.setNoOfBooks(this.bookCount);
+    nProgress.done();
   }
 };
 </script>

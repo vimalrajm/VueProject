@@ -119,6 +119,7 @@ import { mapState } from "vuex";
 import customers from "@/services/customers";
 import { toastMixin } from "@/toastMixin";
 import orders from "@/services/orders";
+import nProgress from "nprogress";
 
 export default {
   mixins: [toastMixin],
@@ -139,6 +140,7 @@ export default {
     ...mapState(["currUser", "currentPage", "noOfCustomers", "custOrderLimit"])
   },
   async created() {
+    nProgress.start();
     this.$store.dispatch("setCurrPage", "Customers");
     this.$store.dispatch("setCustAndOrderLimit", 7);
     let res;
@@ -152,6 +154,7 @@ export default {
     } catch (e) {
       console.log(e);
     }
+    nProgress.done();
   },
   data() {
     return {
@@ -235,6 +238,7 @@ export default {
       }
     },
     async delete(id, count) {
+      nProgress.start();
       let res;
       try {
         let ordersData;
@@ -276,6 +280,7 @@ export default {
         console.log(e);
         this.toast("is-danger", "Some thing went wrong", "is-top");
       }
+      nProgress.done();
     }
   }
 };

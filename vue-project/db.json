@@ -129,37 +129,6 @@
       "zipcode": "7",
       "city": "8",
       "id": 1047319950
-    },
-    {
-      "id": 5123739648,
-      "name": "harish",
-      "email": "harish@gmail.com",
-      "country": "United Kingdom",
-      "orders": 0,
-      "role": "customer",
-      "password": "12345678",
-      "address": [
-        "9",
-        "10",
-        "11",
-        "12"
-      ],
-      "zipcode": "2",
-      "city": "2"
-    },
-    {
-      "id": 497703455,
-      "name": "ajith",
-      "email": "ajith@gmail.com",
-      "country": "India",
-      "orders": 0,
-      "role": "customer",
-      "password": "12345678",
-      "address": [
-        "India"
-      ],
-      "zipcode": "876233",
-      "city": "MYSURU"
     }
   ],
   "books": [
@@ -250,9 +219,9 @@
       "id": 8340822,
       "custId": 4445805593,
       "date": "2019-08-15T09:25:24.272Z",
-      "numberOfBooks": 11,
-      "status": "Successful",
-      "totalCost": 987.69,
+      "numberOfBooks": 13,
+      "status": "In Progress",
+      "totalCost": 1033.67,
       "bookIdQty": [
         {
           "bookId": 13579,
@@ -268,6 +237,10 @@
         },
         {
           "bookId": 87654321,
+          "qty": "2"
+        },
+        {
+          "bookId": 8642,
           "qty": "2"
         }
       ]
@@ -411,7 +384,7 @@
   ],
   "views": [
     {
-      "viewers": 19,
+      "viewers": 20,
       "id": 1
     }
   ]

@@ -74,6 +74,9 @@
 import user from "@/services/users.js";
 import { toastMixin } from "@/toastMixin";
 import customer from "@/services/customers.js";
+import nProgress from "nprogress";
+import { setTimeout } from "timers";
+
 export default {
   mixins: [toastMixin],
   data() {
@@ -84,8 +87,15 @@ export default {
       customer: false
     };
   },
+  beforeCreate() {
+    nProgress.start();
+    setTimeout(() => {
+      nProgress.done();
+    }, 2000);
+  },
   methods: {
     async loginValidation() {
+      nProgress.start();
       let userDetail;
       const emailRegex = /([a-zA-Z0-9]+)@([a-zA-Z]+)\.([a-zA-Z]{2,4}$)/;
       if (this.emailVal === "" || this.pwdValue === "") {
@@ -146,6 +156,7 @@ export default {
       } else {
         this.toast("is-danger", "Invlid email id or password", "is-top");
       }
+      nProgress.start();
     },
     signupModal() {}
   }

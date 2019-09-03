@@ -142,7 +142,7 @@ import { mapState } from "vuex";
 import { toastMixin } from "@/toastMixin";
 import { Book } from "@/services/dataServices/booksData";
 import bookService from "@/services/books.js";
-
+import nProgress from "nprogress";
 export default {
   data() {
     return {
@@ -174,6 +174,7 @@ export default {
     Menu
   },
   async created() {
+    nProgress.start();
     this.$store.dispatch("setCurrPage", "Books");
     let res;
     if (this.bookDetail !== undefined && this.bookDetail !== "new") {
@@ -186,6 +187,7 @@ export default {
       this.btnType = "Update";
       this.addedBy = res.data.addedBy;
     }
+    nProgress.done();
   },
   computed: {
     ...mapState(["currUser", "currentPage", "noOfBooks", "pageLimit"]),
@@ -202,7 +204,7 @@ export default {
         "";
       this.chosenFileName = "No chosen file";
     },
-    createNewBook() {
+    async createNewBook() {
       let res;
       if (
         this.titleVal === "" ||
@@ -224,7 +226,7 @@ export default {
           this.addedBy
         );
         try {
-          res = bookService.createBook(bookObj);
+          res = await bookService.createBook(bookObj);
           if (res.status === 201) {
             this.toast("is-success", "Book added sucessfully", "is-top");
             this.isCreated = 1;
@@ -241,7 +243,7 @@ export default {
         }
       }
     },
-    updateBook() {
+    async updateBook() {
       let res;
       if (
         this.titleVal === "" ||
@@ -261,7 +263,7 @@ export default {
             this.chosenFileName,
             this.addedBy
           );
-          res = bookService.updateBook(Number(this.bookDetail), bookObj2);
+          res = await bookService.updateBook(Number(this.bookDetail), bookObj2);
           if (res.status === 200) {
             this.toast("is-success", "Book updated sucessfully", "is-top");
             this.$router.push({

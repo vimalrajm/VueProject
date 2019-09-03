@@ -97,6 +97,7 @@ import customers from "@/services/customers";
 import orders from "@/services/orders";
 import OrdersNavBar from "@/components/NavBar.vue";
 import Pagination from "@/components/Pagination.vue";
+import nProgress from "nprogress";
 
 export default {
   components: {
@@ -204,6 +205,7 @@ export default {
     ...mapState(["currUser", "currentPage", "noOfOrders", "custOrderLimit"])
   },
   async created() {
+    nProgress.start();
     let res;
     this.$store.dispatch("setCurrPage", "Orders");
     this.$store.dispatch("setCustAndOrderLimit", 7);
@@ -221,6 +223,7 @@ export default {
     } catch (e) {
       console.log(e);
     }
+    nProgress.done();
   }
 };
 </script>
