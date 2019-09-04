@@ -213,14 +213,14 @@ export default {
       try {
         let res;
         res = await orders.getCart();
-        _.find(res.data, o => {
+        for (let o of res.data) {
           if (o.custId === currUser.id) {
-            let book = books.getABook(o.bookId);
+            let book = await books.getABook(o.bookId);
             book.data.qty = o.qty;
             book.data.cartId = o.id;
             this.cartData.push(book.data);
           }
-        });
+        }
       } catch (e) {
         console.log(e);
       }
@@ -245,15 +245,15 @@ export default {
       try {
         let res;
         res = await orders.getCart();
-        _.find(res.data, o => {
+        for (let o of res.data) {
           if (o.custId === this.currUser.id) {
-            let order = orders.removeBookFromCart(o.id);
+            let order = await orders.removeBookFromCart(o.id);
             if (!order.status === 200) {
               this.toast("is-danger", "Something went wrong", "is-top");
             }
           }
           this.cartData = [];
-        });
+        }
       } catch (e) {
         console.log(e);
         this.toast("is-danger", "Something went wrong", "is-top");

@@ -29,7 +29,7 @@
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }}
           </p>
-          <p class="subtitle is-4">Revenu</p>
+          <p class="subtitle is-4">Revenue</p>
         </div>
       </div>
       <div class="column is-3-widescreen">

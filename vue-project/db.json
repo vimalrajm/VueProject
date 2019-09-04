@@ -213,15 +213,22 @@
       "qty": 1
     }
   ],
-  "cart": [],
+  "cart": [
+    {
+      "bookId": 97531,
+      "custId": 4445805593,
+      "qty": 1,
+      "id": 3
+    }
+  ],
   "orders": [
     {
       "id": 8340822,
       "custId": 4445805593,
       "date": "2019-08-15T09:25:24.272Z",
-      "numberOfBooks": 13,
+      "numberOfBooks": 17,
       "status": "In Progress",
-      "totalCost": 1033.67,
+      "totalCost": 1326.5500000000002,
       "bookIdQty": [
         {
           "bookId": 13579,
@@ -241,6 +248,14 @@
         },
         {
           "bookId": 8642,
+          "qty": "2"
+        },
+        {
+          "bookId": 246810,
+          "qty": "2"
+        },
+        {
+          "bookId": 3038280522,
           "qty": "2"
         }
       ]
@@ -371,20 +386,24 @@
       "id": 827101,
       "custId": 4445805593,
       "date": "2019-08-24T12:08:38.994Z",
-      "numberOfBooks": 1,
+      "numberOfBooks": 4,
       "status": "In Progress",
-      "totalCost": 19.99,
+      "totalCost": 88.96,
       "bookIdQty": [
         {
           "bookId": 12345678,
           "qty": 1
+        },
+        {
+          "bookId": 246810,
+          "qty": "3"
         }
       ]
     }
   ],
   "views": [
     {
-      "viewers": 20,
+      "viewers": 23,
       "id": 1
     }
   ]

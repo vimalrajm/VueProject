@@ -169,7 +169,8 @@ export default {
       city: "",
       country: "-- Choose a country --",
       isCreated: 0,
-      btnLoading: ""
+      btnLoading: "",
+      orders: 0
     };
   },
   async created() {
@@ -186,6 +187,7 @@ export default {
         this.city = res.data.city;
         this.country = res.data.country;
         this.btnType = "Update";
+        this.orders = res.data.orders;
       } catch (e) {
         console.log(e);
       }
@@ -286,7 +288,6 @@ export default {
                   "setNoOfCustomers",
                   Number(this.noOfCustomers) + 1
                 );
-                console.log(this.noOfCustomers);
               } else {
                 this.toast(
                   "is-danger",
@@ -296,7 +297,6 @@ export default {
                 this.btnLoading = "";
               }
             } else {
-              console.log("found");
               this.toast("is-danger", "Email id already exists", "is-top");
               this.btnLoading = "";
               this.address = [];
@@ -333,7 +333,7 @@ export default {
             this.customerName,
             this.customerEmail,
             this.country,
-            3,
+            this.orders,
             "customer",
             "12345678",
             this.address,
@@ -385,7 +385,6 @@ export default {
                 this.btnLoading = "";
               }
             } else {
-              console.log("found");
               this.toast("is-danger", "Email id already exists", "is-top");
               this.btnLoading = "";
               this.address = [];

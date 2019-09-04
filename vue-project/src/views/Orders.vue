@@ -18,8 +18,6 @@
             :api-mode="false"
             :fields="headers"
             :data="orderData"
-            @vuetable:checkbox-toggled="checked"
-            @vuetable:checkbox-toggled-all="checked"
           >
             <div slot="id" slot-scope="data">
               <router-link
@@ -165,9 +163,6 @@ export default {
       } else {
         return "is-danger";
       }
-    },
-    checked() {
-      this.deleteItems = this.$refs.vuetable.selectedTo;
     },
     getDate(date) {
       var months = [

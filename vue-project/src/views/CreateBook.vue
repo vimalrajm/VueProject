@@ -107,6 +107,7 @@
                 <div class="field">
                   <div class="buttons">
                     <button
+                      :class="btnLoad"
                       class="is-medium is-success button"
                       @click.prevent="
                         btnType === 'Update' ? updateBook() : createNewBook()
@@ -156,7 +157,8 @@ export default {
       fd: null,
       isCreated: 0,
       btnType: "Create",
-      addedBy: ""
+      addedBy: "",
+      btnLoading: ""
     };
   },
   mixins: [toastMixin],
@@ -196,6 +198,9 @@ export default {
     },
     curPageNum() {
       return Math.ceil((Number(this.noOfBooks) + 1) / this.pageLimit);
+    },
+    btnLoad() {
+      return this.btnLoading;
     }
   },
   methods: {
@@ -205,6 +210,7 @@ export default {
       this.chosenFileName = "No chosen file";
     },
     async createNewBook() {
+      this.btnLoading = "is-loading";
       let res;
       if (
         this.titleVal === "" ||
@@ -242,8 +248,10 @@ export default {
           console.log(e);
         }
       }
+      this.btnLoading = "";
     },
     async updateBook() {
+      this.btnLoading = "is-loading";
       let res;
       if (
         this.titleVal === "" ||
@@ -287,6 +295,7 @@ export default {
           );
         }
       }
+      this.btnLoading = "";
     },
     previewFile(event) {
       //file uplaod JS reference this website https://developer.mozilla.org/en-US/docs/Web/API/FileList

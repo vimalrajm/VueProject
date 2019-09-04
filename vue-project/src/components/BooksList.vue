@@ -97,13 +97,11 @@ export default {
       this.$emit("input", event.target.value);
     },
     qtyChange(book, event) {
-      console.log(event.target.value);
       _.find(this.books, o => {
         if (o.id === book.id) {
           o.qty = event.target.value;
         }
       });
-      console.log(JSON.stringify(this.books));
     },
     async deleteBook(book) {
       if (this.currUser.userId !== book.addedBy) {
@@ -131,7 +129,6 @@ export default {
       }
     },
     cart(book, currUser) {
-      console.log(JSON.stringify(book), currUser);
       this.$dialog.confirm({
         title: "Add to cart",
         message: `Are you sure you want to add <b>${

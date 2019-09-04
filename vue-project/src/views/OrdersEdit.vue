@@ -118,8 +118,8 @@
                   <div slot="bookName" slot-scope="props" disabled>
                     <router-link
                       :to="{
-                        name: 'addCustomer',
-                        params: { customerDetail: props.rowData.id }
+                        name: 'createBook',
+                        params: { bookDetail: props.rowData.id }
                       }"
                       :event="currUser.role === 'customer' ? '' : 'click'"
                       >{{ props.rowData.bookName }}</router-link

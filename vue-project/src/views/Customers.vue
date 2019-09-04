@@ -204,7 +204,6 @@ export default {
     },
     checked() {
       this.deleteItems = this.$refs.vuetable.selectedTo;
-      console.log(Array.from(this.deleteItems));
     },
     deleteCustomer(customer) {
       if (Array.from(this.deleteItems).length !== 0) {
