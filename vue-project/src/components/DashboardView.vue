@@ -12,7 +12,7 @@
     </nav>
     <div class="columns">
       <div class="column is-3-widescreen">
-        <div class="notification is-link has-text">
+        <div class="notification is-link has-text animateOrdersNotification">
           <p class="title is-1">
             {{ ordersCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
           </p>
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="column is-3-widescreen">
-        <div class="notification is-info has-text">
+        <div class="notification is-info has-text animateRevenueNotification">
           <p class="title is-1">
             ${{
               revenu
@@ -33,7 +33,9 @@
         </div>
       </div>
       <div class="column is-3-widescreen">
-        <div class="notification is-primary has-text">
+        <div
+          class="notification is-primary has-text animateCustomersNotification"
+        >
           <p class="title is-1">
             {{
               customersCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -43,7 +45,9 @@
         </div>
       </div>
       <div class="column is-3-widescreen">
-        <div class="notification is-success has-text">
+        <div
+          class="notification is-success has-text animateViewersNotification"
+        >
           <p class="title is-1">
             {{ viewers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
           </p>
@@ -104,4 +108,29 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+div >>> .animate:hover {
+  box-shadow: 6px 6px 10px black;
+  transition: box-shadow 400ms;
+}
+
+.animateOrdersNotification:hover {
+  box-shadow: 6px 6px 10px #3273dc;
+  transition: box-shadow 400ms;
+}
+
+.animateRevenueNotification:hover {
+  box-shadow: 6px 6px 10px #209cee;
+  transition: box-shadow 400ms;
+}
+
+.animateCustomersNotification:hover {
+  box-shadow: 6px 6px 10px #00d1b2;
+  transition: box-shadow 400ms;
+}
+
+.animateViewersNotification:hover {
+  box-shadow: 6px 6px 10px #23d160;
+  transition: box-shadow 400ms;
+}
+</style>

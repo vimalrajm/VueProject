@@ -75,4 +75,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+div >>> .animate:hover {
+  box-shadow: 5px 5px 10px black;
+  transition: box-shadow 400ms;
+}
+</style>

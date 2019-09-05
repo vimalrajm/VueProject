@@ -1,7 +1,7 @@
 <template>
   <div class="columns is-multiline">
     <div v-for="book in books" :key="book.bookName" class="column is-6">
-      <div class="box">
+      <div class="box animate">
         <div class="media">
           <aside class="media-left">
             <img :src="require(`@/assets/${book.image}`)" width="100" />

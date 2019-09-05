@@ -1,6 +1,6 @@
 <template>
   <div class="column is-4-desktop">
-    <div class="card">
+    <div class="card animate">
       <div class="card-content">
         <h2 class="title is-4">
           Most loyal customers
