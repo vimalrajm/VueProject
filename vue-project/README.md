@@ -34,6 +34,4 @@ json-server --watch db.json
 ```
 
 ### For demo video
- ```
  https://drive.google.com/drive/folders/1qDoKWtJBx0R_e-42yfEQp6n2WOhHHpBn
- ```
