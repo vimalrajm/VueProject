@@ -1,5 +1,5 @@
 # VueProject
-Online book publishing and selling project developed using vue and bulma
+Online e-store for books developed using vue and bulma
 
 ### Used Libraries
 - Bulma
