@@ -129,6 +129,49 @@
       "zipcode": "7",
       "city": "8",
       "id": 1047319950
+    },
+    {
+      "name": "Karan",
+      "email": "karan@gmail.com",
+      "country": "India",
+      "orders": 1,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "JP Nagar - banshankari",
+        null
+      ],
+      "zipcode": "580019",
+      "city": "BANGALORE",
+      "id": 8736985593
+    },
+    {
+      "id": 8815250804,
+      "name": "user 12",
+      "email": "vimal12@gmail.com",
+      "country": "India",
+      "orders": 0,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "abc"
+      ],
+      "zipcode": "56710",
+      "city": "loc1"
+    },
+    {
+      "id": 9631275812,
+      "name": "user23",
+      "email": "user23@gmail.com",
+      "country": "United Kingdom",
+      "orders": 0,
+      "role": "customer",
+      "password": "12345678",
+      "address": [
+        "user"
+      ],
+      "zipcode": "123635",
+      "city": "651235612"
     }
   ],
   "books": [
@@ -227,7 +270,7 @@
       "custId": 4445805593,
       "date": "2019-08-15T09:25:24.272Z",
       "numberOfBooks": 17,
-      "status": "In Progress",
+      "status": "Successful",
       "totalCost": 1326.5500000000002,
       "bookIdQty": [
         {
@@ -373,7 +416,7 @@
       "custId": 4445805593,
       "date": "2019-08-21T16:48:32.122Z",
       "numberOfBooks": 2,
-      "status": "Successful",
+      "status": "Failed",
       "totalCost": 45.98,
       "bookIdQty": [
         {
@@ -399,11 +442,33 @@
           "qty": "3"
         }
       ]
+    },
+    {
+      "id": 540144,
+      "custId": 8736985593,
+      "date": "2019-09-05T17:36:39.265Z",
+      "numberOfBooks": 10,
+      "status": "In Progress",
+      "totalCost": 1012.07,
+      "bookIdQty": [
+        {
+          "bookId": 3038280522,
+          "qty": "2"
+        },
+        {
+          "bookId": 97531,
+          "qty": "3"
+        },
+        {
+          "bookId": 8169846467,
+          "qty": "5"
+        }
+      ]
     }
   ],
   "views": [
     {
-      "viewers": 23,
+      "viewers": 25,
       "id": 1
     }
   ]

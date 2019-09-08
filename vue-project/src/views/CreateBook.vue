@@ -6,131 +6,133 @@
         <div class="column is-2">
           <Menu :currentPage="currentPage"></Menu>
         </div>
-        <div class="column is-10">
-          <nav class="breadcrumb">
-            <ul>
-              <li>
-                <router-link
-                  :to="{
-                    name: 'books',
-                    params: {
-                      currPageNumber: isCreated ? curPageNum : 1
-                    }
-                  }"
-                  class="has-text-weight-semibold"
-                  >Books</router-link
-                >
-              </li>
-              <li class="is-active has-text-weight-semibold">
-                <a href="#">New Book</a>
-              </li>
-            </ul>
-          </nav>
-          <form>
-            <div class="columns">
-              <div class="column">
-                <BaseInputField
-                  type="text"
-                  placeholder="e.g. Designing with bulma"
-                  iconName="fa fa-book"
-                  labelName="Title"
-                  v-model="titleVal"
-                  fontWeight="has-text-weight-normal"
-                ></BaseInputField>
+        <transition name="slide-fade">
+          <div class="column is-10" v-if="loaded">
+            <nav class="breadcrumb">
+              <ul>
+                <li>
+                  <router-link
+                    :to="{
+                      name: 'books',
+                      params: {
+                        currPageNumber: isCreated ? curPageNum : 1
+                      }
+                    }"
+                    class="has-text-weight-semibold"
+                    >Books</router-link
+                  >
+                </li>
+                <li class="is-active has-text-weight-semibold">
+                  <a href="#">New Book</a>
+                </li>
+              </ul>
+            </nav>
+            <form>
+              <div class="columns">
+                <div class="column">
+                  <BaseInputField
+                    type="text"
+                    placeholder="e.g. Designing with bulma"
+                    iconName="fa fa-book"
+                    labelName="Title"
+                    v-model="titleVal"
+                    fontWeight="has-text-weight-normal"
+                  ></BaseInputField>
+                </div>
               </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <BaseInputField
-                  type="number"
-                  placeholder="$ e.g.22.99"
-                  iconName="fa fa-usd"
-                  labelName="Price"
-                  v-model="price"
-                  fontWeight="has-text-weight-normal"
-                ></BaseInputField>
+              <div class="columns">
+                <div class="column">
+                  <BaseInputField
+                    type="number"
+                    placeholder="$ e.g.22.99"
+                    iconName="fa fa-usd"
+                    labelName="Price"
+                    v-model="price"
+                    fontWeight="has-text-weight-normal"
+                  ></BaseInputField>
+                </div>
+                <div class="column">
+                  <BaseInputField
+                    type="number"
+                    placeholder="e.g. 270"
+                    iconName="fa fa-file"
+                    labelName="Pages"
+                    v-model="pages"
+                    fontWeight="has-text-weight-normal"
+                  ></BaseInputField>
+                </div>
+                <div class="column">
+                  <BaseInputField
+                    pattern="[1-9]{13}"
+                    type="number"
+                    placeholder="e.g.1231434664647"
+                    iconName="fa fa-list-ol"
+                    labelName="ISBN"
+                    v-model="isbn"
+                    fontWeight="has-text-weight-normal"
+                  ></BaseInputField>
+                </div>
               </div>
-              <div class="column">
-                <BaseInputField
-                  type="number"
-                  placeholder="e.g. 270"
-                  iconName="fa fa-file"
-                  labelName="Pages"
-                  v-model="pages"
-                  fontWeight="has-text-weight-normal"
-                ></BaseInputField>
-              </div>
-              <div class="column">
-                <BaseInputField
-                  pattern="[1-9]{13}"
-                  type="number"
-                  placeholder="e.g.1231434664647"
-                  iconName="fa fa-list-ol"
-                  labelName="ISBN"
-                  v-model="isbn"
-                  fontWeight="has-text-weight-normal"
-                ></BaseInputField>
-              </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <div class="field">
-                  <label class="label">Cover Image</label>
-                  <div class="control">
-                    <div class="file has-name">
-                      <label class="file-label">
-                        <input
-                          type="file"
-                          class="file-input"
-                          @change="previewFile"
-                          accept="image/*"
-                        />
-                        <span class="file-cta">
-                          <span class="file-icon">
-                            <i class="fa fa-upload"></i>
+              <div class="columns">
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Cover Image</label>
+                    <div class="control">
+                      <div class="file has-name">
+                        <label class="file-label">
+                          <input
+                            type="file"
+                            class="file-input"
+                            @change="previewFile"
+                            accept="image/*"
+                          />
+                          <span class="file-cta">
+                            <span class="file-icon">
+                              <i class="fa fa-upload"></i>
+                            </span>
+                            <span class="file-label">
+                              Choose a file...
+                            </span>
                           </span>
-                          <span class="file-label">
-                            Choose a file...
+                          <span class="file-name">
+                            {{ chosenFile }}
                           </span>
-                        </span>
-                        <span class="file-name">
-                          {{ chosenFile }}
-                        </span>
-                      </label>
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <div class="field">
-                  <div class="buttons">
-                    <button
-                      :class="btnLoad"
-                      class="is-medium is-success button"
-                      @click.prevent="
-                        btnType === 'Update' ? updateBook() : createNewBook()
-                      "
-                    >
-                      {{ btnType }}
-                    </button>
-                    <router-link
-                      :to="{
-                        name: 'books',
-                        params: {
-                          currPageNumber: isCreated ? curPageNum : 1
-                        }
-                      }"
-                      class="is-medium is-light button"
-                      >Cancel</router-link
-                    >
+              <div class="columns">
+                <div class="column">
+                  <div class="field">
+                    <div class="buttons">
+                      <button
+                        :class="btnLoad"
+                        class="is-medium is-success button"
+                        @click.prevent="
+                          btnType === 'Update' ? updateBook() : createNewBook()
+                        "
+                      >
+                        {{ btnType }}
+                      </button>
+                      <router-link
+                        :to="{
+                          name: 'books',
+                          params: {
+                            currPageNumber: isCreated ? curPageNum : 1
+                          }
+                        }"
+                        class="is-medium is-light button"
+                        >Cancel</router-link
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -144,6 +146,7 @@ import { toastMixin } from "@/toastMixin";
 import { Book } from "@/services/dataServices/booksData";
 import bookService from "@/services/books.js";
 import nProgress from "nprogress";
+import { setTimeout } from "timers";
 export default {
   data() {
     return {
@@ -158,7 +161,8 @@ export default {
       isCreated: 0,
       btnType: "Create",
       addedBy: "",
-      btnLoading: ""
+      btnLoading: "",
+      loaded: false
     };
   },
   mixins: [toastMixin],
@@ -176,6 +180,7 @@ export default {
     Menu
   },
   async created() {
+    this.loaded = false;
     nProgress.start();
     this.$store.dispatch("setCurrPage", "Books");
     let res;
@@ -190,6 +195,13 @@ export default {
       this.addedBy = res.data.addedBy;
     }
     nProgress.done();
+    if (this.bookDetail === "new") {
+      setTimeout(() => {
+        this.loaded = true;
+      }, 100);
+    } else {
+      this.loaded = true;
+    }
   },
   computed: {
     ...mapState(["currUser", "currentPage", "noOfBooks", "pageLimit"]),
@@ -312,4 +324,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 1s cubic-bezier(1, 4, 1, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

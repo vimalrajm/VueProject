@@ -6,140 +6,142 @@
         <div class="column is-2">
           <Menu :currentPage="currentPage"></Menu>
         </div>
-        <div class="column is-10">
-          <nav class="breadcrumb">
-            <ul>
-              <li>
-                <router-link
-                  :to="{
-                    name: 'customers',
-                    params: {
-                      currPageNumber: isCreated ? curPageNum : 1
-                    }
-                  }"
-                  class="has-text-weight-semibold"
-                  >Customers</router-link
-                >
-              </li>
-              <li class="is-active">
-                <a href="#">New Customer</a>
-              </li>
-            </ul>
-          </nav>
-          <form>
-            <div class="columns">
-              <div class="column">
-                <BaseInputField
-                  type="text"
-                  placeholder="e.g. Alex Smith"
-                  iconName="fa fa-user"
-                  labelName="Full name"
-                  v-model="customerName"
-                  fontWeight="has-text-weight-normal"
-                ></BaseInputField>
+        <transition name="slide-fade">
+          <div class="column is-10" v-if="loaded">
+            <nav class="breadcrumb">
+              <ul>
+                <li>
+                  <router-link
+                    :to="{
+                      name: 'customers',
+                      params: {
+                        currPageNumber: isCreated ? curPageNum : 1
+                      }
+                    }"
+                    class="has-text-weight-semibold"
+                    >Customers</router-link
+                  >
+                </li>
+                <li class="is-active">
+                  <a href="#">New Customer</a>
+                </li>
+              </ul>
+            </nav>
+            <form>
+              <div class="columns">
+                <div class="column">
+                  <BaseInputField
+                    type="text"
+                    placeholder="e.g. Alex Smith"
+                    iconName="fa fa-user"
+                    labelName="Full name"
+                    v-model="customerName"
+                    fontWeight="has-text-weight-normal"
+                  ></BaseInputField>
+                </div>
               </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <BaseInputField
-                  type="text"
-                  placeholder="e.g. Alex Smith"
-                  iconName="fa fa-envelope"
-                  labelName="Email"
-                  v-model="customerEmail"
-                  fontWeight="has-text-weight-normal"
-                ></BaseInputField>
+              <div class="columns">
+                <div class="column">
+                  <BaseInputField
+                    type="text"
+                    placeholder="e.g. Alex Smith"
+                    iconName="fa fa-envelope"
+                    labelName="Email"
+                    v-model="customerEmail"
+                    fontWeight="has-text-weight-normal"
+                  ></BaseInputField>
+                </div>
               </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <BaseInputField
-                  type="text"
-                  placeholder="Number and street name"
-                  iconName="fa fa-address-card"
-                  labelName="Address"
-                  v-model="address1"
-                  fontWeight="has-text-weight-normal"
-                ></BaseInputField>
-                <BaseInputField
-                  type="text"
-                  placeholder="Second address line (optional)"
-                  iconName="fa fa-address-book"
-                  labelName=""
-                  v-model="address2"
-                  fontWeight="has-text-weight-normal"
-                ></BaseInputField>
+              <div class="columns">
+                <div class="column">
+                  <BaseInputField
+                    type="text"
+                    placeholder="Number and street name"
+                    iconName="fa fa-address-card"
+                    labelName="Address"
+                    v-model="address1"
+                    fontWeight="has-text-weight-normal"
+                  ></BaseInputField>
+                  <BaseInputField
+                    type="text"
+                    placeholder="Second address line (optional)"
+                    iconName="fa fa-address-book"
+                    labelName=""
+                    v-model="address2"
+                    fontWeight="has-text-weight-normal"
+                  ></BaseInputField>
+                </div>
               </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <BaseInputField
-                  type="number"
-                  placeholder="e.g. 67202"
-                  iconName="fa fa-map-pin"
-                  labelName="Postcode / Zipcode"
-                  v-model="zipcode"
-                  fontWeight="has-text-weight-normal"
-                ></BaseInputField>
-              </div>
-              <div class="column">
-                <BaseInputField
-                  type="text"
-                  placeholder="e.g. San Francisco"
-                  iconName="fa fa-home"
-                  labelName="City"
-                  v-model="city"
-                  fontWeight="has-text-weight-normal"
-                ></BaseInputField>
-              </div>
-              <div class="column">
-                <div class="field">
-                  <label>Country</label>
-                  <div class="control">
-                    <div class="select">
-                      <select v-model="country">
-                        <option>-- Choose a country --</option>
-                        <option>Canada</option>
-                        <option>United Kingdom</option>
-                        <option>United States</option>
-                        <option>India</option>
-                      </select>
+              <div class="columns">
+                <div class="column">
+                  <BaseInputField
+                    type="number"
+                    placeholder="e.g. 67202"
+                    iconName="fa fa-map-pin"
+                    labelName="Postcode / Zipcode"
+                    v-model="zipcode"
+                    fontWeight="has-text-weight-normal"
+                  ></BaseInputField>
+                </div>
+                <div class="column">
+                  <BaseInputField
+                    type="text"
+                    placeholder="e.g. San Francisco"
+                    iconName="fa fa-home"
+                    labelName="City"
+                    v-model="city"
+                    fontWeight="has-text-weight-normal"
+                  ></BaseInputField>
+                </div>
+                <div class="column">
+                  <div class="field">
+                    <label>Country</label>
+                    <div class="control">
+                      <div class="select">
+                        <select v-model="country">
+                          <option>-- Choose a country --</option>
+                          <option>Canada</option>
+                          <option>United Kingdom</option>
+                          <option>United States</option>
+                          <option>India</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <div class="field">
-                  <div class="buttons">
-                    <button
-                      :class="btnLoad"
-                      class="is-medium is-success button"
-                      @click.prevent="
-                        btnType === 'Update'
-                          ? updateCustomerDetail()
-                          : addNewCustomer()
-                      "
-                    >
-                      {{ btnType }}
-                    </button>
-                    <router-link
-                      :to="{
-                        name: 'customers',
-                        params: {
-                          currPageNumber: isCreated ? curPageNum : 1
-                        }
-                      }"
-                      class="is-medium is-light button"
-                      >Cancel</router-link
-                    >
+              <div class="columns">
+                <div class="column">
+                  <div class="field">
+                    <div class="buttons">
+                      <button
+                        :class="btnLoad"
+                        class="is-medium is-success button"
+                        @click.prevent="
+                          btnType === 'Update'
+                            ? updateCustomerDetail()
+                            : addNewCustomer()
+                        "
+                      >
+                        {{ btnType }}
+                      </button>
+                      <router-link
+                        :to="{
+                          name: 'customers',
+                          params: {
+                            currPageNumber: isCreated ? curPageNum : 1
+                          }
+                        }"
+                        class="is-medium is-light button"
+                        >Cancel</router-link
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -155,6 +157,7 @@ import customerService from "@/services/customers";
 import userService from "@/services/users";
 import _ from "lodash";
 import nProgress from "nprogress";
+import { setTimeout } from "timers";
 
 export default {
   data() {
@@ -170,10 +173,12 @@ export default {
       country: "-- Choose a country --",
       isCreated: 0,
       btnLoading: "",
-      orders: 0
+      orders: 0,
+      loaded: false
     };
   },
   async created() {
+    this.loaded = false;
     nProgress.start();
     if (this.customerDetail !== undefined && this.customerDetail !== "new") {
       try {
@@ -194,6 +199,13 @@ export default {
       this.$store.dispatch("setCurrPage", "Customers");
     }
     nProgress.done();
+    if (this.customerDetail === "new") {
+      setTimeout(() => {
+        this.loaded = true;
+      }, 100);
+    } else {
+      this.loaded = true;
+    }
   },
   mixins: [toastMixin],
   props: {
@@ -399,4 +411,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 1s cubic-bezier(1, 4, 1, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

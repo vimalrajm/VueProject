@@ -6,191 +6,195 @@
         <div class="column is-2">
           <Menu :currentPage="currentPage"></Menu>
         </div>
-        <div class="column is-10">
-          <nav class="breadcrumb">
-            <ul>
-              <li>
-                <router-link
-                  :to="{
-                    name: 'orders',
-                    params: { currPageNumber: 1 }
-                  }"
-                  class="has-text-weight-semibold"
-                  >Orders</router-link
-                >
-              </li>
-              <li class="is-active">
-                <a href="#">Edit order</a>
-              </li>
-            </ul>
-          </nav>
-          <form>
-            <div class="columns">
-              <div class="column">
-                <div class="field">
-                  <h1 class="subtitle is-3">
-                    <span class="has-text-grey-light">Order</span>
-                    <strong>&nbsp;{{ orderId }}</strong>
-                  </h1>
+        <transition name="slide-fade">
+          <div class="column is-10" v-if="loaded">
+            <nav class="breadcrumb">
+              <ul>
+                <li>
+                  <router-link
+                    :to="{
+                      name: 'orders',
+                      params: { currPageNumber: 1 }
+                    }"
+                    class="has-text-weight-semibold"
+                    >Orders</router-link
+                  >
+                </li>
+                <li class="is-active">
+                  <a href="#">Edit order</a>
+                </li>
+              </ul>
+            </nav>
+            <form>
+              <div class="columns">
+                <div class="column">
+                  <div class="field">
+                    <h1 class="subtitle is-3">
+                      <span class="has-text-grey-light">Order</span>
+                      <strong>&nbsp;{{ orderId }}</strong>
+                    </h1>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="columns is-desktop">
-              <div class="column is-3-desktop is-3-widescreen">
-                <p class="heading">
-                  <strong>DATE</strong>
-                </p>
-                <p class="content">
-                  {{ orderDate }}
-                </p>
-                <p class="heading">
-                  <strong>Status</strong>
-                </p>
-                <div class="buttons">
-                  <button
-                    class="is-warning is-small button"
-                    :class="
-                      orderData.status === 'In Progress' ? '' : 'is-outlined'
-                    "
-                    :disabled="currUser.role === 'customer' ? true : false"
-                    @click.prevent="setStatus('In Progress')"
-                  >
-                    In Progress
-                  </button>
-                  <button
-                    class="is-success is-small button"
-                    :class="
-                      orderData.status === 'Successful' ? '' : 'is-outlined'
-                    "
-                    :disabled="currUser.role === 'customer' ? true : false"
-                    @click.prevent="setStatus('Successful')"
-                  >
-                    Successful
-                  </button>
-                  <button
-                    class="is-danger is-small button"
-                    :disabled="currUser.role === 'customer' ? true : false"
-                    :class="orderData.status === 'Failed' ? '' : 'is-outlined'"
-                    @click.prevent="setStatus('Failed')"
-                  >
-                    Failed
-                  </button>
-                </div>
-                <p class="heading">
-                  <strong>Customer</strong>
-                </p>
-                <p class="content">
-                  <strong>
-                    <router-link
-                      :to="{
-                        name: 'addCustomer',
-                        params: { customerDetail: orderedBy.id }
-                      }"
-                      class="is-capitalized"
-                      >{{ orderedBy.name }}</router-link
+              <div class="columns is-desktop">
+                <div class="column is-3-desktop is-3-widescreen">
+                  <p class="heading">
+                    <strong>DATE</strong>
+                  </p>
+                  <p class="content">
+                    {{ orderDate }}
+                  </p>
+                  <p class="heading">
+                    <strong>Status</strong>
+                  </p>
+                  <div class="buttons">
+                    <button
+                      class="is-warning is-small button"
+                      :class="
+                        orderData.status === 'In Progress' ? '' : 'is-outlined'
+                      "
+                      :disabled="currUser.role === 'customer' ? true : false"
+                      @click.prevent="setStatus('In Progress')"
                     >
-                  </strong>
-                  <br />
-                  <code>{{ orderedBy.email }}</code>
-                  <br />
-                  <span v-for="address in orderedBy.address" :key="address"
-                    >{{ address }},
-                  </span>
-                  <br />
-                  {{ orderedBy.city }}, {{ orderedBy.zipcode }},
-                  <br />
-                  {{ orderedBy.country }}.
-                </p>
-                <br />
-              </div>
-              <div class="column">
-                <p class="heading">
-                  <strong>Books</strong>
-                </p>
-                <VueTable :api-mode="false" :fields="headers" :data="books">
-                  <div slot="image" slot-scope="props">
-                    <img
-                      :src="require(`@/assets/${props.rowData.image}`)"
-                      :alt="props.rowData.image"
-                      width="40"
-                    />
-                  </div>
-                  <div slot="bookName" slot-scope="props" disabled>
-                    <router-link
-                      :to="{
-                        name: 'createBook',
-                        params: { bookDetail: props.rowData.id }
-                      }"
-                      :event="currUser.role === 'customer' ? '' : 'click'"
-                      >{{ props.rowData.bookName }}</router-link
+                      In Progress
+                    </button>
+                    <button
+                      class="is-success is-small button"
+                      :class="
+                        orderData.status === 'Successful' ? '' : 'is-outlined'
+                      "
+                      :disabled="currUser.role === 'customer' ? true : false"
+                      @click.prevent="setStatus('Successful')"
                     >
+                      Successful
+                    </button>
+                    <button
+                      class="is-danger is-small button"
+                      :disabled="currUser.role === 'customer' ? true : false"
+                      :class="
+                        orderData.status === 'Failed' ? '' : 'is-outlined'
+                      "
+                      @click.prevent="setStatus('Failed')"
+                    >
+                      Failed
+                    </button>
                   </div>
-                  <div slot="total" slot-scope="props">
-                    {{
-                      (
-                        Number(props.rowData.qty) *
-                        Number(props.rowData.bookPrice)
-                      ).toFixed(2)
-                    }}
-                  </div>
-                </VueTable>
-                <table class="tableBorder">
-                  <tr>
-                    <td class="has-text-centered ">
-                      <MultiSelect
-                        class="select is-small"
-                        style="min-width: 200px;max-width: 350px"
-                        v-model="bookSelected"
-                        :options="bookList"
-                        :clear-on-select="false"
-                        :close-on-select="true"
-                        :allow-empty="false"
-                        label="bookName"
-                        track-by="id"
-                        :hide-selected="true"
-                        placeholder="Select a book"
+                  <p class="heading">
+                    <strong>Customer</strong>
+                  </p>
+                  <p class="content">
+                    <strong>
+                      <router-link
+                        :to="{
+                          name: 'addCustomer',
+                          params: { customerDetail: orderedBy.id }
+                        }"
+                        class="is-capitalized"
+                        >{{ orderedBy.name }}</router-link
                       >
-                      </MultiSelect>
-                      <span class="control ">
-                        <input
-                          v-model="bookQty"
-                          type="number"
-                          value="1"
-                          maxlength="2"
-                          min="1"
-                          class="input is-small"
-                          max="5"
-                          placeholder="Amount"
-                          style="width: 60px; height: 38px; margin-right: -190px; margin-left: 30px"
-                        />
-                      </span>
-                      <span class="control is-pulled-right">
-                        <button
-                          class="button is-small is-link"
-                          style="width: 80px; height: 38px;"
-                          @click.prevent="confirmBookAdd"
-                          :class="isLoading"
-                          :disabled="
-                            orderData.status === 'Successful' ? true : false
-                          "
+                    </strong>
+                    <br />
+                    <code>{{ orderedBy.email }}</code>
+                    <br />
+                    <span v-for="address in orderedBy.address" :key="address"
+                      >{{ address }},
+                    </span>
+                    <br />
+                    {{ orderedBy.city }}, {{ orderedBy.zipcode }},
+                    <br />
+                    {{ orderedBy.country }}.
+                  </p>
+                  <br />
+                </div>
+                <div class="column">
+                  <p class="heading">
+                    <strong>Books</strong>
+                  </p>
+                  <VueTable :api-mode="false" :fields="headers" :data="books">
+                    <div slot="image" slot-scope="props">
+                      <img
+                        :src="require(`@/assets/${props.rowData.image}`)"
+                        :alt="props.rowData.image"
+                        width="40"
+                      />
+                    </div>
+                    <div slot="bookName" slot-scope="props" disabled>
+                      <router-link
+                        :to="{
+                          name: 'createBook',
+                          params: { bookDetail: props.rowData.id }
+                        }"
+                        :event="currUser.role === 'customer' ? '' : 'click'"
+                        >{{ props.rowData.bookName }}</router-link
+                      >
+                    </div>
+                    <div slot="total" slot-scope="props">
+                      {{
+                        (
+                          Number(props.rowData.qty) *
+                          Number(props.rowData.bookPrice)
+                        ).toFixed(2)
+                      }}
+                    </div>
+                  </VueTable>
+                  <table class="tableBorder">
+                    <tr>
+                      <td class="has-text-centered ">
+                        <MultiSelect
+                          class="select is-small"
+                          style="min-width: 200px;max-width: 350px"
+                          v-model="bookSelected"
+                          :options="bookList"
+                          :clear-on-select="false"
+                          :close-on-select="true"
+                          :allow-empty="false"
+                          label="bookName"
+                          track-by="id"
+                          :hide-selected="true"
+                          placeholder="Select a book"
                         >
-                          Add Book
-                        </button>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr style="border: 1px solid #dbdbdb;">
-                    <td style="height:50px;">
-                      <label class="has-text-right has-text-weight-bold label"
-                        >${{ getTotal }}</label
-                      >
-                    </td>
-                  </tr>
-                </table>
+                        </MultiSelect>
+                        <span class="control ">
+                          <input
+                            v-model="bookQty"
+                            type="number"
+                            value="1"
+                            maxlength="2"
+                            min="1"
+                            class="input is-small"
+                            max="5"
+                            placeholder="Amount"
+                            style="width: 60px; height: 38px; margin-right: -190px; margin-left: 30px"
+                          />
+                        </span>
+                        <span class="control is-pulled-right">
+                          <button
+                            class="button is-small is-link"
+                            style="width: 80px; height: 38px;"
+                            @click.prevent="confirmBookAdd"
+                            :class="isLoading"
+                            :disabled="
+                              orderData.status === 'Successful' ? true : false
+                            "
+                          >
+                            Add Book
+                          </button>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr style="border: 1px solid #dbdbdb;">
+                      <td style="height:50px;">
+                        <label class="has-text-right has-text-weight-bold label"
+                          >${{ getTotal }}</label
+                        >
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -214,6 +218,7 @@ export default {
   data() {
     return {
       orderData: {},
+      loaded: false,
       orderDate: "",
       orderedBy: {},
       bookQty: 1,
@@ -252,6 +257,7 @@ export default {
     };
   },
   async created() {
+    this.loaded = false;
     nProgress.start();
     this.$store.dispatch("setCurrPage", "Orders");
     try {
@@ -302,6 +308,7 @@ export default {
       console.log(e);
     }
     nProgress.done();
+    this.loaded = true;
   },
   mixins: [toastMixin],
   props: {
@@ -461,5 +468,13 @@ td {
 div >>> .multiselect__select:before {
   border-color: white;
   display: none;
+}
+.slide-fade-enter-active {
+  transition: all 1s cubic-bezier(1, 4, 1, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

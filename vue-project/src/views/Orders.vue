@@ -6,80 +6,82 @@
         <div class="column is-2">
           <Menu :currentPage="currentPage"></Menu>
         </div>
-        <div class="column is-10">
-          <h1 class="title">Orders</h1>
-          <OrdersNavBar
-            :count="noOfOrders"
-            :placeHolder="placeholder"
-            :currentPage="currentPage"
-          ></OrdersNavBar>
-          <VueTable
-            ref="vuetable"
-            :api-mode="false"
-            :fields="headers"
-            :data="orderData"
-          >
-            <div slot="id" slot-scope="data">
-              <router-link
-                v-if="
-                  currUser.id === data.rowData.custId ||
-                    currUser.role === 'admin'
-                "
-                :to="{
-                  name: 'orderEdit',
-                  params: { orderId: data.rowData.id }
-                }"
-                class="has-text-weight-bold"
-                >{{ data.rowData.id }}</router-link
-              >
-              <div
-                v-else
-                class="has-text-link has-text-weight-bold not-allowed"
-              >
-                {{ data.rowData.id }}
-              </div>
-            </div>
-            <div slot="custName" slot-scope="data">
-              <router-link
-                v-if="
-                  currUser.id === data.rowData.custId ||
-                    currUser.role === 'admin'
-                "
-                :to="{
-                  name: 'addCustomer',
-                  params: { customerDetail: data.rowData.custId }
-                }"
-                class="is-capitalized"
-                >{{ data.rowData.custName }}</router-link
-              >
-              <div v-else class="has-text-link is-capitalized not-allowed">
-                {{ data.rowData.custName }}
-              </div>
-            </div>
-            <div slot="date" slot-scope="data">
-              {{ getDate(data.rowData.date) }}
-            </div>
-            <div
-              slot="status"
-              slot-scope="data"
-              class="tag"
-              :class="getColor(data.rowData.status)"
+        <transition name="slide-fade">
+          <div class="column is-10" v-if="loaded">
+            <h1 class="title">Orders</h1>
+            <OrdersNavBar
+              :count="noOfOrders"
+              :placeHolder="placeholder"
+              :currentPage="currentPage"
+            ></OrdersNavBar>
+            <VueTable
+              ref="vuetable"
+              :api-mode="false"
+              :fields="headers"
+              :data="orderData"
             >
-              {{ data.rowData.status }}
-            </div>
-            <div slot="totalCost" slot-scope="data" class="has-text-right">
-              ${{ Number(data.rowData.totalCost).toFixed(2) }}
-            </div>
-          </VueTable>
-          <hr />
-          <Pagination
-            v-show="noOfOrders"
-            :pageLimit="custOrderLimit"
-            :count="noOfOrders"
-            :currPageNumber="currPageNumber"
-            :currentPage="currentPage"
-          ></Pagination>
-        </div>
+              <div slot="id" slot-scope="data">
+                <router-link
+                  v-if="
+                    currUser.id === data.rowData.custId ||
+                      currUser.role === 'admin'
+                  "
+                  :to="{
+                    name: 'orderEdit',
+                    params: { orderId: data.rowData.id }
+                  }"
+                  class="has-text-weight-bold"
+                  >{{ data.rowData.id }}</router-link
+                >
+                <div
+                  v-else
+                  class="has-text-link has-text-weight-bold not-allowed"
+                >
+                  {{ data.rowData.id }}
+                </div>
+              </div>
+              <div slot="custName" slot-scope="data">
+                <router-link
+                  v-if="
+                    currUser.id === data.rowData.custId ||
+                      currUser.role === 'admin'
+                  "
+                  :to="{
+                    name: 'addCustomer',
+                    params: { customerDetail: data.rowData.custId }
+                  }"
+                  class="is-capitalized"
+                  >{{ data.rowData.custName }}</router-link
+                >
+                <div v-else class="has-text-link is-capitalized not-allowed">
+                  {{ data.rowData.custName }}
+                </div>
+              </div>
+              <div slot="date" slot-scope="data">
+                {{ getDate(data.rowData.date) }}
+              </div>
+              <div
+                slot="status"
+                slot-scope="data"
+                class="tag"
+                :class="getColor(data.rowData.status)"
+              >
+                {{ data.rowData.status }}
+              </div>
+              <div slot="totalCost" slot-scope="data" class="has-text-right">
+                ${{ Number(data.rowData.totalCost).toFixed(2) }}
+              </div>
+            </VueTable>
+            <hr />
+            <Pagination
+              v-show="noOfOrders"
+              :pageLimit="custOrderLimit"
+              :count="noOfOrders"
+              :currPageNumber="currPageNumber"
+              :currentPage="currentPage"
+            ></Pagination>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -114,6 +116,7 @@ export default {
   data() {
     return {
       placeholder: "Order #, customer...",
+      loaded: false,
       headers: [
         {
           name: VuetableFieldCheckbox,
@@ -200,6 +203,7 @@ export default {
     ...mapState(["currUser", "currentPage", "noOfOrders", "custOrderLimit"])
   },
   async created() {
+    this.loaded = false;
     nProgress.start();
     let res;
     this.$store.dispatch("setCurrPage", "Orders");
@@ -219,8 +223,18 @@ export default {
       console.log(e);
     }
     nProgress.done();
+    this.loaded = true;
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 1s cubic-bezier(1, 4, 1, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

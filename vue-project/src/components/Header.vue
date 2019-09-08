@@ -29,7 +29,7 @@
             {{ currUser.name }}
           </div>
           <div class="navbar-dropdown">
-            <a class="navbar-item">
+            <a class="navbar-item" @click="profileModal">
               <div>
                 <span class="icon is-small">
                   <i class="fa fa-user-circle-o"></i>
@@ -57,59 +57,124 @@
         </div>
       </div>
     </div>
-    <div class="modal" :class="activeModal">
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Cart items</p>
-          <button
-            class="delete has-background-danger"
-            aria-label="close"
-            @click="closeCartModal"
-          ></button>
-        </header>
-        <section class="modal-card-body">
-          <vueTable :api-mode="false" :fields="headers" :data="cartData">
-            <div slot="SI NO" slot-scope="props" class="has-text-dark">
-              {{ props.rowIndex + 1 }}
-            </div>
-            <div slot="bookName" class="has-text-dark" slot-scope="props">
-              {{ props.rowData.bookName }}
-            </div>
-            <div slot="qty" class="has-text-dark" slot-scope="props">
-              {{ props.rowData.qty }}
-            </div>
-            <div
-              slot="actions"
-              slot-scope="props"
-              class="delete"
-              @click="removeBook(props.rowData.cartId)"
+    <transition name="slide-fade">
+      <div
+        class="modal is-small"
+        v-if="activeModal !== ''"
+        :class="activeModal"
+      >
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Cart items</p>
+            <button
+              class="delete has-background-danger"
+              aria-label="close"
+              @click="closeCartModal"
+            ></button>
+          </header>
+          <section class="modal-card-body">
+            <vueTable :api-mode="false" :fields="headers" :data="cartData">
+              <div slot="SI NO" slot-scope="props" class="has-text-dark">
+                {{ props.rowIndex + 1 }}
+              </div>
+              <div slot="bookName" class="has-text-dark" slot-scope="props">
+                {{ props.rowData.bookName }}
+              </div>
+              <div slot="qty" class="has-text-dark" slot-scope="props">
+                {{ props.rowData.qty }}
+              </div>
+              <div
+                slot="actions"
+                slot-scope="props"
+                class="delete"
+                @click="removeBook(props.rowData.cartId)"
+              >
+                <span class="icon has-text-danger button">
+                  <i class="fa fa-remove"></i>
+                </span>
+              </div>
+            </vueTable>
+          </section>
+          <footer class="modal-card-foot">
+            <button
+              class="button is-success"
+              @click="createOrder"
+              :disabled="cartLength === 0 ? true : false"
             >
-              <span class="icon has-text-danger button">
-                <i class="fa fa-remove"></i>
-              </span>
-            </div>
-          </vueTable>
-        </section>
-        <footer class="modal-card-foot">
-          <button
-            class="button is-success"
-            @click="createOrder"
-            :disabled="cartLength === 0 ? true : false"
-          >
-            Place Order
-          </button>
-          <button class="button" @click="closeCartModal">Cancel</button>
-          <button
-            class="button is-danger"
-            @click="clearCart"
-            :disabled="cartLength === 0 ? true : false"
-          >
-            Clear Cart
-          </button>
-        </footer>
+              Place Order
+            </button>
+            <button class="button" @click="closeCartModal">Cancel</button>
+            <button
+              class="button is-danger"
+              @click="clearCart"
+              :disabled="cartLength === 0 ? true : false"
+            >
+              Clear Cart
+            </button>
+          </footer>
+        </div>
       </div>
-    </div>
+    </transition>
+    <!-- <transition name="slide-fade">
+      <div
+        class="modal is-small"
+        v-if="activeProfile !== ''"
+        :class="activeProfile"
+      >
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Profile Details</p>
+            <button
+              class="delete has-background-danger"
+              aria-label="close"
+              @click="closeCartModal"
+            ></button>
+          </header>
+          <section class="modal-card-body">
+            <vueTable :api-mode="false" :fields="headers" :data="cartData">
+              <div slot="SI NO" slot-scope="props" class="has-text-dark">
+                {{ props.rowIndex + 1 }}
+              </div>
+              <div slot="bookName" class="has-text-dark" slot-scope="props">
+                {{ props.rowData.bookName }}
+              </div>
+              <div slot="qty" class="has-text-dark" slot-scope="props">
+                {{ props.rowData.qty }}
+              </div>
+              <div
+                slot="actions"
+                slot-scope="props"
+                class="delete"
+                @click="removeBook(props.rowData.cartId)"
+              >
+                <span class="icon has-text-danger button">
+                  <i class="fa fa-remove"></i>
+                </span>
+              </div>
+            </vueTable>
+          </section>
+          <footer class="modal-card-foot">
+            <button
+              class="button is-success"
+              @click="createOrder"
+              :disabled="cartLength === 0 ? true : false"
+            >
+              Place Order
+            </button>
+            <button class="button" @click="closeCartModal">Cancel</button>
+            <button
+              class="button is-danger"
+              @click="clearCart"
+              :disabled="cartLength === 0 ? true : false"
+            >
+              Clear Cart
+            </button>
+          </footer>
+        </div>
+      </div>
+    </transition> -->
   </nav>
 </template>
 <script>
@@ -139,8 +204,10 @@ export default {
   },
   data() {
     return {
+      show: true,
       activeModal: "",
       cartData: [],
+      activeProfile: "",
       headers: [
         {
           name: "SI NO",
@@ -166,6 +233,9 @@ export default {
     };
   },
   methods: {
+    profileModal() {
+      this.activeProfile = "is-active";
+    },
     async createOrder() {
       try {
         let orderId = Math.floor(Math.random() * 10000000);
@@ -228,6 +298,7 @@ export default {
     closeCartModal() {
       this.activeModal = "";
       this.cartData = [];
+      this.activeProfile = "";
     },
     async removeBook(cartId) {
       let data = [];
@@ -272,5 +343,17 @@ export default {
 
 .delete {
   margin-left: 20px;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

@@ -6,103 +6,108 @@
         <div class="column is-2">
           <Menu :currentPage="currentPage"></Menu>
         </div>
-        <div class="column is-10">
-          <h1 class="title">Customers</h1>
-          <CustomersNavBar
-            :count="noOfCustomers"
-            :placeHolder="placeholder"
-            :currentPage="currentPage"
-          ></CustomersNavBar>
-          <VueTable
-            ref="vuetable"
-            :api-mode="false"
-            :fields="headers"
-            :data="customerData"
-            @vuetable:checkbox-toggled="checked"
-            @vuetable:checkbox-toggled-all="checked"
-          >
-            <div slot="name" slot-scope="props">
-              <router-link
-                :to="{
-                  name: 'addCustomer',
-                  params: { customerDetail: props.rowData.id }
-                }"
-                v-if="
-                  currUser.role === 'admin' || currUser.id === props.rowData.id
-                "
-              >
-                <strong class="has-text-link is-capitalized">
-                  {{ props.rowData.name }}
-                </strong>
-              </router-link>
-              <strong v-else class="has-text-link is-capitalized not-allowed">{{
-                props.rowData.name
-              }}</strong>
-            </div>
-            <div slot="email" slot-scope="props">
-              <code> {{ props.rowData.email }} </code>
-            </div>
-            <div slot="orders" slot-scope="props">
-              <router-link
-                :to="{
-                  name: 'orders',
-                  params: { currPageNumber: 1 }
-                }"
-                >{{ props.rowData.orders }}
-              </router-link>
-            </div>
-            <div
-              v-if="currUser.role === 'admin'"
-              slot="actions"
-              slot-scope="props"
+        <transition name="slide-fade">
+          <div class="column is-10" v-if="loaded">
+            <h1 class="title">Customers</h1>
+            <CustomersNavBar
+              :count="noOfCustomers"
+              :placeHolder="placeholder"
+              :currentPage="currentPage"
+            ></CustomersNavBar>
+            <VueTable
+              ref="vuetable"
+              :api-mode="false"
+              :fields="headers"
+              :data="customerData"
+              @vuetable:checkbox-toggled="checked"
+              @vuetable:checkbox-toggled-all="checked"
             >
-              <div class="buttons">
+              <div slot="name" slot-scope="props">
                 <router-link
                   :to="{
                     name: 'addCustomer',
                     params: { customerDetail: props.rowData.id }
                   }"
-                  class="button is-small is-warning"
-                >
-                  Edit
-                </router-link>
-                <p
-                  class="button is-small is-danger"
-                  @click="deleteCustomer(props.rowData)"
-                >
-                  Delete
-                </p>
-              </div>
-            </div>
-            <div v-else slot="actions" slot-scope="props">
-              <div class="buttons">
-                <router-link
-                  :to="
-                    props.rowData.id === currUser.id
-                      ? {
-                          name: 'addCustomer',
-                          params: { customerDetail: props.rowData.id }
-                        }
-                      : ''
+                  v-if="
+                    currUser.role === 'admin' ||
+                      currUser.id === props.rowData.id
                   "
-                  class="button is-small is-warning"
-                  :disabled="props.rowData.id === currUser.id ? false : true"
                 >
-                  Edit
+                  <strong class="has-text-link is-capitalized">
+                    {{ props.rowData.name }}
+                  </strong>
                 </router-link>
-                <p class="button is-small is-danger" disabled>Delete</p>
+                <strong
+                  v-else
+                  class="has-text-link is-capitalized not-allowed"
+                  >{{ props.rowData.name }}</strong
+                >
               </div>
-            </div>
-          </VueTable>
-          <hr />
-          <Pagination
-            v-show="noOfCustomers"
-            :pageLimit="custOrderLimit"
-            :count="noOfCustomers"
-            :currPageNumber="currPageNumber"
-            :currentPage="currentPage"
-          ></Pagination>
-        </div>
+              <div slot="email" slot-scope="props">
+                <code> {{ props.rowData.email }} </code>
+              </div>
+              <div slot="orders" slot-scope="props">
+                <router-link
+                  :to="{
+                    name: 'orders',
+                    params: { currPageNumber: 1 }
+                  }"
+                  >{{ props.rowData.orders }}
+                </router-link>
+              </div>
+              <div
+                v-if="currUser.role === 'admin'"
+                slot="actions"
+                slot-scope="props"
+              >
+                <div class="buttons">
+                  <router-link
+                    :to="{
+                      name: 'addCustomer',
+                      params: { customerDetail: props.rowData.id }
+                    }"
+                    class="button is-small is-warning"
+                  >
+                    Edit
+                  </router-link>
+                  <p
+                    class="button is-small is-danger"
+                    @click="deleteCustomer(props.rowData)"
+                  >
+                    Delete
+                  </p>
+                </div>
+              </div>
+              <div v-else slot="actions" slot-scope="props">
+                <div class="buttons">
+                  <router-link
+                    :to="
+                      props.rowData.id === currUser.id
+                        ? {
+                            name: 'addCustomer',
+                            params: { customerDetail: props.rowData.id }
+                          }
+                        : ''
+                    "
+                    class="button is-small is-warning"
+                    :disabled="props.rowData.id === currUser.id ? false : true"
+                  >
+                    Edit
+                  </router-link>
+                  <p class="button is-small is-danger" disabled>Delete</p>
+                </div>
+              </div>
+            </VueTable>
+            <hr />
+            <Pagination
+              v-show="noOfCustomers"
+              :pageLimit="custOrderLimit"
+              :count="noOfCustomers"
+              :currPageNumber="currPageNumber"
+              :currentPage="currentPage"
+            ></Pagination>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -140,6 +145,7 @@ export default {
     ...mapState(["currUser", "currentPage", "noOfCustomers", "custOrderLimit"])
   },
   async created() {
+    this.loaded = false;
     nProgress.start();
     this.$store.dispatch("setCurrPage", "Customers");
     this.$store.dispatch("setCustAndOrderLimit", 7);
@@ -155,10 +161,12 @@ export default {
       console.log(e);
     }
     nProgress.done();
+    this.loaded = true;
   },
   data() {
     return {
       deleteItems: [],
+      loaded: false,
       placeholder: "Name, Email...",
       headers: [
         {
@@ -285,4 +293,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 1s cubic-bezier(1, 4, 1, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

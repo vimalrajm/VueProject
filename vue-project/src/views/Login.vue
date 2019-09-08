@@ -2,69 +2,71 @@
   <div>
     <div class="hero has-background-white-ter is-fullheight">
       <div class="hero-body">
-        <div class="container">
-          <div class="columns is-centered">
-            <div class="column is-5-tablet is-4-desktop is-4-widescreen">
-              <form class="box">
-                <div class="field has-text-centered">
-                  <img src="@/assets/logo.jpg" width="80" />
-                  <div class="heading is-size-5 has-text-weight-semibold">
-                    Vimal Book House
+        <transition name="fade">
+          <div class="container" v-if="loaded">
+            <div class="columns is-centered">
+              <div class="column is-5-tablet is-4-desktop is-4-widescreen">
+                <form class="box">
+                  <div class="field has-text-centered">
+                    <img src="@/assets/logo.jpg" width="80" />
+                    <div class="heading is-size-5 has-text-weight-semibold">
+                      Vimal Book House
+                    </div>
                   </div>
-                </div>
-                <hr class="has-background-dark" />
-                <BaseInputField
-                  type="text"
-                  placeholder="e.g. vimal@gmail.com"
-                  iconName="fa fa-envelope"
-                  labelName="Login"
-                  v-model="emailVal"
-                  fontWeight="has-text-weight-semibold"
-                ></BaseInputField>
-                <BaseInputField
-                  type="password"
-                  placeholder="********"
-                  iconName="fa fa-envelope"
-                  labelName="Password"
-                  v-model="pwdValue"
-                  fontWeight="has-text-weight-semibold"
-                ></BaseInputField>
-                <div class="field">
-                  <label class="checkbox">
-                    <input type="checkbox" /> Remember me
-                  </label>
-                </div>
-                <div class="columns">
-                  <div class="column">
-                    <BaseButton
-                      position="has-text-right"
-                      btnClass="button is-success"
-                      btnType="button"
-                      clickFunction="loginValidation"
-                      @login-call="loginValidation"
-                    >
-                      <h5 slot="btnlabel">Login</h5>
-                    </BaseButton>
+                  <hr class="has-background-dark" />
+                  <BaseInputField
+                    type="text"
+                    placeholder="e.g. vimal@gmail.com"
+                    iconName="fa fa-envelope"
+                    labelName="Login"
+                    v-model="emailVal"
+                    fontWeight="has-text-weight-semibold"
+                  ></BaseInputField>
+                  <BaseInputField
+                    type="password"
+                    placeholder="********"
+                    iconName="fa fa-envelope"
+                    labelName="Password"
+                    v-model="pwdValue"
+                    fontWeight="has-text-weight-semibold"
+                  ></BaseInputField>
+                  <div class="field">
+                    <label class="checkbox">
+                      <input type="checkbox" /> Remember me
+                    </label>
                   </div>
-                  <div class="column">
-                    <BaseButton
-                      position="has-text-left"
-                      btnType="button"
-                      clickFunction="signupModal"
-                      @signup-call="signupModal"
-                      btnClass="button is-success"
-                    >
-                      <h5 slot="btnlabel">Signup</h5>
-                    </BaseButton>
+                  <div class="columns">
+                    <div class="column">
+                      <BaseButton
+                        position="has-text-right"
+                        btnClass="button is-success"
+                        btnType="button"
+                        clickFunction="loginValidation"
+                        @login-call="loginValidation"
+                      >
+                        <h5 slot="btnlabel">Login</h5>
+                      </BaseButton>
+                    </div>
+                    <div class="column">
+                      <BaseButton
+                        position="has-text-left"
+                        btnType="button"
+                        clickFunction="signupModal"
+                        @signup-call="signupModal"
+                        btnClass="button is-success"
+                      >
+                        <h5 slot="btnlabel">Signup</h5>
+                      </BaseButton>
+                    </div>
                   </div>
-                </div>
-                <div class="field has-text-centered">
-                  <a href="#" class="has-text-danger">Forgot password?</a>
-                </div>
-              </form>
+                  <div class="field has-text-centered">
+                    <a href="#" class="has-text-danger">Forgot password?</a>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -84,14 +86,17 @@ export default {
       emailVal: "",
       pwdValue: "",
       loginFail: true,
-      customer: false
+      customer: false,
+      loaded: false
     };
   },
   beforeCreate() {
+    this.loaded = false;
     nProgress.start();
     setTimeout(() => {
       nProgress.done();
-    }, 2000);
+      this.loaded = true;
+    }, 500);
   },
   methods: {
     async loginValidation() {
@@ -156,7 +161,7 @@ export default {
       } else {
         this.toast("is-danger", "Invlid email id or password", "is-top");
       }
-      nProgress.start();
+      nProgress.done();
     },
     signupModal() {}
   }
@@ -166,5 +171,12 @@ export default {
 <style scoped>
 .box {
   border: 1px solid #a7164d;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
