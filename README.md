@@ -14,5 +14,5 @@ Online e-store for books developed using vue and bulma
 - Vuex
 - Vuex Persist
 
-### For demo video
+### For demo video (NOTE: if error playing in chrome please use the below URL in firefox)
 https://drive.google.com/drive/folders/1qDoKWtJBx0R_e-42yfEQp6n2WOhHHpBn?usp=sharing
